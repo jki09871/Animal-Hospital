@@ -266,7 +266,7 @@
 #smart_editor2 .se2_qeditor{position:absolute;top:0;left:0;width:183px;margin:0;padding:0;border:1px solid #c7c7c7;border-right:1px solid #ababab;border-bottom:1px solid #ababab;background:#fafafa}
 #smart_editor2 .se2_qeditor label,#smart_editor2 .se2_qeditor span,#smart_editor2 .se2_qeditor dt{font-size:11px;color:#666;letter-spacing:-1px}
 #smart_editor2 .se2_qbar{position:relative;width:183px;height:11px;background:url("../img/ko_KR/bx_set_110302.gif") 0 -731px no-repeat}
-#smart_editor2 .se2_qbar .se2_qmini{position:absolute;top:-1px;right:0;*right:-1px;_right:3px;width:18px;height:14px;background:url("../img/ko_KR/btn_set.png?130306") -315px -170px no-repeat}
+#smart_editor2 .se2_qbar .se2_qmini{position:absolute;top:-1px;right:0;*right:-1px;_right:-3px;width:18px;height:14px;background:url("../img/ko_KR/btn_set.png?130306") -315px -170px no-repeat}
 #smart_editor2 .se2_qbar .se2_qmini button{width:20px;height:14px;margin-top:-1px}
 #smart_editor2 .se2_qeditor .se2_qbody0{float:left;border:1px solid #fefefe}
 #smart_editor2 .se2_qeditor .se2_qbody{position:relative;z-index:90;width:174px;padding:4px 0 0 7px}

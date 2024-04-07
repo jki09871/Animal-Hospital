@@ -75,7 +75,7 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
 /* TEXT_TOOLBAR : ROUNDING */
 #smart_editor2 ul li.first_child button span.tool_bg,#smart_editor2 ul li.last_child button span.tool_bg,#smart_editor2 ul li.single_child button span.tool_bg{visibility:visible;height:21px}
 #smart_editor2 ul li.first_child button span.tool_bg{left:-1px;width:3px;background:url("../img/bg_button_left.gif?20121228") no-repeat}
-#smart_editor2 ul li.last_child button span.tool_bg{right:0px;_right:1px;width:2px;background:url("../img/bg_button_right.gif") no-repeat}
+#smart_editor2 ul li.last_child button span.tool_bg{right:0px;_right:-1px;width:2px;background:url("../img/bg_button_right.gif") no-repeat}
 #smart_editor2 ul li.single_child{padding-right:1px}
 #smart_editor2 ul li.single_child button span.tool_bg{left:0;background:url("../img/bg_button.gif?20121228") no-repeat;width:22px}
 #smart_editor2 div.se2_text_tool ul li.hover button span.tool_bg{background-position:0 -21px}

@@ -50,6 +50,7 @@
         <tr>
             <th>bno</th>
             <th>title</th>
+            <th>writer</th>
             <th>time</th>
             <th>hits</th>
         </tr>
@@ -59,6 +60,7 @@
                 <th>
                     <a href="/board/read?bno=${board.bno}">${board.title}</a>
                 </th>
+                <td>${board.writer}</td>
                 <td><fmf:formatDate value="${board.time}" pattern="yyyy-MM-dd"/></td>
                 <td>${board.hits}</td>
             </tr>

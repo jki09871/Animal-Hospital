@@ -29,6 +29,7 @@ public class BoardController {
     @PostMapping("/save")
     public String BoarSavePost(BoardDTO boardDTO){
         service.save(boardDTO);
+        System.out.println("boardDTO = " + boardDTO);
 
         return "redirect:/board/list";
     }

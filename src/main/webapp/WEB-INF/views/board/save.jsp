@@ -40,5 +40,6 @@
         oEditors.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
 
     }
+
 </script>
 </html>

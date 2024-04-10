@@ -78,9 +78,9 @@
 	 * 일반 업로드 
 	 * @desc oFileUploader의 upload함수를 호출함. 
 	 */
-	function generalUpload(){
-		oFileUploader.upload();
-	}
+	// function generalUpload(){
+	// 	oFileUploader.upload();
+	// }
 	
     /** 
      * 이미지 첨부 전 안내 텍스트가 나오는 배경으로 '설정'하는 함수.
@@ -333,9 +333,9 @@
     function html5Upload() {	
     	var tempFile,
     		sUploadURL;
-    	
-    	sUploadURL= 'file_uploader_html5.php'; 	//upload URL
-    	
+
+		sUploadURL = "/SmartEditorMultiImageUpload";
+
     	//파일을 하나씩 보내고, 결과를 받음.
     	for(var j=0, k=0; j < nImageInfoCnt; j++) {
     		tempFile = htImageInfo['img'+j];
@@ -478,7 +478,7 @@
  	 */
  	function callFileUploader (){
  		oFileUploader = new jindo.FileUploader(jindo.$("uploadInputBox"),{
- 			sUrl  : location.href.replace(/\/[^\/]*$/, '') + '/file_uploader.php',	//샘플 URL입니다.
+ 			sUrl  : location.href.replace(/\/[^\/]*$/, '') + '/smarteditorMultiImageUpload',	//샘플 URL입니다.
  	        sCallback : location.href.replace(/\/[^\/]*$/, '') + '/callback.html',	//업로드 이후에 iframe이 redirect될 콜백페이지의 주소
  	    	sFiletype : "*.jpg;*.png;*.bmp;*.gif",						//허용할 파일의 형식. ex) "*", "*.*", "*.jpg", 구분자(;)	
  	    	sMsgNotAllowedExt : 'JPG, GIF, PNG, BMP 확장자만 가능합니다',	//허용할 파일의 형식이 아닌경우에 띄워주는 경고창의 문구
@@ -675,7 +675,6 @@
  				}
  			}
  		}
-
  		req.send(data);
  		return this;
  	};

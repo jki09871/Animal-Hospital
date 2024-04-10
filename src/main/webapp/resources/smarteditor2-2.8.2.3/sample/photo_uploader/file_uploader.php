@@ -7,8 +7,9 @@ $bSuccessUpload = is_uploaded_file($_FILES['Filedata']['tmp_name']);
 if(bSuccessUpload) {
 	$tmp_name = $_FILES['Filedata']['tmp_name'];
 	$name = $_FILES['Filedata']['name'];
-	
-	$filename_ext = strtolower(array_pop(explode('.',$name)));
+    // 파일 이름에서 확장자 추출
+    $filename_parts = explode('.', $name);
+    $filename_ext = strtolower(array_pop($filename_parts));
 	$allow_file = array("jpg", "png", "bmp", "gif");
 	
 	if(!in_array($filename_ext, $allow_file)) {

@@ -14,7 +14,7 @@
     </div>
     <input type="text" name="title" placeholder="title">
     <div class="col-md-10" style="margin-left:80px;">
-        <textarea id="summernote" rows="5" name="explanation" style="width:100%; height:250px;"></textarea>
+        <textarea id="summernote" rows="5" name="content" style="width:100%; height:250px;"></textarea>
     </div>
     <input type="submit" value="작성">
 </form>
@@ -31,7 +31,9 @@
         lang: "ko-KR",
         callbacks: {
             onImageUpload : function(files) {
-                sendFile(files[0],this);
+                for (var i = files.length -1; i>=0; i--){
+                    sendFile(files[i],this);
+                }
             }
         }
     });
@@ -46,9 +48,9 @@
             url : "/ajaxUpload",
             contentType : false,
             processData : false,
+
             success : function (data){
                 console.log(data);
-                console.log(editor);
                 $(editor).summernote("insertImage", data.url);
             }
         });

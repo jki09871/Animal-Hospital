@@ -2,10 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
 <!-- 스마트 에디터 스크립트 추가 -->
-<script type="text/javascript" src="/resources/smarteditor2-2.8.2.3/js/HuskyEZCreator.js" charset="UTF-8"></script>
 
 <html>
 <head>
+    <script type="text/javascript" src="/resources/summernote" charset="UTF-8"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
     <title>Title</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
             <th>content</th>
             <td style="width: 600px;">
                 <!-- 에디터를 표시할 textarea -->
-                <textarea rows="10" cols="30" name="content" id="editor"><c:out value="${board.content}"/></textarea>
+                <textarea id="summernote" rows="5" name="content" style="width:100%; height:250px;">${board.content}</textarea>
             </td>
             <td><input type="submit" value="수정"></td>
         </tr>
@@ -27,28 +28,43 @@
     <input type="hidden" name="bno" id="bno" value="<c:out value="${board.bno}"/>">
 </form>
 </body>
+<script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
 
 <script>
-    // 스마트 에디터 생성
-    let oEditors = [];
-    smartEditor = function() {
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors,
-            elPlaceHolder: "editor",
-            sSkinURI : "/resources/smarteditor2-2.8.2.3/SmartEditor2Skin.html",
-            fCreator: "createSEditor2"
+    $('#summernote').summernote({
+        height: 300,
+        width: 1000,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        lang: "ko-KR",
+        callbacks: {
+            onImageUpload : function(files) {
+                for (var i = files.length - 1; i >= 0; i--) {
+                    sendFile(files[i], this);
+                }
+            }
+        }
+    });
+
+    function sendFile(file, editor){
+        let formData = new FormData();
+        formData.append("file", file);
+        console.log(file);
+        $.ajax({
+            data : formData,
+            type : "POST",
+            url : "/ajaxUpload",
+            contentType : false,
+            processData : false,
+
+            success : function (data){
+                console.log(data);
+                $(editor).summernote("insertImage", data.url);
+            }
         });
     }
 
-    $(document).ready(function() {
-        // 폼이 로드될 때 스마트 에디터 생성
-        smartEditor();
-    });
 
-    // 수정 폼 전송 전에 스마트 에디터의 내용을 업데이트
-    $('#updateForm').submit(function() {
-        oEditors.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
-
-    });
 </script>
 </html>

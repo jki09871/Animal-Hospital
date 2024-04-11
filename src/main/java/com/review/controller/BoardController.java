@@ -26,12 +26,13 @@ public class BoardController {
         return "/board/save";
     }
 
+
     @PostMapping("/save")
     public String BoarSavePost(BoardDTO boardDTO){
         service.save(boardDTO);
         System.out.println("boardDTO = " + boardDTO);
 
-        return "redirect:/board/list";
+        return "redirect:/board/read";
     }
 
     @GetMapping("/list")

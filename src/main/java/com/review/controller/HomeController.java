@@ -65,37 +65,38 @@ public class HomeController {
 		return "home";
 	}
 
-	final private String fileRoot = "C:\\img\\summernote\\";
+	final private String fileRoot = "C:\\img\\hong\\";
+	@PostMapping("/ajaxUpload")
+	public @ResponseBody Map<String, Object> SummerNoteImageFile(@RequestParam("file") MultipartFile file){
+
+		Map<String, Object> jsonObject = new HashMap<>();
 
 
-	@RequestMapping(value="/ajaxUpload")
-	public @ResponseBody Map<String,Object> SummerNoteImageFile(@RequestParam("file") MultipartFile  file) {
-
-		Map<String,Object> jsonObject = new HashMap<>();
-
-		File f = new File(fileRoot);
-		if (f.exists()){
-			f.mkdirs();
-		}
 		String originalFileName = file.getOriginalFilename();
+		System.out.println("originalFileName(파일에 진짜이름) = " + originalFileName);
+
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		System.out.println("extension(확장자 추출) = " + extension);
 
 		String saveFileName = UUID.randomUUID()+extension;
+		System.out.println("saveFileName(랜덤 이름을 부여 하고 확장자 붙힘) = " + saveFileName);
 
 		File targetFile = new File(fileRoot+saveFileName);
-		try {
+		System.out.println("targetFile(경로 + 랜덤이름) = " + targetFile);
 
+		try {
 			InputStream fileStream = file.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);
-			 jsonObject.put("url", "/summernote/"+saveFileName);
-			//jsonObject.put("url", "/common/img/thumNail.do?fName="+saveFileName);
-			jsonObject.put("responseCode", "succcess");
-		} catch(IOException e) {
+			//jsonObject.put("url", "/hong/"+saveFileName);
+			jsonObject.put("url", "/common/img/thumNail.do?fName="+saveFileName);
+			jsonObject.put("responseCode", "success");
+
+
+		}catch (IOException e){
 			FileUtils.deleteQuietly(targetFile);
 			jsonObject.put("responseCode", "error");
 			e.printStackTrace();
 		}
-
 		return jsonObject;
 	}
 
@@ -111,10 +112,13 @@ public class HomeController {
 	@GetMapping("/common/img/thumNail.do")
 	public String thumNail(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
+
 		FileInputStream in = null;
 		// http://localhost:8090/common/img/thumNail.do?fName=bac4fa26-ccf7-4834-a498-a7dcaf4ab16b.png
 
 		String fName = req.getParameter("fName");
+
+		System.out.println("fName = " + fName);
 
 
 		try {

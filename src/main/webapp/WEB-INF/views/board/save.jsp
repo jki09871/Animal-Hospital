@@ -3,7 +3,8 @@
 
 <html>
 <head>
-    <script type="text/javascript" src="/resources/smarteditor2-2.8.2.3/js/HuskyEZCreator.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/resources/summernote" charset="UTF-8"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
     <title>Title</title>
 </head>
 <body>
@@ -12,33 +13,45 @@
         <input type="text" name="writer" placeholder="writer">
     </div>
     <input type="text" name="title" placeholder="title">
-    <div class="post-form">
-        <textarea rows="20" name="content" id="editor"></textarea>
+    <div class="col-md-10" style="margin-left:80px;">
+        <textarea id="summernote" rows="5" name="explanation" style="width:100%; height:250px;"></textarea>
     </div>
-    <input type="submit" value="작성" onclick="updateContent()">
+    <input type="submit" value="작성">
 </form>
 </body>
+<%--<script src="${pageContext.request.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>--%>
+<script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
 <script>
-    let oEditors = [];
-
-    smartEditor = function() {
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors,
-            elPlaceHolder: "editor", // 수정된 부분
-            sSkinURI : "/resources/smarteditor2-2.8.2.3/SmartEditor2Skin.html",
-            fCreator: "createSEditor2"
-        });
-    }
-
-    $(document).ready(function() {
-        // 스마트에디터 적용
-        smartEditor();
+    $('#summernote').summernote({
+        height: 300,
+        width: 1000,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        lang: "ko-KR",
+        callbacks: {
+            onImageUpload : function(files) {
+                sendFile(files[0],this);
+            }
+        }
     });
 
-    // 값 업데이트 함수
-    function updateContent() {
-        oEditors.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
-
+    function sendFile(file, editor){
+        var formData = new FormData();
+        formData.append("file", file);
+        console.log(file);
+        $.ajax({
+            data : formData,
+            type : "POST",
+            url : "/ajaxUpload",
+            contentType : false,
+            processData : false,
+            success : function (data){
+                console.log(data);
+                console.log(editor);
+                $(editor).summernote("insertImage", data.url);
+            }
+        });
     }
 
 </script>

@@ -27,7 +27,7 @@
 				<li><a href="#pets" class="smooth-scroll">OUR PETS</a></li>
 				<li><a href="#stories" class="smooth-scroll">STORIES</a></li>
 				<li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
-				<li><a href="#contact" class="smooth-scroll">CONTACT</a></li>
+				<li><a href="/board/list" class="smooth-scroll">CONTACT</a></li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->

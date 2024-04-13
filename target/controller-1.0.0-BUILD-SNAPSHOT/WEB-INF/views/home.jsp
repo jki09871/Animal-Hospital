@@ -23,7 +23,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#home" class="smooth-scroll">ABOUT</a></li>
+				<li><a href="/member/do" class="smooth-scroll">ABOUT</a></li>
 				<li><a href="#pets" class="smooth-scroll">OUR PETS</a></li>
 				<li><a href="#stories" class="smooth-scroll">STORIES</a></li>
 				<li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>

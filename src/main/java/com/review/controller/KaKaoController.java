@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,26 +31,34 @@ public class KaKaoController {
     }
 
     @GetMapping("/kakao")
-    public String getCI(@RequestParam String code, Model model) throws IOException {
+    public String getCI(@RequestParam String code, Model model, HttpSession session) throws IOException {
 
-        System.out.println("code = " + code);
         String access_token = ks.getToken(code);
-        System.out.println("access_token = " + access_token);
         Map<String, Object> userInfo = ks.getUserInfo(access_token);
         model.addAttribute("code", code);
         model.addAttribute("access_token", userInfo.get("access_token"));
-        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("id", userInfo.get("id"));
 
-
+        if (userInfo.get("id") != null) {
+            session.setAttribute("userId", userInfo.get("id"));
+            session.setAttribute("access_token", userInfo.get("access_token"));
+        }
         // ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집가능
         return "kakaoCI/logincode";
 
     }
 
-    @RequestMapping(value="/kakaologout")
+    @RequestMapping(value="/logout")
     public String logout(HttpSession session) {
-        ks.logout((String)session.getAttribute("access_token"));
-        session.invalidate();
+        String access_token = (String)session.getAttribute("access_token");
+
+
+        if(access_token != null && !"".equals(access_token)){
+            ks.kakaoLogout(access_token);
+            session.invalidate();
+        }else{
+            System.out.println("access_Token is null");
+        }
         return "redirect:/";
     }
 }

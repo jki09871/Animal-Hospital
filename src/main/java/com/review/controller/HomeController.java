@@ -20,6 +20,7 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Handles requests for the application home page.
@@ -33,7 +34,7 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -61,6 +62,9 @@ public class HomeController {
 		bannerList.add("gallery9.jpg");
 
 		model.addAttribute("bannerList", bannerList);
+
+		System.out.println("session.getAttribute(\"id\") = "+session.getAttribute("userId"));
+		System.out.println("session.getAttribute(\"access_token\") = "+session.getAttribute("access_token"));
 
 		return "home";
 	}

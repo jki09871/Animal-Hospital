@@ -8,11 +8,11 @@
 <div>
     <input type="text" name="code" id="code" value="${code}">
     <input type="text" name="connected_at" id="connected_at" value="${access_token}">
-    <input type="text" name="userInfo" id="userInfo" value="${userInfo}">
+    <input type="text" name="userInfo" id="userInfo" value="${id}">
 
 </div>
 
-<a href="/member/kakaologout">로그아웃</a>
+<a href="/member/logout">로그아웃</a>
 
 </body>
 </html>

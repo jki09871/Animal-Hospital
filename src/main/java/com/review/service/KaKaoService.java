@@ -35,7 +35,7 @@ public class KaKaoService {
             // request header 설정
             HttpHeaders headers = new HttpHeaders();
             // Content-type을 application/x-www-form-urlencoded 로 설정
-            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
 
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream()));
             //이 코드는 HTTP 요청의 본문에 데이터를 작성하기 위해 사용되는 것.
@@ -73,9 +73,6 @@ public class KaKaoService {
             JSONObject elem = (JSONObject) parser.parse(result);
 
             String access_token = elem.get("access_token").toString();
-            String refresh_token = elem.get("refresh_token").toString();
-            System.out.println("refresh_token = " + refresh_token);
-            System.out.println("access_token = " + access_token);
 
             token = access_token;
 
@@ -118,7 +115,6 @@ public class KaKaoService {
             JSONParser parser = new JSONParser();
             JSONObject obj = (JSONObject) parser.parse(res);
 
-            System.out.println("obj = " + obj);
 
 
             JSONObject properties = (JSONObject) obj.get("properties");
@@ -132,6 +128,7 @@ public class KaKaoService {
 
             result.put("id", id);
             result.put("nickname", nickname);
+            result.put("access_token", access_token);
 
             br.close();
 
@@ -141,51 +138,18 @@ public class KaKaoService {
         return result;
     }
 
-    public String getAgreementInfo(String access_token) {
-        String result = "";
-        String host = "https://kapi.kakao.com/v2/user/scopes";
-
-        try {
-            URL url = new URL(host);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setRequestProperty("Authorization", "Bearer" + access_token);
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                result += line;
-            }
-
-            int responseCode = urlConnection.getResponseCode();
-            System.out.println("responseCode = " + responseCode);
-
-            // result is json format
-            br.close();
-
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    public void logout(String access_Token) {
-        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+    public void kakaoLogout(String access_token) {
+        String reqURL = "https://kapi.kakao.com/v1/user/unlink";
         try {
             URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Authorization", "Bearer " + access_token);
 
-            int responseCode = conn.getResponseCode();
+            int responseCode = urlConnection.getResponseCode();
             System.out.println("responseCode : " + responseCode);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
             String result = "";
             String line = "";
@@ -195,6 +159,7 @@ public class KaKaoService {
             }
             System.out.println(result);
         } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

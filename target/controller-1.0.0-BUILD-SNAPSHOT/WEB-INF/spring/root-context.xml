@@ -25,4 +25,7 @@
 
 	<context:component-scan base-package="com.review.repository"/>
 	<context:component-scan base-package="com.review.service"/>
+	<context:component-scan base-package="com.review.naver" />
+
+
 </beans>

@@ -2,7 +2,6 @@ package com.review.controller;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.review.naver.NaverLoginBO;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -31,14 +30,14 @@ public class NaverController {
     }
     // 로그인 첫 화면 요청 메서드
 
-    @RequestMapping(value = "/naver/login", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/naver/Nlogin", method = {RequestMethod.GET, RequestMethod.POST})
     public String login(Model model, HttpSession session) {
 
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 
         //네이버
         model.addAttribute("url", naverAuthUrl);
-        return "naver/login";
+        return "naver/Nlogin";
     }
 
     //네이버 로그인 성공시 callback 호출 메소드
@@ -73,7 +72,7 @@ public class NaverController {
 
         model.addAttribute("result", apiResult);
 
-        return "/naver/login";
+        return "naver/Nlogin";
     }
 
     @RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
@@ -81,6 +80,7 @@ public class NaverController {
         System.out.println("여기는 logout");
         session.invalidate();;
 
-        return "redirect:/naver/login";
+
+        return "redirect:/naver/Nlogin";
     }
 }

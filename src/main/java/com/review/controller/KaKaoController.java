@@ -27,7 +27,7 @@ public class KaKaoController {
     @GetMapping("/do")
     public String loginPage(Model model) {
 
-        return "kakaoCI/login";
+        return "kakaoCI/Klogin";
     }
 
     @GetMapping("/kakao")

@@ -18,11 +18,53 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <c:choose>
+                <c:when test="${sessionScope.loginEmail != null || sessionScope.kakaosessionId != null || sessionScope.naversessionId != null}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/board/save">글작성</a><br>
+                    </li>
+                    <li class="nav-item">
+                        <c:choose>
+                            <c:when test="${sessionScope.loginEmail != null}">
+                                <a class="nav-link">${sessionScope.loginEmail}님 환영합니다.</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout">로그아웃</a>
+                                </li>
+                            </c:when>
+
+                            <c:when test="${sessionScope.kakaosessionId != null}">
+                                <li class="nav-item">
+                                <a class="nav-link">${sessionScope.kakaosessionId}님 환영합니다.</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link" href="/member/kakao/logout">로그아웃</a>
+                                </li>
+                            </c:when>
+
+                            <c:when test="${sessionScope.naversessionId != null}">
+                                <li class="nav-item">
+                                    <a class="nav-link">${sessionScope.naversessionId}님 환영합니다.</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/naver/logout">로그아웃</a>
+                                </li>
+                            </c:when>
+                        </c:choose>
+
+                        </c:when>
+                        <c:when test="${sessionScope.loginEmail == null}">
+                <li class="nav-item">
+                                <a class="nav-link" href="/member/login">로그인</a><br>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/board/save">글쓰기</a>
+                                <a class="nav-link" href="/member/joinmembership">회원가입</a><br>
+                        </c:when>
+                    </c:choose>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Dropdown
@@ -33,9 +75,6 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">

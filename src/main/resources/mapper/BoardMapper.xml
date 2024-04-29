@@ -10,6 +10,7 @@
 
     <select id="list" resultType="com.review.dto.BoardDTO">
         select * from moong_table
+        order by bno DESC
     </select>
 
     <select id="read" parameterType="int" resultType="com.review.dto.BoardDTO">

@@ -28,17 +28,20 @@ public class NaverController {
     private void setNaverLoginBO(NaverLoginBO naverLoginBO){
         this.naverLoginBO = naverLoginBO;
     }
-    // 로그인 첫 화면 요청 메서드
+//     로그인 첫 화면 요청 메서드
 
-    @RequestMapping(value = "/naver/Nlogin", method = {RequestMethod.GET, RequestMethod.POST})
-    public String login(Model model, HttpSession session) {
-
-        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-
-        //네이버
-        model.addAttribute("url", naverAuthUrl);
-        return "naver/Nlogin";
-    }
+//    @RequestMapping(value = "/member/login", method = {RequestMethod.GET, RequestMethod.POST})
+//    public String login(Model model, HttpSession session) {
+//
+//
+//        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+//
+//        System.out.println("naverAuthUrl = " + naverAuthUrl);
+//
+//        //네이버
+//        model.addAttribute("url", naverAuthUrl);
+//        return "board/list";
+//    }
 
     //네이버 로그인 성공시 callback 호출 메소드
     @RequestMapping(value = "/test/callback", method = {RequestMethod.GET, RequestMethod.POST})
@@ -46,6 +49,10 @@ public class NaverController {
         System.out.println("여기는 callback");
         OAuth2AccessToken oauthToken;
         oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        System.out.println("oauthToken = " + oauthToken);
+        System.out.println("session = " + session);
+        System.out.println("code = " + code);
+        System.out.println("state = " + state);
 
         //1. 로그인 사용자 정보를 읽어온다
             apiResult = naverLoginBO.getUserProfile(oauthToken); //String 형식의 json 데이터
@@ -62,25 +69,27 @@ public class NaverController {
         //3. 데이터 파싱
         //Top레벨 단계 _response 파싱
         JSONObject response_obj = (JSONObject) jsonObject.get("response");
+
+        System.out.println("response_obj = " + response_obj);
         //response의  nickname값 파싱
         String nickname = (String) response_obj.get("nickname");
 
         System.out.println("nickname = " + nickname);
 
         //4. 파싱 닉네임 세션으로 저장
-        session.setAttribute("sessionId", nickname); //세션 생성
+        session.setAttribute("naversessionId", nickname); //세션 생성
 
         model.addAttribute("result", apiResult);
 
-        return "naver/Nlogin";
+        return "redirect:/board/list";
     }
 
-    @RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/naver/logout", method = {RequestMethod.GET, RequestMethod.POST})
     public String logout(HttpSession session) throws IOException {
         System.out.println("여기는 logout");
         session.invalidate();;
 
 
-        return "redirect:/naver/Nlogin";
+        return "/member/login";
     }
 }

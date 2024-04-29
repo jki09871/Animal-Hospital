@@ -23,12 +23,12 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/member/do" class="smooth-scroll">ABOUT</a></li>
-				<li><a href="/naver/Nlogin" class="smooth-scroll">OUR PETS</a></li>
+				<li><a href="#home" class="smooth-scroll">ABOUT</a></li>
+				<li><a href="#pets" class="smooth-scroll">OUR PETS</a></li>
 				<li><a href="#stories" class="smooth-scroll">STORIES</a></li>
 				<li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
 				<li><a href="/board/list" class="smooth-scroll">CONTACT</a></li>
-				<li><a href="/sociallogin/login" class="smooth-scroll">LOGIN</a></li>
+				<li><a href="/member/login" class="smooth-scroll">LOGIN</a></li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
@@ -332,7 +332,9 @@
 
 		<c:forEach var="result" items="${bannerList}" varStatus="st">
 
-			<c:if test="${cnt == 1}"> <div class="row"> </c:if>
+			<c:if test="${cnt == 1}">
+				<div class="row">
+			</c:if>
 				<div class="col-md-4">
 					<div class="well">
 						<img class="img-responsive" src="/resources/animal-adoption/images/gallery/${result}" />

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
 
@@ -10,7 +11,17 @@
 <body>
 <form id="myForm" action="/board/save" method="post">
     <div class="mb-4">
-        <input type="text" name="writer" placeholder="writer">
+<c:choose>
+    <c:when test="${sessionScope.naversessionId != null}">
+        <input type="hidden" name="writer" placeholder="writer" value="${sessionScope.naversessionId}">
+    </c:when>
+    <c:when test="${sessionScope.kakaosessionId != null}">
+        <input type="hidden" name="writer" placeholder="writer" value="${sessionScope.kakaosessionId}">
+    </c:when>
+    <c:when test="${loginEmail != null}">
+        <input type="hidden" name="writer" placeholder="writer" value="${loginEmail}">
+    </c:when>
+</c:choose>
     </div>
     <input type="text" name="title" placeholder="title">
     <div class="col-md-10" style="margin-left:80px;">

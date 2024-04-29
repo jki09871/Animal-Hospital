@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
@@ -24,32 +25,30 @@ public class KaKaoController {
     @Setter(onMethod_ = @Autowired)
     KaKaoService ks;
 
-    @GetMapping("/do")
-    public String loginPage(Model model) {
-
-        return "kakaoCI/Klogin";
-    }
-
     @GetMapping("/kakao")
-    public String getCI(@RequestParam String code, Model model, HttpSession session) throws IOException {
+    public String getCI(@RequestParam String code, Model model, HttpServletRequest request) throws IOException {
+        System.out.println("ControllerCode = " + code);
 
         String access_token = ks.getToken(code);
         Map<String, Object> userInfo = ks.getUserInfo(access_token);
         model.addAttribute("code", code);
         model.addAttribute("access_token", userInfo.get("access_token"));
-        model.addAttribute("id", userInfo.get("id"));
+        model.addAttribute("Id", userInfo.get("id"));
+
+        HttpSession session = request.getSession();
 
         if (userInfo.get("id") != null) {
-            session.setAttribute("userId", userInfo.get("id"));
+            session.setAttribute("kakaosessionId", userInfo.get("nickname"));
             session.setAttribute("access_token", userInfo.get("access_token"));
         }
         // ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집가능
-        return "kakaoCI/logincode";
+        return "redirect:/board/list";
 
     }
 
-    @RequestMapping(value="/logout")
-    public String logout(HttpSession session) {
+    @RequestMapping(value="/kakao/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         String access_token = (String)session.getAttribute("access_token");
 
 
@@ -59,6 +58,6 @@ public class KaKaoController {
         }else{
             System.out.println("access_Token is null");
         }
-        return "redirect:/";
+        return "redirect:/member/login";
     }
 }

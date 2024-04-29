@@ -47,6 +47,8 @@ public class KaKaoService {
             sb.append("&code=" + code);
             // sb.toString()은 생성된 쿼리 문자열을 반환하며, 이 문자열은 HTTP POST 요청의 본문에 포함되어 서버로 전송됩니다
 
+            System.out.println("KaKaoService sb = " + sb);
+
             bw.write(sb.toString());
             bw.flush();
             // 이 코드는 StringBuilder에 있는 문자열을 HTTP 요청의 본문으로 작성하여 해당 요청을 서버에 전송하는 역할을 합니다.
@@ -108,6 +110,7 @@ public class KaKaoService {
             String line = "";
             String res = "";
             while ((line = br.readLine()) != null) {
+
                 res += line;
             }
             System.out.println("res = " + res);
@@ -157,7 +160,7 @@ public class KaKaoService {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println(result);
+            System.out.println("result : "+result);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

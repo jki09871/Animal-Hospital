@@ -2,20 +2,14 @@ package com.review.controller;
 
 import java.io.*;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
-
 import org.apache.commons.io.FileUtils;
-
-import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -62,9 +56,6 @@ public class HomeController {
 		bannerList.add("gallery9.jpg");
 
 		model.addAttribute("bannerList", bannerList);
-
-		System.out.println("session.getAttribute(\"id\") = "+session.getAttribute("userId"));
-		System.out.println("session.getAttribute(\"access_token\") = "+session.getAttribute("access_token"));
 
 		return "home";
 	}
@@ -122,20 +113,29 @@ public class HomeController {
 
 		String fName = req.getParameter("fName");
 
-		System.out.println("fName = " + fName);
+		System.out.println("fName@@@@@@@@@@@@@@@@@@@@@@@@@ = " + fName);
 
 
 		try {
 
 
 			String pullFath = fileRoot + "/" + fName;
+			System.out.println("pullFath = " + pullFath);
+
 			int idx = pullFath.lastIndexOf("/");
+			System.out.println("idx = " + idx);
+
 			String fileName = pullFath.substring(idx+1 , pullFath.length());
+			System.out.println("fileName = " + fileName);
 
 			File imgFile = new File(pullFath);
-			if(imgFile.isFile()) {
+			if(imgFile.isFile()) { // 파일이 실제 경로에 있는 파일인지 확인 있으면 true
 				in = new FileInputStream(imgFile);
+				System.out.println("in = " + in);
+
 				int length = (int)imgFile.length();
+				System.out.println("length = " + length);
+
 
 				int bufferSize = 1024;
 				byte[] buffer = new byte[bufferSize];

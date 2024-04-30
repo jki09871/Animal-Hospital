@@ -90,6 +90,6 @@ public class NaverController {
         session.invalidate();;
 
 
-        return "/member/login";
+        return "redirect:/member/login";
     }
 }

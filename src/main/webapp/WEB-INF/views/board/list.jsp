@@ -20,11 +20,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
-                <c:choose>
+                <li class="nav-item">
+                    <a class="nav-link" href="/board/save">글작성</a><br>
+                </li>
+            <c:choose>
                 <c:when test="${sessionScope.loginEmail != null || sessionScope.kakaosessionId != null || sessionScope.naversessionId != null}">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/board/save">글작성</a><br>
-                    </li>
                     <li class="nav-item">
                         <c:choose>
                             <c:when test="${sessionScope.loginEmail != null}">

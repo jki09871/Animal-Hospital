@@ -9,24 +9,20 @@
     <title>Title</title>
 </head>
 <body>
-<form id="myForm" action="/board/save" method="post">
+<form id="myForm" action="/board/save" method="post" enctype="multipart/form-data">
     <div class="mb-4">
-<c:choose>
-    <c:when test="${sessionScope.naversessionId != null}">
-        <input type="hidden" name="writer" placeholder="writer" value="${sessionScope.naversessionId}">
-    </c:when>
-    <c:when test="${sessionScope.kakaosessionId != null}">
-        <input type="hidden" name="writer" placeholder="writer" value="${sessionScope.kakaosessionId}">
-    </c:when>
-    <c:when test="${loginEmail != null}">
-        <input type="hidden" name="writer" placeholder="writer" value="${loginEmail}">
-    </c:when>
-</c:choose>
+
+<input type="hidden" name="writer" placeholder="writer" value="${sessionScope.naversessionId != null ?
+                    sessionScope.naversessionId : (sessionScope.kakaosessionId != null ? sessionScope.kakaosessionId : loginEmail)}">
     </div>
     <input type="text" name="title" placeholder="title">
     <div class="col-md-10" style="margin-left:80px;">
         <textarea id="summernote" rows="5" name="content" style="width:100%; height:250px;"></textarea>
+    </div><br>
+    <div id="fileIndex">
+        <input type="file" name="file"/>
     </div>
+    <button class="fileAdd_btn" type="button">파일추가</button>
     <input type="submit" value="작성">
 </form>
 </body>
@@ -66,6 +62,17 @@
             }
         });
     }
+
+    var fileIndex = 1;
+    $('.fileAdd_btn').on('click', function () {
+        $("#fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
+            + "<button type='button' class='fileRemove' onclick='fnDel(this)' id='fileDel'>삭제</button></div>");
+
+    });
+        $(document).on("click","#fileDelBtn", function(){
+            $(this).parent().remove();
+
+        });
 
 </script>
 </html>

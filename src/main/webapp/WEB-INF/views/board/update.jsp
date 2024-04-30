@@ -10,7 +10,8 @@
     <title>Title</title>
 </head>
 <body>
-<form id="updateForm" action="/board/update" method="post">
+<form id="updateForm" action="/board/update" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="writer" id="writer" value="<c:out value="${board.writer}"/>">
     <table>
         <tr>
             <th>title</th>
@@ -24,8 +25,18 @@
             </td>
             <td><input type="submit" value="수정"></td>
         </tr>
+        <tr>
+            <td id="fileIndex">
+                <c:forEach var="file" items="${file}" varStatus="var">
+                <div>
+                    <a href="#" id="fileName" class="${file.FILE_NO}" >${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
+                    <button type="button" class="fileRemove" onclick="fnDel('${file.BNO}','${file.FILE_NO}')" id="fileDel">Remove</button>
+                </div>
+                </c:forEach>
+        </tr>
     </table>
     <input type="hidden" name="bno" id="bno" value="<c:out value="${board.bno}"/>">
+    <button type="button" id="fileAdd_btn" class="btn btn-primary">파일추가</button>
 </form>
 </body>
 <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
@@ -65,6 +76,42 @@
         });
     }
 
+    var fileIndex = 1;
+    $('#fileAdd_btn').on('click', function () {
+        $("#fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
+            + "<button type='button' class='fileRemove' onclick='fnDel(this)' id='fileDel'>삭제</button></div>");
+
+    });
+
+    function fnDel(bno, fileNo) {
+        console.log(bno);
+        console.log(fileNo);
+
+        if (confirm("파일을 삭제하시겠습니까?")) {
+            alert("삭제되었습니다.");
+
+            // 현재 클릭된 버튼의 부모 요소를 찾아 삭제
+            $('#fileDel').closest('div').remove();
+
+
+
+            $.ajax({
+                url: '/board/fileRemove',
+                method: 'POST',
+                data: {fileNo: fileNo, bno : bno}, // 키 이름을 fileNo로 수정a
+                success: function () {
+                    console.log("bno: " + bno);
+                    console.log("fileNo: " + fileNo);
+                    console.log("파일 삭제 성공");
+                },
+                error: function (request, status, error) {
+                    console.error("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+                }
+            });
+        } else {
+            return;
+        }
+    }
 
 </script>
 </html>

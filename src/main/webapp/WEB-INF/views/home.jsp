@@ -28,7 +28,8 @@
 				<li><a href="#stories" class="smooth-scroll">STORIES</a></li>
 				<li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
 				<li><a href="/board/list" class="smooth-scroll">CONTACT</a></li>
-				<li><a href="/member/login" class="smooth-scroll">LOGIN</a></li>
+				<li><a href="/animal/login" class="smooth-scroll">LOGIN</a></li>
+				<li><a href="/animal/logout" class="smooth-scroll">LOGOUT</a></li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->

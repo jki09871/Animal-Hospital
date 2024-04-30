@@ -10,27 +10,27 @@
         <tr>
             <th>이름</th>
             <td>
-                <input type="text" name="memberName" autocomplete="true">
+                <input type="text" name="memberName" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <th>비밀번호</th>
             <td>
-                <input type="text" name="memberPassword" autocomplete="true">
+                <input type="text" name="memberPassword" autocomplete="off">
             </td>
         </tr>
 
         <tr>
             <th>나이</th>
             <td>
-                <input type="text" name="memberAge" autocomplete="true">
+                <input type="text" name="memberAge" autocomplete="off">
             </td>
         </tr>
         <tr>
             <th>이메일</th>
             <td>
-                <input type="text" name="memberEmail" id="memberEmail" value="" autocomplete="true">
+                <input type="text" name="memberEmail" id="memberEmail" value="" autocomplete="off">
                 <input type="button" name="memberCheckButton" id="memberCheckButton"value="이메일 확인">
                 <div id="result" ></div>
             </td>
@@ -38,7 +38,7 @@
         <tr>
             <th>전화번호</th>
             <td>
-                <input type="text" name="memberMobile" autocomplete="true">
+                <input type="text" name="memberMobile" autocomplete="off">
             </td>
         </tr>
         <colgroup>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Review">
+
+    <insert id="reviewScreen" parameterType="com.review.dto.AnimalReviewDTO">
+        INSERT INTO MEDICALREVIEWBAORD
+        (
+            REVIEWTITLE ,       -- 리뷰 제목 --
+            REVIEWCONTENT ,     -- 리뷰 내용 --
+            REVIEWWRITER        -- 리뷰 작성자 --
+        ) values
+            (
+             #{reviewTitle},
+             #{reviewContent},
+             #{reviewWriter}
+            )
+    </insert>
+
+    <select id="findAll" resultType="com.review.dto.AnimalReviewDTO">
+        SELECT * FROM MEDICALREVIEWBAORD
+        ORDER BY REVIEWNUM DESC;
+    </select>
+
+    <select id="read" parameterType="int" resultType="com.review.dto.AnimalReviewDTO">
+        SELECT * FROM MEDICALREVIEWBAORD
+        WHERE REVIEWNUM = #{reviewNum}
+    </select>
+
+    <update id="update" parameterType="com.review.dto.AnimalReviewDTO">
+        UPDATE MEDICALREVIEWBAORD
+        SET REVIEWTITLE= #{reviewTitle}, REVIEWCONTENT = #{reviewContent}
+        WHERE REVIEWNUM = #{reviewNum}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM MEDICALREVIEWBAORD
+        where REVIEWNUM = #{reviewNum};
+</delete>
+</mapper>

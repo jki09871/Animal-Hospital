@@ -11,6 +11,7 @@
 
 </form>
   <div> <a href="/animal/signup">회원가입</a></div>
-
+  <div> <a href="/animal/reviewList">게시판</a></div>
+,회원가입ㅎ
 </body>
 </html>

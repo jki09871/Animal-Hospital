@@ -1,6 +1,6 @@
 package com.review.controller;
 
-import com.review.dto.AnimalDTO;
+import com.review.dto.AnimalMemberDTO;
 import com.review.service.AnimalService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Log4j
 @Controller
 @RequiredArgsConstructor
-public class AnimalController {
+public class AnimalMemberController {
     @Setter(onMethod_ = @Autowired)
     private AnimalService as;
 
@@ -28,7 +28,7 @@ public class AnimalController {
         return "/animal/ownerSignupScreen";
     }
     @PostMapping("/animal/signup")
-    public String PostSignupScreen(AnimalDTO animalDTO){
+    public String PostSignupScreen(AnimalMemberDTO animalDTO){
         System.out.println("## animalDTO = " + animalDTO);
         int SignupResult = as.PostSignupScreen(animalDTO);
 
@@ -48,14 +48,14 @@ public class AnimalController {
     }
     
     @PostMapping("/animal/login")
-    public String MemberLogin(AnimalDTO animalDTO, HttpServletRequest request){
+    public String MemberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request){
         HttpSession session = request.getSession();
 
         animalDTO = as.UserVerification(animalDTO);
         if (animalDTO != null) {
             session.setAttribute("loginId", animalDTO.getOwnerId());
             log.info("로그인 성공");
-            return "redirect:/board/list";
+            return "redirect:/animal/board/evaluation";
         } else {
             log.info("로그인 실패");
             return "/animal/login";

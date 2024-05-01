@@ -132,6 +132,7 @@ public class BoardController {
         if (writer.equals(K_login) || writer.equals(N_login) || writer.equals(E_login)){
             model.addAttribute("file", service.SelectFileList(boardDTO.getBno()));
             model.addAttribute("board", service.read(boardDTO.getBno()));
+
             return "/board/update";
         } else {
 

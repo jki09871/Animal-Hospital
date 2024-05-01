@@ -1,6 +1,6 @@
 package com.review.repository;
 
-import com.review.dto.AnimalDTO;
+import com.review.dto.AnimalMemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,11 +16,11 @@ public class AnimalRepository {
     private final SqlSessionTemplate sql;
 
 
-    public int PostSignupScreen(AnimalDTO animalDTO) {
+    public int PostSignupScreen(AnimalMemberDTO animalDTO) {
        return sql.insert("animal.signup", animalDTO);
     }
 
-    public AnimalDTO UserVerification(AnimalDTO animalDTO) {
+    public AnimalMemberDTO UserVerification(AnimalMemberDTO animalDTO) {
         return sql.selectOne("animal.login", animalDTO);
     }
 

@@ -1,6 +1,6 @@
 package com.review.service;
 
-import com.review.dto.AnimalDTO;
+import com.review.dto.AnimalMemberDTO;
 import com.review.repository.AnimalRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class AnimalService {
     private AnimalRepository ar;
 
     /********************** 회원가입 **********************/
-    public int PostSignupScreen(AnimalDTO animalDTO) {
+    public int PostSignupScreen(AnimalMemberDTO animalDTO) {
         return ar.PostSignupScreen(animalDTO);
     }
     /*****************************************************/
@@ -41,7 +41,7 @@ public class AnimalService {
 
 
     /*********************** 로그인 ***********************/
-    public AnimalDTO UserVerification(AnimalDTO animalDTO) {
+    public AnimalMemberDTO UserVerification(AnimalMemberDTO animalDTO) {
         return ar.UserVerification(animalDTO);
     }
     /*****************************************************/

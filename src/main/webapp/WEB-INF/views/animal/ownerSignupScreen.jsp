@@ -14,14 +14,17 @@
             </div>
             <div id="divPw">
                 <input type="password" id="pw" name="OwnerPassword" placeholder="비밀번호" class="input_pw"  autocomplete="off" required>
+                <div id="PwCheckResult">8 ~ 16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</div>
+                <input type="password" id="pw2" name="OwnerPassword2" placeholder="비밀번호 확인" class="input_pw"  autocomplete="off" required>
+                <div id="PwCheckResult2"></div>
             </div>
             <div id="divEm">
                 <input type="email" id="em" name="OwnerEmail" placeholder="이메일" class="input_em" autocomplete="off" required>
                 <button type="button" id="EmailCheck" name="EmailCheck" onclick="fn_EmailCheck()">이메일 확인</button>
-                <div id="EmailCheckResult"></div>
+                <div id="EmailCheckResult">이메일을 입력 해주세요</div>
             </div>
             <div id="divPn">
-                <input type="text" id="pn" name="OwnerPhoneNumber" placeholder="전화번호" class="input_pn" autocomplete="off" required>
+                <input type="text" id="pn" name="OwnerPhoneNumber" placeholder="전화번호'-'없이입려해주세요" class="input_pn" autocomplete="off" required>
             </div>
             <div id="divPetId">
                 <input type="text" id="pi" name="petId" placeholder="마이크로칩 번호" class="input_pi" autocomplete="off" required>
@@ -31,123 +34,210 @@
     </form>
 </body>
 <script>
-    function isId(IdCheck) {
-        var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
+
+    /*************************************** 아이디 정규식 검사 *********************************************/
+    function validateId(IdCheck) {
+        var regExp = /^(?:[a-z][a-z0-9]{5,19}|[0-9][a-z0-9]{5,19})$/i;
         return regExp.test(IdCheck);
     }
 
-    function fn_idCheck(){
+
+    $('#id').on('keyup', function () { /** 타자치면서 검사 **/
         var IdCheck = $('#id').val();
-        var IdValid = isId(IdCheck);
-        if (!IdValid){
+        var IdValid = validateId(IdCheck);
+        if (IdValid) {
             $('#IdCheckResult').data("result", 1);
-            $('#IdCheckResult').text("올바르지 않는 아이디 입니다.")
+            $('#IdCheckResult').data('IdResult', 0);
+            $('#IdCheckResult').text("아이디 확인버튼을 눌러주세요.")
+        }else {
+            $('#IdCheckResult').data("result", 0);
+            $('#IdCheckResult').text("영문자로 시작하며 숫자 6~20자를 이용해주세요");
             return;
         }
 
-        $.ajax({
-            url : "/animal/EmailCheck",
-            type : "GET",
-            data : {IdCheck : IdCheck},
-            dataType : "json",
-            success: function (data){
-                console.log(data);
+    });
 
-                if (data == false){
-                    let EmailCheck = $('#IdCheckResult').data('result', 1);
-                    $('#IdCheckResult').text("중복된 아이디 입니다.")
-                    console.log(EmailCheck);
-                    return;
-                }else {
-                    $('#IdCheckResult').data("result", 0);
-                    $('#IdCheckResult').text("사용 가능한 아이디 입니다.");
+
+    function fn_idCheck(){
+        var IdCheck = $('#id').val();
+
+        if ($('#IdCheckResult').data("result") === 1) {
+
+            $.ajax({
+                url: "/animal/EmailCheck",
+                type: "GET",
+                data: {IdCheck: IdCheck},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+
+                    if (data == false) {
+                        $('#IdCheckResult').data('IdResult', 0);
+                        $('#IdCheckResult').text("중복된 아이디 입니다.")
+                        return;
+                    } else {
+                        $('#IdCheckResult').data("IdResult", 1);
+                        $('#IdCheckResult').text("사용 가능한 아이디 입니다.");
+                    }
+                },
+                error: function (request, status, error) {
+
+                    console.log("code:" + request.status + "\n" + "message:"
+                        + request.responseText + "\n" + "error:" + error);
+
                 }
-            },
-            error:function(request, status, error){
-
-                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
-            }
-        });
+            });
+        }
     }
+    /*************************************** 아이디 정규식 끝 ***********************************************/
 
-    function validateEmail(email) {
+    /*************************************** 이메일 정규식 검사 *********************************************/
+    function validateEmail(EmailCheck) {
         var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        return emailRegex.test(email);
+        return emailRegex.test(EmailCheck);
     }
+
+    $('#em').on('keyup', function () { /** 타자치면서 검사 **/
+        var EmailCheck = $('#em').val();
+        var EmailValid = validateEmail(EmailCheck);
+        if (EmailValid) {
+            $('#EmailCheckResult').data("result", 1);
+            $('#EmailCheckResult').data('EmailResult', 0);
+            $('#EmailCheckResult').text("이메일 확인버튼을 눌러주세요.")
+        }else {
+            $('#EmailCheckResult').data("result", 0);
+            $('#EmailCheckResult').text("이메일을 입력 해주세요");
+            return;
+        }
+
+    });
 
     function fn_EmailCheck(){
         var email = $('#em').val();
-        var Check = validateEmail(email);
-        if (!Check){
-            $('#EmailCheckResult').data("result", 1);
-            $('#EmailCheckResult').text("이메일 형식이 올바르지 않습니다.")
+
+        if ($('#EmailCheckResult').data("result") === 1) {
+            $.ajax({
+                url: "/animal/EmailCheck",
+                type: "GET",
+                data: {email: email},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+
+                    if (data == false) {
+                        $('#EmailCheckResult').data('EmailResult', 0);
+                        $('#EmailCheckResult').text("중복된 이메일 입니다.")
+
+                        return;
+                    } else {
+                        $('#EmailCheckResult').data("EmailResult", 1);
+                        $('#EmailCheckResult').text("사용 가능한 이메일 입니다.");
+                    }
+                },
+                error: function (request, status, error) {
+
+                    console.log("code:" + request.status + "\n"
+                        + "message:" + request.responseText + "\n" + "error:" + error);
+
+                }
+            });
+        }
+    }
+    /*************************************** 이메일 정규식 끝 ***********************************************/
+
+    /************************************** 비밀번호 정규식 검사 ********************************************/
+
+    function isPassword(asValue) {
+        var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+        return regExp.test(asValue);
+    }
+
+    $('#pw').on('keyup', function () {
+        /** 타자치면서 검사 **/
+        var IdCheck = $('#pw').val();
+        var PasswordValid = isPassword(IdCheck);
+        if (PasswordValid) {
+            $('#PwCheckResult').data("result", 1);
+            $('#PwCheckResult').text("");
+        } else {
+            $('#PwCheckResult').data("result", 0);
+            $('#PwCheckResult').text("8 ~ 16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
             return;
         }
+    });
 
-        $.ajax({
-            url : "/animal/EmailCheck",
-            type : "GET",
-            data : {email: email},
-            dataType : "json",
-            success: function (data){
-                console.log(data);
+    $('#pw2').on('keyup', function () {
+       var pw = $('#pw').val();
+       var pw2 = $('#pw2').val();
+       if (pw == pw2){
+           $('#PwCheckResult2').data("result", 1);
+           $('#PwCheckResult2').text("");
+       } else {
+           $('#PwCheckResult2').data("result", 0);
+           $('#PwCheckResult2').text("비밀번호를 확인 해주세요");
+       }
+    });
+    /************************************** 비밀번호 정규식 끝 ********************************************/
 
-                if (data == false){
-                    let EmailCheck = $('#EmailCheckResult').data('result', 1);
-                    $('#EmailCheckResult').text("중복된 이메일 입니다.")
-                    console.log(EmailCheck);
-                    return;
-                }else {
-                    $('#EmailCheckResult').data("result", 0);
-                    $('#EmailCheckResult').text("사용 가능한 이메일 입니다.");
-                }
-            },
-            error:function(request, status, error){
+    /************************************** 전화번호 정규식 끝 ********************************************/
 
-                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
-            }
-        })
+    function isPhoneNumber(phone) {
+        var regExp = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+        return regExp.test(phone);
     }
 
+    $('#pn').on('keyup', function () {
+        var phone = $('#pn').val();
+        var phoneCheck = isPhoneNumber(phone);
 
+        if (phoneCheck) {
+            console.log("성공")
 
-    function fnJoin(e){
-        var valid = true;
-        var userid = $('#id');          // 사용자 아이디
-        var userPassword = $('#pw');    // 사용자 비밀번호
-        var userEmail = $('#em');       // 사용자 이메일
-        var userPhoneNum = $('#pn');    // 사용자 핸드폰 번호
-        var userPetId = $('#pi');       // 사용자 동물 고유번호
-
-
-        if (!userid.val()){
-            userid.focus();
-            e.preventDefault();
-            return;}
-        else if (!userPassword.val()){
-            userPassword.focus();
-            e.preventDefault();
-            return;}
-        else if (!userEmail.val()){
-            userEmail.focus();
-            e.preventDefault();
-            return;}
-        else if (!userPhoneNum.val()){
-            userPhoneNum.focus();
-            e.preventDefault();
-            return;}
-        else if (!userPetId.val()){
-            userPetId.focus();
-            e.preventDefault();
-            return;}
-        else if (valid){
-            alert("회원가입이 완료 되었습니다.")
-           // $(this).submit();
-            // $("#joinFrom").submit();
+            $('#pn').data("result", 1);
+        } else {
+            console.log("실패")
+            $('#pn').data("result", 0);
+            return;
         }
+    });
 
-    }
+        function fnJoin(e) {
+            var valid = true;
+            var userid = $('#id');          // 사용자 아이디
+            var userPassword = $('#pw');    // 사용자 비밀번호
+            var userEmail = $('#em');       // 사용자 이메일
+            var userPhoneNum = $('#pn');    // 사용자 핸드폰 번호
+            var userPetId = $('#pi');       // 사용자 동물 고유번호
+
+
+            // if (!userid.val() || $('#IdCheckResult').data("result") === 0 || $('#IdCheckResult').data("IdResult") === 0) {
+            //     alert("아이디를 확인 해주세요.")
+            //     userid.focus();
+            //     e.preventDefault();
+            //     return;
+            // } else if (!userPassword.val() || $('#PwCheckResult2').data("result") === 0) {
+            //     userPassword.focus();
+            //     e.preventDefault();
+            //     return;
+            // } else if (!userEmail.val() || $('#EmailCheckResult').data("EmailResult") === 0 || $('#EmailCheckResult').data("result") === 0) {
+            //     alert("이메일을 확인 해주세요.")
+            //     userEmail.focus();
+            //     e.preventDefault();
+            //     return;
+            // } else
+                if (!userPhoneNum.val() || $('#pn').data("result") === 0){
+                userPhoneNum.focus();
+                e.preventDefault();
+                return;
+            // } else if (!userPetId.val()) {
+            //     userPetId.focus();
+            //     e.preventDefault();
+            //     return;
+            } else if (valid) {
+                alert("회원가입이 완료 되었습니다.")
+                // $(this).submit();
+                // $("#joinFrom").submit();
+            }
+        }
 </script>
 </html>

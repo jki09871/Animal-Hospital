@@ -18,23 +18,24 @@ public class MedicalReviewService {
     @Setter(onMethod_ = @Autowired)
     private MedicalReviewRepository repository;
 
-    public void ReviewWrite(AnimalReviewDTO reviewDTO) {
-        repository.reviewScreen(reviewDTO);
+    public void reviewWrite(AnimalReviewDTO reviewDTO) {
+        System.out.println("reviewDTO = " + reviewDTO);
+        repository.reviewWrite(reviewDTO);
     }
 
-    public List<AnimalReviewDTO> ReviewList(AnimalReviewDTO reviewDTO) {
-        return repository.findAll(reviewDTO);
+    public List<AnimalReviewDTO> reviewList(AnimalReviewDTO reviewDTO) {
+        return repository.reviewList(reviewDTO);
     }
 
     public AnimalReviewDTO information(int reviewNum) {
-        return  repository.ReviewRead(reviewNum);
+        return  repository.information(reviewNum);
     }
 
-    public void Correction(AnimalReviewDTO reviewDTO) {
-        repository.Correction(reviewDTO);
+    public void correction(AnimalReviewDTO reviewDTO) {
+        repository.correction(reviewDTO);
     }
 
-    public void DeleteUsingNum(int reviewNum) {
-        repository.RemovePost(reviewNum);
+    public void deleteUsingNum(int reviewNum) {
+        repository.deleteUsingNum(reviewNum);
     }
 }

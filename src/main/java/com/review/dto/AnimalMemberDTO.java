@@ -18,11 +18,11 @@ public class AnimalMemberDTO {
          OWNERREGDATE timestamp							 -- 가입 날짜 --
  **/
 
-    private String OwnerId;
-    private String OwnerPassword;
-    private String OwnerEmail;
-    private String OwnerPhoneNumber;
+    private String ownerId;
+    private String password;
+    private String email;
+    private String phoneNumber;
     private String petId;
-    private int OwnerGrade;
-    private Date OwnerRegdate;
+    private int grade;
+    private Date regDate;
 }

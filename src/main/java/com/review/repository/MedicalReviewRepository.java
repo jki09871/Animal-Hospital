@@ -19,23 +19,24 @@ public class MedicalReviewRepository {
     private final SqlSessionTemplate sql;
 
 
-    public void reviewScreen(AnimalReviewDTO reviewDTO) {
-        sql.insert("Review.reviewScreen", reviewDTO);
+    public void reviewWrite(AnimalReviewDTO reviewDTO) {
+        System.out.println("reviewDTO = " + reviewDTO);
+        sql.insert("review.reviewScreen", reviewDTO);
     }
 
-    public List<AnimalReviewDTO> findAll(AnimalReviewDTO reviewDTO) {
-        return sql.selectList("Review.findAll", reviewDTO);
+    public List<AnimalReviewDTO> reviewList(AnimalReviewDTO reviewDTO) {
+        return sql.selectList("review.findAll", reviewDTO);
     }
 
-    public AnimalReviewDTO ReviewRead(int reviewNum) {
-        return sql.selectOne("Review.read", reviewNum);
+    public AnimalReviewDTO information(int reviewNum) {
+        return sql.selectOne("review.read", reviewNum);
     }
 
-    public void Correction(AnimalReviewDTO reviewDTO) {
-        sql.update("Review.update", reviewDTO);
+    public void correction(AnimalReviewDTO reviewDTO) {
+        sql.update("review.update", reviewDTO);
     }
 
-    public void RemovePost(int reviewNum) {
-        sql.delete("Review.delete", reviewNum);
+    public void deleteUsingNum(int reviewNum) {
+        sql.delete("review.delete", reviewNum);
     }
 }

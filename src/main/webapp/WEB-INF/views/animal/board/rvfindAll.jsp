@@ -16,7 +16,7 @@
             <thead>
             <tr>
                 <th>번호</th>
-                <th>재목</th>
+                <th>제목</th>
                 <th>작성자</th>
                 <th>작성일</th>
                 <th>수정일</th>
@@ -27,10 +27,10 @@
             <c:forEach var="animal" items="${list}">
                 <tr>
                     <td><c:out value="${animal.reviewNum}"></c:out></td>
-                    <td><a href="/animal/viewDetails?reviewNum=${animal.reviewNum}"><c:out value="${animal.reviewTitle}"></c:out></a> </td>
-                    <td><c:out value="${animal.reviewWriter}"></c:out></td>
-                    <td><fmt:formatDate value="${animal.reviewregdate}" pattern="yyyy-MM-dd"/></td>
-                    <td><fmt:formatDate value="${animal.reviewUpdate}" pattern="yyyy-MM-dd"/></td>
+                    <td><a href="/animal/viewDetails?reviewNum=${animal.reviewNum}"><c:out value="${animal.title}"></c:out></a> </td>
+                    <td><c:out value="${animal.writer}"></c:out></td>
+                    <td><fmt:formatDate value="${animal.regdate}" pattern="yyyy-MM-dd"/></td>
+                    <td><fmt:formatDate value="${animal.updateDate}" pattern="yyyy-MM-dd"/></td>
                 </tr>
             </c:forEach>
             </tbody>

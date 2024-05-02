@@ -19,15 +19,16 @@ public class AnimalService {
     private AnimalRepository ar;
 
     /********************** 회원가입 **********************/
-    public int PostSignupScreen(AnimalMemberDTO animalDTO) {
-        return ar.PostSignupScreen(animalDTO);
+    public int postSignupScreen(AnimalMemberDTO animalDTO) {
+        return ar.postSignupScreen(animalDTO);
     }
     /*****************************************************/
 
 
     /***************** 회원가입 중복이메일 확인 **************/
-    public boolean JoinEmailCheck(Map<String, Object> valid) {
-      int valid2 = ar.JoinEmailCheck(valid);
+    public boolean joinEmailCheck(Map<String, Object> valid) {
+        System.out.println("valid = " + valid);
+      int valid2 = ar.joinEmailCheck(valid);
 
         if (valid2 == 0) {
             log.info("사용 가능한 이메일 또는 아이디 입니다.");
@@ -41,8 +42,8 @@ public class AnimalService {
 
 
     /*********************** 로그인 ***********************/
-    public AnimalMemberDTO UserVerification(AnimalMemberDTO animalDTO) {
-        return ar.UserVerification(animalDTO);
+    public AnimalMemberDTO userVerification(AnimalMemberDTO animalDTO) {
+        return ar.userVerification(animalDTO);
     }
     /*****************************************************/
 

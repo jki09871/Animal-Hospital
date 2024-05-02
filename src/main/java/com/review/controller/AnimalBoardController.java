@@ -24,51 +24,53 @@ public class AnimalBoardController {
     private MedicalReviewService service;
 
     @RequestMapping("/animal/reviewList")
-    public String AnimalReviewList(AnimalReviewDTO reviewDTO, Model model){
+    public String animalReviewList(AnimalReviewDTO reviewDTO, Model model){
         log.info("리뷰 게시판");
 
-        List<AnimalReviewDTO> reviewList = service.ReviewList(reviewDTO);
+        List<AnimalReviewDTO> reviewList = service.reviewList(reviewDTO);
         model.addAttribute("list", reviewList);
-        return "/animal/board/RvfindAll";
+        return "/animal/board/rvfindAll";
     }
 
     @GetMapping("/animal/review")
-    public String MedicalReview(){
+    public String medicalReview(){
         return "/animal/board/evaluation";
     }
 
     @PostMapping("/animal/review")
-    public String MedicalReview(AnimalReviewDTO reviewDTO){
-        service.ReviewWrite(reviewDTO);
+    public String medicalReview(AnimalReviewDTO reviewDTO){
+        service.reviewWrite(reviewDTO);
+        System.out.println("reviewDTO = " + reviewDTO);
         return "redirect:/animal/reviewList";
     }
     
     @GetMapping("/animal/viewDetails")
-    public String ViewDetails(AnimalReviewDTO reviewDTO, Model model){
-        
-        model.addAttribute("animal", service.information(reviewDTO.getReviewNum()));
+    public String viewDetails(AnimalReviewDTO reviewDTO, Model model){
+        AnimalReviewDTO information = service.information(reviewDTO.getReviewNum());
+        System.out.println("information = " + information);
+        model.addAttribute("animal", information);
 
         return "/animal/board/viewDetails";
     }
 
     @GetMapping("/animal/correction")
-    public String CorrectionBefore(AnimalReviewDTO reviewDTO, Model model){
+    public String correctionBefore(AnimalReviewDTO reviewDTO, Model model){
 
         model.addAttribute("animal", service.information(reviewDTO.getReviewNum()));
         return "/animal/board/correction";
     }
 
     @PostMapping("/animal/correction")
-    public String CorrectionAfter(AnimalReviewDTO reviewDTO, Model model){
-        service.Correction(reviewDTO);
+    public String correctionAfter(AnimalReviewDTO reviewDTO, Model model){
+        service.correction(reviewDTO);
         model.addAttribute("animal",service.information(reviewDTO.getReviewNum()));
         return "/animal/board/viewDetails";
 
     }
 
-    @GetMapping("/animal/DeletePost")
-    public String DeletePost(@RequestParam("reviewNum") int reviewNum){
-        service.DeleteUsingNum(reviewNum);
+    @GetMapping("/animal/deletePost")
+    public String deletePost(@RequestParam("reviewNum") int reviewNum){
+        service.deleteUsingNum(reviewNum);
 
         return "redirect:/animal/reviewList";
 

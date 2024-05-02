@@ -6,40 +6,46 @@
 
     <insert id="signup" parameterType="com.review.dto.AnimalMemberDTO">
         /** 회원 가입 **/
-        INSERT INTO ANIMALOWNER
+        INSERT INTO ANIMAL_OWNER
         (
-        OWNERID,            /** 회원 아이디 **/
-        OWNERPASSWORD,      /** 회원 비밀번호 **/
-        OWNEREMAIL,         /** 회원 이메일 **/
-        OWNERPHONENUMBER,   /** 회원 핸드폰번호 **/
-        PETID               /** 동물 고유번호 **/
+        OWNER_ID,            /** 회원 아이디 **/
+        PASSWORD,             /** 회원 비밀번호 **/
+        EMAIL,               /** 회원 이메일 **/
+        PHONENUMBER,         /** 회원 핸드폰번호 **/
+        PETID                /** 동물 고유번호 **/
         )
         VALUES
         (
-        #{OwnerId},
-        #{OwnerPassword},
-        #{OwnerEmail},
-        #{OwnerPhoneNumber},
+        #{ownerId},
+        #{password},
+        #{email},
+        #{phoneNumber},
         #{petId}
         )
     </insert>
 
     <select id="login" parameterType="com.review.dto.AnimalMemberDTO" resultType="com.review.dto.AnimalMemberDTO">
         SELECT
-            OWNERID,            /** 회원 아이디 **/
-            OWNERPASSWORD,      /** 회원 비밀번호 **/
-            OWNEREMAIL,         /** 회원 이메일 **/
-            OWNERPHONENUMBER,   /** 회원 핸드폰번호 **/
+            OWNER_ID,            /** 회원 아이디 **/
+            PASSWORD,      /** 회원 비밀번호 **/
+            EMAIL,         /** 회원 이메일 **/
+            PHONENUMBER,   /** 회원 핸드폰번호 **/
             PETID               /** 동물 고유번호 **/
-        FROM ANIMALOWNER
-        WHERE OWNERID = #{OwnerId} AND OWNERPASSWORD = #{OwnerPassword}
+        FROM ANIMAL_OWNER
+        WHERE OWNER_ID = #{ownerId} AND PASSWORD = #{password}
     </select>
 
-    <select id="EmailCheck" parameterType="hashMap" resultType="int">
+    <select id="emailCheck" parameterType="hashMap" resultType="int">
         SELECT
             COUNT(*)
-        FROM ANIMALOWNER
-        WHERE OWNEREMAIL = #{OwnerEmail} OR OWNERID = #{OwnerId}
+        FROM ANIMAL_OWNER
+        WHERE  1 = 1
+        <if test="email != null and email != '' ">
+            AND  EMAIL =  #{email}
+        </if>
+        <if test="ownerId != null and ownerId != '' ">
+            AND  OWNER_ID =  #{ownerId}
+        </if>
     </select>
 
 </mapper>

@@ -2,40 +2,66 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="Review">
+<mapper namespace="review">
 
     <insert id="reviewScreen" parameterType="com.review.dto.AnimalReviewDTO">
-        INSERT INTO MEDICALREVIEWBAORD
+        INSERT INTO MEDICAL_REVIEW_BAORD
         (
-            REVIEWTITLE ,       -- 리뷰 제목 --
-            REVIEWCONTENT ,     -- 리뷰 내용 --
-            REVIEWWRITER        -- 리뷰 작성자 --
+            TITLE ,       -- 리뷰 제목 --
+            CONTENT ,     -- 리뷰 내용 --
+            <if test="writer != null and writer != '' ">
+                WRITER        -- 리뷰 작성자 --
+            </if>
         ) values
             (
-             #{reviewTitle},
-             #{reviewContent},
-             #{reviewWriter}
+             #{title},
+             #{content},
+            <if test="writer != null and writer != '' ">
+                #{writer}
+            </if>
             )
     </insert>
 
     <select id="findAll" resultType="com.review.dto.AnimalReviewDTO">
-        SELECT * FROM MEDICALREVIEWBAORD
-        ORDER BY REVIEWNUM DESC;
+        SELECT
+            REVIEW_NUM,                         /** 등록 번호 **/
+            TITLE,                              /** 제목 **/
+            CONTENT,                            /** 내용 **/
+            WRITER,                             /** 작성자 **/
+            REGDATE,                            /** 작성 시간 **/
+            UPDATETATE                          /** 수정 시간 **/
+            FROM MEDICAL_REVIEW_BAORD
+        ORDER BY REVIEW_NUM DESC;
     </select>
 
     <select id="read" parameterType="int" resultType="com.review.dto.AnimalReviewDTO">
-        SELECT * FROM MEDICALREVIEWBAORD
-        WHERE REVIEWNUM = #{reviewNum}
+        SELECT
+            REVIEW_NUM,                         /** 등록 번호 **/
+            TITLE,                              /** 제목 **/
+            CONTENT,                            /** 내용 **/
+            WRITER,                             /** 작성자 **/
+            REGDATE                             /** 작성 시간 **/
+        FROM MEDICAL_REVIEW_BAORD
+        WHERE REVIEW_NUM = #{reviewNum}
     </select>
 
     <update id="update" parameterType="com.review.dto.AnimalReviewDTO">
-        UPDATE MEDICALREVIEWBAORD
-        SET REVIEWTITLE= #{reviewTitle}, REVIEWCONTENT = #{reviewContent}
-        WHERE REVIEWNUM = #{reviewNum}
+        UPDATE MEDICAL_REVIEW_BAORD
+        SET UPDATETATE
+        <if test="title != null and title != '' ">
+            , TITLE =  #{title}
+        </if>
+        <if test="content != null and content != '' ">
+            , CONTENT =  #{content}
+        </if>
+        WHERE REVIEW_NUM = #{reviewNum}
+        <if test="writer != null and writer != '' ">
+            AND  WRITER =  #{writer}
+        </if>
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM MEDICALREVIEWBAORD
-        where REVIEWNUM = #{reviewNum};
+        DELETE FROM MEDICAL_REVIEW_BAORD
+        where REVIEW_NUM = #{reviewNum}
 </delete>
 </mapper>

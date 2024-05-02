@@ -16,16 +16,16 @@ public class AnimalRepository {
     private final SqlSessionTemplate sql;
 
 
-    public int PostSignupScreen(AnimalMemberDTO animalDTO) {
+    public int postSignupScreen(AnimalMemberDTO animalDTO) {
        return sql.insert("animal.signup", animalDTO);
     }
 
-    public AnimalMemberDTO UserVerification(AnimalMemberDTO animalDTO) {
+    public AnimalMemberDTO userVerification(AnimalMemberDTO animalDTO) {
         return sql.selectOne("animal.login", animalDTO);
     }
 
-    public int JoinEmailCheck(Map<String, Object> valid) {
+    public int joinEmailCheck(Map<String, Object> valid) {
 
-        return sql.selectOne("animal.EmailCheck", valid);
+        return sql.selectOne("animal.emailCheck", valid);
     }
 }

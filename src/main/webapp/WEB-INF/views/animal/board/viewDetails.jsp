@@ -15,20 +15,20 @@
         </tr>
         <tr>
             <th>writer</th>
-            <td>${animal.reviewWriter}</td>
+            <td>${animal.writer}</td>
         </tr>
         <tr>
             <th>title</th>
-            <td>${animal.reviewTitle}</td>
+            <td>${animal.title}</td>
         </tr>
         <tr>
             <th>content</th>
-            <td>${animal.reviewContent}</td>
+            <td>${animal.content}</td>
         </tr>
         <tr>
             <th>time</th>
             <td>
-                <fmf:formatDate value="${animal.reviewregdate}" pattern="yyyy-MM-dd"/>
+                <fmf:formatDate value="${animal.regdate}" pattern="yyyy-MM-dd"/>
             </td>
         </tr>
     </table>
@@ -89,7 +89,7 @@
                 // alert("비밀번호가 확인되었습니다");
 
 
-                url = '/animal/DeletePost';
+                url = '/animal/deletePost';
                 break;
         }
 

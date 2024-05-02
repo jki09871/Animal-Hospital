@@ -8,17 +8,17 @@
 </head>
 <body>
 <form id="updateForm" action="/animal/correction" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="reviewWriter" id="reviewWriter" value="<c:out value="${animal.reviewWriter}"/>">
+    <input type="hidden" name="writer" id="writer" value="<c:out value="${animal.writer}"/>">
     <table>
         <tr>
             <th>title</th>
-            <td><input type="text" name="reviewTitle" value="<c:out value="${animal.reviewTitle}"/>"></td>
+            <td><input type="text" name="title" value="<c:out value="${animal.title}"/>"></td>
         </tr>
         <tr>
             <th>content</th>
             <td style="width: 600px;">
                 <!-- 에디터를 표시할 textarea -->
-                <textarea id="summernote" rows="5" name="reviewContent" style="width:100%; height:250px;">${animal.reviewContent}</textarea>
+                <textarea id="summernote" rows="5" name="content" style="width:100%; height:250px;">${animal.content}</textarea>
             </td>
             <td><input type="submit" value="수정"></td>
         </tr>

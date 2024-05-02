@@ -5,13 +5,12 @@
 </head>
 <body>
 <form action="/animal/login" method="post">
-  <input type="text" name="OwnerId" placeholder="아이디">
-  <input type="password" name="OwnerPassword" placeholder="비밀번호">
+  <input type="text" name="ownerId" placeholder="아이디">
+  <input type="password" name="password" placeholder="비밀번호">
   <input type="submit" value="로그인"><br>
 
 </form>
   <div> <a href="/animal/signup">회원가입</a></div>
   <div> <a href="/animal/reviewList">게시판</a></div>
-,회원가입ㅎ
 </body>
 </html>

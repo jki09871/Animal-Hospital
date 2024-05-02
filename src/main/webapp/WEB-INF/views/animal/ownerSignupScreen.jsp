@@ -8,23 +8,23 @@
     <form action="/animal/signup" method="post" name="joinFrom" id="joinFrom">
         <div id="signup">
             <div id="divId">
-                <input type="text" id="id" name="OwnerId" placeholder="아이디" class="input_id"  autocomplete="off" required>
-                <button type="button" id="IdCheck" name="IdCheck" onclick="fn_idCheck()">아이디 확인</button>
-                <div id="IdCheckResult">영문자로 시작하며 숫자 6~20자를 이용해주세요</div>
+                <input type="text" id="id" name="ownerId" placeholder="아이디" class="input_id"  autocomplete="off" required>
+                <button type="button" id="idCheck" name="idCheck" onclick="fn_idCheck()">아이디 확인</button>
+                <div id="idCheckResult">영문자로 시작하며 숫자 6~20자를 이용해주세요</div>
             </div>
             <div id="divPw">
-                <input type="password" id="pw" name="OwnerPassword" placeholder="비밀번호" class="input_pw"  autocomplete="off" required>
-                <div id="PwCheckResult">8 ~ 16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</div>
-                <input type="password" id="pw2" name="OwnerPassword2" placeholder="비밀번호 확인" class="input_pw"  autocomplete="off" required>
-                <div id="PwCheckResult2"></div>
+                <input type="password" id="pw" name="password" placeholder="비밀번호" class="input_pw"  autocomplete="off" required>
+                <div id="pwCheckResult">8 ~ 16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</div>
+                <input type="password" id="pw2" name="ownerPassword2" placeholder="비밀번호 확인" class="input_pw"  autocomplete="off" required>
+                <div id="pwCheckResult2"></div>
             </div>
             <div id="divEm">
-                <input type="email" id="em" name="OwnerEmail" placeholder="이메일" class="input_em" autocomplete="off" required>
-                <button type="button" id="EmailCheck" name="EmailCheck" onclick="fn_EmailCheck()">이메일 확인</button>
-                <div id="EmailCheckResult">이메일을 입력 해주세요</div>
+                <input type="email" id="em" name="email" placeholder="이메일" class="input_em" autocomplete="off" required>
+                <button type="button" id="emailCheck" name="emailCheck" onclick="fn_emailCheck()">이메일 확인</button>
+                <div id="emailCheckResult">이메일을 입력 해주세요</div>
             </div>
             <div id="divPn">
-                <input type="text" id="pn" name="OwnerPhoneNumber" placeholder="전화번호'-'없이입려해주세요" class="input_pn" autocomplete="off" required>
+                <input type="text" id="pn" name="phoneNumber" placeholder="전화번호'-'없이입려해주세요" class="input_pn" autocomplete="off" required>
             </div>
             <div id="divPetId">
                 <input type="text" id="pi" name="petId" placeholder="마이크로칩 번호" class="input_pi" autocomplete="off" required>
@@ -36,22 +36,22 @@
 <script>
 
     /*************************************** 아이디 정규식 검사 *********************************************/
-    function validateId(IdCheck) {
+    function validateId(idCheck) {
         var regExp = /^(?:[a-z][a-z0-9]{5,19}|[0-9][a-z0-9]{5,19})$/i;
-        return regExp.test(IdCheck);
+        return regExp.test(idCheck);
     }
 
 
     $('#id').on('keyup', function () { /** 타자치면서 검사 **/
-        var IdCheck = $('#id').val();
-        var IdValid = validateId(IdCheck);
-        if (IdValid) {
-            $('#IdCheckResult').data("result", 1);
-            $('#IdCheckResult').data('IdResult', 0);
-            $('#IdCheckResult').text("아이디 확인버튼을 눌러주세요.")
+        var idCheck = $('.input_id').val();
+        var idValid = validateId(idCheck);
+        if (idValid) {
+            $('#idCheckResult').data("result", 1);
+            $('#idCheckResult').data('IdResult', 0);
+            $('#idCheckResult').text("아이디 확인버튼을 눌러주세요.")
         }else {
-            $('#IdCheckResult').data("result", 0);
-            $('#IdCheckResult').text("영문자로 시작하며 숫자 6~20자를 이용해주세요");
+            $('#idCheckResult').data("result", 0);
+            $('#idCheckResult').text("영문자로 시작하며 숫자 6~20자를 이용해주세요");
             return;
         }
 
@@ -59,25 +59,26 @@
 
 
     function fn_idCheck(){
-        var IdCheck = $('#id').val();
+        var ownerId = $('.input_id').val();
+        console.log(ownerId);
 
-        if ($('#IdCheckResult').data("result") === 1) {
+        if ($('#idCheckResult').data("result") === 1) {
 
             $.ajax({
-                url: "/animal/EmailCheck",
+                url: "/animal/emailCheck",
                 type: "GET",
-                data: {IdCheck: IdCheck},
+                data: {ownerId: ownerId},
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
 
                     if (data == false) {
-                        $('#IdCheckResult').data('IdResult', 0);
-                        $('#IdCheckResult').text("중복된 아이디 입니다.")
+                        $('#idCheckResult').data('IdResult', 0);
+                        $('#idCheckResult').text("중복된 아이디 입니다.")
                         return;
                     } else {
-                        $('#IdCheckResult').data("IdResult", 1);
-                        $('#IdCheckResult').text("사용 가능한 아이디 입니다.");
+                        $('#idCheckResult').data("IdResult", 1);
+                        $('#idCheckResult').text("사용 가능한 아이디 입니다.");
                     }
                 },
                 error: function (request, status, error) {
@@ -92,32 +93,33 @@
     /*************************************** 아이디 정규식 끝 ***********************************************/
 
     /*************************************** 이메일 정규식 검사 *********************************************/
-    function validateEmail(EmailCheck) {
+    function validateEmail(emailCheck) {
         var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        return emailRegex.test(EmailCheck);
+        return emailRegex.test(emailCheck);
     }
 
     $('#em').on('keyup', function () { /** 타자치면서 검사 **/
-        var EmailCheck = $('#em').val();
-        var EmailValid = validateEmail(EmailCheck);
-        if (EmailValid) {
-            $('#EmailCheckResult').data("result", 1);
-            $('#EmailCheckResult').data('EmailResult', 0);
-            $('#EmailCheckResult').text("이메일 확인버튼을 눌러주세요.")
+        var emailCheck = $('#em').val();
+        var emailValid = validateEmail(emailCheck);
+        if (emailValid) {
+            $('#emailCheckResult').data("result", 1);
+            $('#emailCheckResult').data('EmailResult', 0);
+            $('#emailCheckResult').text("이메일 확인버튼을 눌러주세요.")
         }else {
-            $('#EmailCheckResult').data("result", 0);
-            $('#EmailCheckResult').text("이메일을 입력 해주세요");
+            $('#emailCheckResult').data("result", 0);
+            $('#emailCheckResult').text("이메일을 입력 해주세요");
             return;
         }
 
     });
 
-    function fn_EmailCheck(){
+    function fn_emailCheck(){
         var email = $('#em').val();
+        console.log(email);
 
-        if ($('#EmailCheckResult').data("result") === 1) {
+        if ($('#emailCheckResult').data("result") === 1) {
             $.ajax({
-                url: "/animal/EmailCheck",
+                url: "/animal/emailCheck",
                 type: "GET",
                 data: {email: email},
                 dataType: "json",
@@ -125,13 +127,13 @@
                     console.log(data);
 
                     if (data == false) {
-                        $('#EmailCheckResult').data('EmailResult', 0);
-                        $('#EmailCheckResult').text("중복된 이메일 입니다.")
+                        $('#emailCheckResult').data('EmailResult', 0);
+                        $('#emailCheckResult').text("중복된 이메일 입니다.")
 
                         return;
                     } else {
-                        $('#EmailCheckResult').data("EmailResult", 1);
-                        $('#EmailCheckResult').text("사용 가능한 이메일 입니다.");
+                        $('#emailCheckResult').data("EmailResult", 1);
+                        $('#emailCheckResult').text("사용 가능한 이메일 입니다.");
                     }
                 },
                 error: function (request, status, error) {
@@ -154,14 +156,14 @@
 
     $('#pw').on('keyup', function () {
         /** 타자치면서 검사 **/
-        var IdCheck = $('#pw').val();
-        var PasswordValid = isPassword(IdCheck);
-        if (PasswordValid) {
-            $('#PwCheckResult').data("result", 1);
-            $('#PwCheckResult').text("");
+        var idCheck = $('#pw').val();
+        var passwordValid = isPassword(idCheck);
+        if (passwordValid) {
+            $('#pwCheckResult').data("result", 1);
+            $('#pwCheckResult').text("");
         } else {
-            $('#PwCheckResult').data("result", 0);
-            $('#PwCheckResult').text("8 ~ 16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
+            $('#pwCheckResult').data("result", 0);
+            $('#pwCheckResult').text("8 ~ 16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
             return;
         }
     });
@@ -170,11 +172,11 @@
        var pw = $('#pw').val();
        var pw2 = $('#pw2').val();
        if (pw == pw2){
-           $('#PwCheckResult2').data("result", 1);
-           $('#PwCheckResult2').text("");
+           $('#pwCheckResult2').data("result", 1);
+           $('#pwCheckResult2').text("");
        } else {
-           $('#PwCheckResult2').data("result", 0);
-           $('#PwCheckResult2').text("비밀번호를 확인 해주세요");
+           $('#pwCheckResult2').data("result", 0);
+           $('#pwCheckResult2').text("비밀번호를 확인 해주세요");
        }
     });
     /************************************** 비밀번호 정규식 끝 ********************************************/
@@ -210,33 +212,32 @@
             var userPetId = $('#pi');       // 사용자 동물 고유번호
 
 
-            // if (!userid.val() || $('#IdCheckResult').data("result") === 0 || $('#IdCheckResult').data("IdResult") === 0) {
-            //     alert("아이디를 확인 해주세요.")
-            //     userid.focus();
-            //     e.preventDefault();
-            //     return;
-            // } else if (!userPassword.val() || $('#PwCheckResult2').data("result") === 0) {
-            //     userPassword.focus();
-            //     e.preventDefault();
-            //     return;
-            // } else if (!userEmail.val() || $('#EmailCheckResult').data("EmailResult") === 0 || $('#EmailCheckResult').data("result") === 0) {
-            //     alert("이메일을 확인 해주세요.")
-            //     userEmail.focus();
-            //     e.preventDefault();
-            //     return;
-            // } else
+            if (!userid.val() || $('#idCheckResult').data("result") === 0 || $('#idCheckResult').data("IdResult") === 0) {
+                alert("아이디를 확인 해주세요.")
+                userid.focus();
+                e.preventDefault();
+                return;
+            } else if (!userPassword.val() || $('#pwCheckResult2').data("result") === 0) {
+                userPassword.focus();
+                e.preventDefault();
+                return;
+            } else if (!userEmail.val() || $('#emailCheckResult').data("EmailResult") === 0 || $('#emailCheckResult').data("result") === 0) {
+                alert("이메일을 확인 해주세요.")
+                userEmail.focus();
+                e.preventDefault();
+                return;
+            } else
                 if (!userPhoneNum.val() || $('#pn').data("result") === 0){
                 userPhoneNum.focus();
                 e.preventDefault();
                 return;
-            // } else if (!userPetId.val()) {
-            //     userPetId.focus();
-            //     e.preventDefault();
-            //     return;
+            } else if (!userPetId.val()) {
+                userPetId.focus();
+                e.preventDefault();
+                return;
             } else if (valid) {
                 alert("회원가입이 완료 되었습니다.")
-                // $(this).submit();
-                // $("#joinFrom").submit();
+                $("#joinFrom").submit();
             }
         }
 </script>

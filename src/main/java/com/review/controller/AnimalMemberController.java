@@ -2,6 +2,7 @@ package com.review.controller;
 
 import com.review.dto.AnimalMemberDTO;
 import com.review.service.AnimalService;
+import com.review.util.Pbkdf2PasswordEncoderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -23,15 +24,17 @@ public class AnimalMemberController {
 
     /**************************  회원 가입  ********************************/
     @GetMapping("/animal/signup")
-    public String SignupScreenGet(){
+    public String signupScreenGet(){
         log.info("## 회원가입 화면 ##");
         return "/animal/ownerSignupScreen";
     }
     @PostMapping("/animal/signup")
-    public String PostSignupScreen(AnimalMemberDTO animalDTO){
-        System.out.println("## animalDTO = " + animalDTO);
-        int SignupResult = as.PostSignupScreen(animalDTO);
+    public String postSignupScreen(AnimalMemberDTO animalDTO){
 
+        Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
+
+        animalDTO.setPassword(pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.encode(animalDTO.getPassword()));
+        int SignupResult = as.postSignupScreen(animalDTO);
         if (SignupResult > 0){
             return "/animal/login";
         }else {
@@ -42,20 +45,29 @@ public class AnimalMemberController {
 
     /***********************  로그인  & 로그아웃 ***************************/
     @GetMapping("/animal/login")
-    public String MemberLogin(){
+    public String memberLogin(){
         log.info(" 로그인 화면 ");
         return "/animal/login";
     }
     
     @PostMapping("/animal/login")
-    public String MemberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request){
-        HttpSession session = request.getSession();
+    public String memberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request){
 
-        animalDTO = as.UserVerification(animalDTO);
+        AnimalMemberDTO dbDto = as.userVerification(animalDTO);
+        boolean loginResult = false;
+        if (dbDto != null){
+            Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
+            if (pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder
+                    .matches(animalDTO.getPassword(), dbDto.getPassword())){
+                loginResult = true;
+            }
+        }
+
+        HttpSession session = request.getSession();
         if (animalDTO != null) {
             session.setAttribute("loginId", animalDTO.getOwnerId());
             log.info("로그인 성공");
-            return "redirect:/animal/board/evaluation";
+            return "redirect:/animal/reviewList";
         } else {
             log.info("로그인 실패");
             return "/animal/login";
@@ -64,7 +76,7 @@ public class AnimalMemberController {
 
     /** 로그아웃 **/
     @RequestMapping("/animal/logout")
-    public String MemberLogout(HttpServletRequest request){
+    public String memberLogout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session != null){
             session.invalidate();
@@ -75,19 +87,20 @@ public class AnimalMemberController {
 
     /*********************  이메일 & 아이디 체크  **************************/
 
-    @RequestMapping("/animal/EmailCheck")
+    @RequestMapping("/animal/emailCheck")
     @ResponseBody
-    public boolean EmailValidCheck(@RequestParam(required = false) String email,
-                                   @RequestParam(required = false) String IdCheck){
+    public boolean emailValidCheck(@RequestParam(required = false) String email,
+                                   @RequestParam(required = false) String ownerId){
+        System.out.println("ownerId = " + ownerId);
 
         /** 아이디와 이메일을 맵에 넣어서 유효성체크 **/
         Map<String, Object> valid = new HashMap<>();
         valid.put("email", email);
-        valid.put("IdCheck", IdCheck);
+        valid.put("ownerId", ownerId);
 
-        boolean EmailCheckReturn = as.JoinEmailCheck(valid);
+        boolean emailCheckReturn = as.joinEmailCheck(valid);
 
-        return EmailCheckReturn;
+        return emailCheckReturn;
     }
     /************************************************************************************************************/
 

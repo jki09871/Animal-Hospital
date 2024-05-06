@@ -33,4 +33,11 @@ public class AnimalRepository {
     }
 
 
+    public AnimalMemberDTO myInformation(Object ownerId) {
+        return sql.selectOne("animal.myInfo", ownerId);
+    }
+
+    public void editInfo(AnimalMemberDTO animalDTO) {
+        sql.update("animal.editInfo", animalDTO);
+    }
 }

@@ -47,4 +47,11 @@ public class AnimalService {
     }
     /*****************************************************/
 
+    public AnimalMemberDTO myInformation(Object ownerId) {
+       return ar.myInformation(ownerId);
+    }
+
+    public void editInfo(AnimalMemberDTO animalDTO) {
+        ar.editInfo(animalDTO);
+    }
 }

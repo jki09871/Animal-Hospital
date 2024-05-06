@@ -9,7 +9,7 @@
         INSERT INTO ANIMAL_OWNER
         (
         OWNER_ID,            /** 회원 아이디 **/
-        PASSWORD,             /** 회원 비밀번호 **/
+        PASSWORD,            /** 회원 비밀번호 **/
         EMAIL,               /** 회원 이메일 **/
         PHONENUMBER,         /** 회원 핸드폰번호 **/
         PETID                /** 동물 고유번호 **/
@@ -27,10 +27,10 @@
     <select id="login" parameterType="com.review.dto.AnimalMemberDTO" resultType="com.review.dto.AnimalMemberDTO">
         SELECT
             OWNER_ID,            /** 회원 아이디 **/
-            PASSWORD,      /** 회원 비밀번호 **/
-            EMAIL,         /** 회원 이메일 **/
-            PHONENUMBER,   /** 회원 핸드폰번호 **/
-            PETID               /** 동물 고유번호 **/
+            PASSWORD,            /** 회원 비밀번호 **/
+            EMAIL,               /** 회원 이메일 **/
+            PHONENUMBER,         /** 회원 핸드폰번호 **/
+            PETID                /** 동물 고유번호 **/
         FROM ANIMAL_OWNER
         WHERE OWNER_ID = #{ownerId}
     </select>
@@ -48,4 +48,19 @@
         </if>
     </select>
 
+    <select id="myInfo" resultType="com.review.dto.AnimalMemberDTO">
+    select
+        OWNER_ID,            /** 회원 아이디 **/
+        EMAIL,               /** 회원 이메일 **/
+        PHONENUMBER,         /** 회원 핸드폰번호 **/
+        PETID                /** 동물 고유번호 **/
+    from animal_owner
+    where OWNER_Id = #{ownerId}
+    </select>
+
+    <select id="editInfo" parameterType="com.review.dto.AnimalMemberDTO">
+        UPDATE ANIMAL_OWNER
+        SET EMAIL = #{email}, PHONENUMBER =  #{phoneNumber}, PETID = #{petId}
+        WHERE OWNER_ID = #{ownerId}
+    </select>
 </mapper>

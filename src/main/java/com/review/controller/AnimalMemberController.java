@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,4 +107,31 @@ public class AnimalMemberController {
     /************************************************************************************************************/
 
 
+    @GetMapping("/animal/myInfo")
+    public String myInformation(Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        Object ownerId = session.getAttribute("loginId");
+
+        model.addAttribute("animal",as.myInformation(ownerId));
+        return "/animal/myInfo";
+    }
+    @GetMapping("/animal/editInfo")
+    public String editInfo(AnimalMemberDTO animalDTO, Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        Object ownerId = session.getAttribute("loginId");
+        model.addAttribute("animal",as.myInformation(ownerId));
+
+        return "/animal/editInfo";
+    }
+
+    @PostMapping("/animal/editInfo")
+    public String editInfo(AnimalMemberDTO animalDTO, HttpServletRequest request){
+
+        as.editInfo(animalDTO);
+        as.myInformation(animalDTO.getOwnerId());
+
+        return "redirect:/animal/myInfo";
+    }
 }

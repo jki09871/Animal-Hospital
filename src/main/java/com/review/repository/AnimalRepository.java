@@ -1,11 +1,14 @@
 package com.review.repository;
 
 import com.review.dto.AnimalMemberDTO;
+import com.review.dto.AnimalReviewDTO;
+import com.review.paging.PagingCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -28,4 +31,6 @@ public class AnimalRepository {
 
         return sql.selectOne("animal.emailCheck", valid);
     }
+
+
 }

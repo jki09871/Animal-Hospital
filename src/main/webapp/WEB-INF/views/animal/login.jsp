@@ -5,8 +5,8 @@
 </head>
 <body>
 <form action="/animal/login" method="post">
-  <input type="text" name="ownerId" placeholder="아이디">
-  <input type="password" name="password" placeholder="비밀번호">
+  <input type="text" name="ownerId" placeholder="아이디" autocomplete="off">
+  <input type="password" name="password" placeholder="비밀번호" autocomplete="off">
   <input type="submit" value="로그인"><br>
 
 </form>

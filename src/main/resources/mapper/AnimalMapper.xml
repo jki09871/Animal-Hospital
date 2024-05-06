@@ -32,7 +32,7 @@
             PHONENUMBER,   /** 회원 핸드폰번호 **/
             PETID               /** 동물 고유번호 **/
         FROM ANIMAL_OWNER
-        WHERE OWNER_ID = #{ownerId} AND PASSWORD = #{password}
+        WHERE OWNER_ID = #{ownerId}
     </select>
 
     <select id="emailCheck" parameterType="hashMap" resultType="int">

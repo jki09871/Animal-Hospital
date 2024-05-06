@@ -1,5 +1,6 @@
 package com.review.util;
 
+import com.review.dto.AnimalReviewDTO;
 import com.review.dto.BoardDTO;
 import com.review.repository.BoardRepository;
 import lombok.Setter;
@@ -21,7 +22,7 @@ public class FileUtils {
     private BoardRepository repository;
     private static final String filePath = "C:\\mp\\file\\"; //파일이 저장될 위치
 
-    public List<Map<String, Object>> parseInsertFileInfo(BoardDTO boardDTO, MultipartHttpServletRequest mpRequest) throws IOException {
+    public List<Map<String, Object>> parseInsertFileInfo(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest) throws IOException {
 
         Iterator<String> iterator = mpRequest.getFileNames();
 
@@ -33,7 +34,7 @@ public class FileUtils {
         List<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> listMap = null;
 
-        int bno = boardDTO.getBno();
+        int reviewNum = reviewDTO.getReviewNum();
 
         File file = new File(filePath);
 
@@ -59,7 +60,7 @@ public class FileUtils {
 
                 multipartFile.transferTo(file);
                 listMap = new HashMap<>();
-                listMap.put("BNO", bno);
+                listMap.put("reviewNum", reviewNum);
                 listMap.put("ORG_FILE_NAME", originalFileName);
                 listMap.put("STORED_FILE_NAME", storedFileName);
                 listMap.put("FILE_SIZE", multipartFile.getSize());
@@ -73,9 +74,9 @@ public class FileUtils {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-    public void processFileInformation(BoardDTO board, MultipartHttpServletRequest mpRequest) {
+    public void processFileInformation(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest) {
         try {
-            List<Map<String, Object>> list = parseInsertFileInfo(board, mpRequest);
+            List<Map<String, Object>> list = parseInsertFileInfo(reviewDTO, mpRequest);
             int size = list.size();
             for (int i = 0; i < size; i++) {
                 repository.insertFile(list.get(i));

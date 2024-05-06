@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="review">
 
-    <insert id="reviewScreen" parameterType="com.review.dto.AnimalReviewDTO">
+    <insert id="reviewScreen" parameterType="com.review.dto.AnimalReviewDTO"  useGeneratedKeys="true" keyProperty="reviewNum">
         INSERT INTO MEDICAL_REVIEW_BAORD
         (
             TITLE ,       -- 리뷰 제목 --
@@ -24,44 +24,60 @@
 
     <select id="findAll" resultType="com.review.dto.AnimalReviewDTO">
         SELECT
-            REVIEW_NUM,                         /** 등록 번호 **/
+            REVIEWNUM,                          /** 등록 번호 **/
             TITLE,                              /** 제목 **/
             CONTENT,                            /** 내용 **/
             WRITER,                             /** 작성자 **/
             REGDATE,                            /** 작성 시간 **/
-            UPDATETATE                          /** 수정 시간 **/
+            UPDATETDATE                         /** 수정 시간 **/
             FROM MEDICAL_REVIEW_BAORD
-        ORDER BY REVIEW_NUM DESC;
+        ORDER BY REVIEWNUM DESC
     </select>
 
     <select id="read" parameterType="int" resultType="com.review.dto.AnimalReviewDTO">
         SELECT
-            REVIEW_NUM,                         /** 등록 번호 **/
+            REVIEWNUM,                          /** 등록 번호 **/
             TITLE,                              /** 제목 **/
             CONTENT,                            /** 내용 **/
             WRITER,                             /** 작성자 **/
             REGDATE                             /** 작성 시간 **/
         FROM MEDICAL_REVIEW_BAORD
-        WHERE REVIEW_NUM = #{reviewNum}
+        WHERE REVIEWNUM = #{reviewNum}
     </select>
 
     <update id="update" parameterType="com.review.dto.AnimalReviewDTO">
         UPDATE MEDICAL_REVIEW_BAORD
-        SET UPDATETATE
+        SET UPDATETDATE = CURRENT_TIMESTAMP
         <if test="title != null and title != '' ">
             , TITLE =  #{title}
         </if>
         <if test="content != null and content != '' ">
             , CONTENT =  #{content}
         </if>
-        WHERE REVIEW_NUM = #{reviewNum}
-        <if test="writer != null and writer != '' ">
-            AND  WRITER =  #{writer}
-        </if>
+        WHERE REVIEWNUM = #{reviewNum}
     </update>
 
     <delete id="delete" parameterType="int">
         DELETE FROM MEDICAL_REVIEW_BAORD
-        where REVIEW_NUM = #{reviewNum}
+        where REVIEWNUM = #{reviewNum}
 </delete>
+
+    <select id="paging" resultType="com.review.dto.AnimalReviewDTO">
+        select * from (
+            SELECT
+            REVIEWNUM,                          /** 등록 번호 **/
+            TITLE,                              /** 제목 **/
+            CONTENT,                            /** 내용 **/
+            WRITER,                             /** 작성자 **/
+            REGDATE,                            /** 작성 시간 **/
+            UPDATETDATE
+            FROM MEDICAL_REVIEW_BAORD
+            ORDER BY REVIEWNUM DESC
+                          ) as T1
+            LIMIT #{skip}, #{amount}
+    </select>
+
+    <select id="postTotal" resultType="int">
+        SELECT COUNT(*) FROM MEDICAL_REVIEW_BAORD
+    </select>
 </mapper>

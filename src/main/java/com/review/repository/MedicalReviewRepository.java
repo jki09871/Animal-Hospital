@@ -1,6 +1,7 @@
 package com.review.repository;
 
 import com.review.dto.AnimalReviewDTO;
+import com.review.paging.PagingCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Log4j
@@ -20,12 +22,11 @@ public class MedicalReviewRepository {
 
 
     public void reviewWrite(AnimalReviewDTO reviewDTO) {
-        System.out.println("reviewDTO = " + reviewDTO);
         sql.insert("review.reviewScreen", reviewDTO);
     }
 
-    public List<AnimalReviewDTO> reviewList(AnimalReviewDTO reviewDTO) {
-        return sql.selectList("review.findAll", reviewDTO);
+    public List<AnimalReviewDTO> reviewList() {
+        return sql.selectList("review.findAll");
     }
 
     public AnimalReviewDTO information(int reviewNum) {
@@ -38,5 +39,30 @@ public class MedicalReviewRepository {
 
     public void deleteUsingNum(int reviewNum) {
         sql.delete("review.delete", reviewNum);
+    }
+
+    public List<AnimalReviewDTO> getListPaging(PagingCriteria pagingCriteria){
+        return sql.selectList("review.paging", pagingCriteria);
+    }
+
+    public int postTotal(){
+        return sql.selectOne("review.postTotal");
+    }
+
+    public void insertFile(Map<String, Object> map) {
+        sql.insert("board.insertFile", map);
+    }
+
+    public List<Map<String, Object>> selectFileList(int reviewNum){
+        return sql.selectList("board.selectFileList", reviewNum);
+    }
+
+    public Map<String, Object> selectFileInfo(Map<String, Object> map){
+        return sql.selectOne("board.selectFileInfo", map);
+    }
+
+
+    public void removeFile(int fileNo) {
+        sql.delete("board.fileRemove", fileNo);
     }
 }

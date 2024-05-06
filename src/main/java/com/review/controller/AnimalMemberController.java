@@ -26,7 +26,7 @@ public class AnimalMemberController {
     @GetMapping("/animal/signup")
     public String signupScreenGet(){
         log.info("## 회원가입 화면 ##");
-        return "/animal/ownerSignupScreen";
+        return "/animal/ownerSignup";
     }
     @PostMapping("/animal/signup")
     public String postSignupScreen(AnimalMemberDTO animalDTO){
@@ -38,7 +38,7 @@ public class AnimalMemberController {
         if (SignupResult > 0){
             return "/animal/login";
         }else {
-         return "/animal/ownerSignupScreen";
+         return "/animal/ownerSignup";
         }
     }
     /************************************************************************************************************/
@@ -54,6 +54,7 @@ public class AnimalMemberController {
     public String memberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request){
 
         AnimalMemberDTO dbDto = as.userVerification(animalDTO);
+        System.out.println("dbDto = " + dbDto);
         boolean loginResult = false;
         if (dbDto != null){
             Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
@@ -64,7 +65,7 @@ public class AnimalMemberController {
         }
 
         HttpSession session = request.getSession();
-        if (animalDTO != null) {
+        if (loginResult) {
             session.setAttribute("loginId", animalDTO.getOwnerId());
             log.info("로그인 성공");
             return "redirect:/animal/reviewList";

@@ -30,5 +30,19 @@
 		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/animal/login"/>
+			<exclude-mapping path="/animal/reviewList/**"/>
+			<exclude-mapping path="/animal/viewDetails/**"/>
+			<exclude-mapping path="/"/>
+			<exclude-mapping path="/animal/logout"/>
+			<exclude-mapping path="/animal/signup"/>
+			<exclude-mapping path="/animal/emailCheck"/>
+			<exclude-mapping path="/board/msg"/>
+			<beans:bean class="com.review.interceptor.LogInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans:beans>

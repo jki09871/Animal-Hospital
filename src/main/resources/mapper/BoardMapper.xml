@@ -50,7 +50,7 @@
         )VALUES
             (
                 #{FILE_NO}            /* 파일 번호*/
-            , #{BNO}                /* 보드 BNO*/
+            , #{reviewNum}                /* 보드 BNO*/
             , #{ORG_FILE_NAME}      /* 진짜 파일 이름*/
             , #{STORED_FILE_NAME}   /* 랜덤 파일 이름*/
             , #{FILE_SIZE}          /* 파일 사이즈*/
@@ -68,7 +68,7 @@
              , STORED_FILE_NAME                       /* 랜덤 파일 이름*/
              , BNO                                    /* 보드 BNO*/
         FROM MP_FILE
-        WHERE BNO = #{BNO}
+        WHERE BNO = #{reviewNum}
           AND DEL_GB = 'N'
         ORDER BY FILE_NO ASC
     </select>

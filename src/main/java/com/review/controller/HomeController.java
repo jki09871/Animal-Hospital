@@ -113,7 +113,7 @@ public class HomeController {
 
 		String fName = req.getParameter("fName");
 
-		System.out.println("fName@@@@@@@@@@@@@@@@@@@@@@@@@ = " + fName);
+		System.out.println("fName = " + fName);
 
 
 		try {

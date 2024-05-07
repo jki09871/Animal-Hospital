@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Pet">
+
+    <insert id="infoSave" parameterType="com.review.dto.PetDTO">
+        INSERT INTO ANIMAL_TABLE
+            (
+            OWNER_Id,
+            PET_ID,
+             NAME,
+             AGE,
+             SIGNIFICANT
+             )
+             VALUES
+             (
+              #{ownerId},
+              #{pet_Id},
+              #{name},
+              #{age},
+              #{significant}
+              )
+    </insert>
+
+    <select id="PetInfo" parameterType="String" resultType="com.review.dto.PetDTO">
+        SELECT
+            PET_Id,
+            NAME,
+            AGE,
+            SIGNIFICANT
+        FROM ANIMAL_TABLE
+        WHERE OWNER_Id = #{ownerId}
+    </select>
+
+</mapper>

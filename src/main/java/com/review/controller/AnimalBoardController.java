@@ -40,6 +40,8 @@ public class AnimalBoardController {
 
     }
 
+    /************************************************  게시물 리스트  ************************************************/
+
     @RequestMapping("/animal/reviewList")
     public String animalReviewList(Model model, PagingCriteria pagingCriteria, HttpServletRequest request){
         log.info("리뷰 게시판");
@@ -53,7 +55,9 @@ public class AnimalBoardController {
         model.addAttribute("pageMaker", pageMaker);
         return "/animal/board/rvfindAll";
     }
+    /************************************************************************************************************/
 
+    /************************************************  게시물 작성  ************************************************/
     @GetMapping("/animal/review")
     public String medicalReview(){
         return "/animal/board/evaluation";
@@ -69,7 +73,9 @@ public class AnimalBoardController {
 
         return "redirect:/animal/reviewList";
     }
-    
+    /************************************************************************************************************/
+
+    /***********************************************  게시물 상세보기 **********************************************/
     @GetMapping("/animal/viewDetails")
     public String viewDetails(AnimalReviewDTO reviewDTO, Model model, PagingCriteria criteria, HttpServletRequest request){
 
@@ -85,7 +91,9 @@ public class AnimalBoardController {
 
         return "/animal/board/viewDetails";
     }
+    /************************************************************************************************************/
 
+    /************************************************  게시물 수정 ************************************************/
     @GetMapping("/animal/correction")
     public String correctionBefore(AnimalReviewDTO reviewDTO, Model model, PagingCriteria criteria, HttpServletRequest request){
 
@@ -118,7 +126,9 @@ public class AnimalBoardController {
         return "redirect:/animal/viewDetails";
 
     }
+    /************************************************************************************************************/
 
+    /************************************************  게시물 삭제  ************************************************/
     @PostMapping("/animal/deletePost")
     public String deletePost(@RequestParam("reviewNum") int reviewNum,Model model, HttpServletRequest request, RedirectAttributes rttr){
         service.deleteUsingNum(reviewNum);
@@ -129,7 +139,9 @@ public class AnimalBoardController {
         return "redirect:/animal/reviewList";
 
     }
+    /************************************************************************************************************/
 
+    /************************************************  파일 다운  ************************************************/
     @RequestMapping("/animal/fileDown")
     public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws IOException {
         Map<String, Object> resultMap = service.selectFileInfo(map);
@@ -147,11 +159,14 @@ public class AnimalBoardController {
         response.getOutputStream().close();
 
     }
+    /************************************************************************************************************/
 
+    /************************************************  파일 삭제  ************************************************/
     @RequestMapping("/animal/fileRemove")
     @ResponseBody
     public void deleteFile(@RequestParam("fileNo") int fileNo, @RequestParam("reviewNum") int reviewNum){
         System.out.println("삭제한 FILE_NO은 " + reviewNum + "번 입니다.");
         service.deleteFile(fileNo, reviewNum);
     }
+    /**********************************************************************************************************/
 }

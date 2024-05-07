@@ -14,7 +14,7 @@
         )
         values
             (
-                #{memberEmail}
+            #{memberEmail}
             ,#{memberPassword}
             ,#{memberName}
             ,#{memberAge}

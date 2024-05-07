@@ -23,11 +23,11 @@ public class AnimalMemberController {
     @Setter(onMethod_ = @Autowired)
     private AnimalService as;
 
-    /**************************  회원 가입  ********************************/
+    /************************************************  회원 가입  ************************************************/
     @GetMapping("/animal/signup")
     public String signupScreenGet(){
         log.info("## 회원가입 화면 ##");
-        return "/animal/ownerSignup";
+        return "/animal/owner/ownerSignup";
     }
     @PostMapping("/animal/signup")
     public String postSignupScreen(AnimalMemberDTO animalDTO){
@@ -37,18 +37,18 @@ public class AnimalMemberController {
         animalDTO.setPassword(pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.encode(animalDTO.getPassword()));
         int SignupResult = as.postSignupScreen(animalDTO);
         if (SignupResult > 0){
-            return "/animal/login";
+            return "/animal/owner/login";
         }else {
-         return "/animal/ownerSignup";
+         return "/animal/owner/ownerSignup";
         }
     }
     /************************************************************************************************************/
 
-    /***********************  로그인  & 로그아웃 ***************************/
+    /*******************************************  로그인  & 로그아웃 **********************************************/
     @GetMapping("/animal/login")
     public String memberLogin(){
         log.info(" 로그인 화면 ");
-        return "/animal/login";
+        return "/animal/owner/login";
     }
     
     @PostMapping("/animal/login")
@@ -72,7 +72,7 @@ public class AnimalMemberController {
             return "redirect:/animal/reviewList";
         } else {
             log.info("로그인 실패");
-            return "/animal/login";
+            return "/animal/owner/login";
         }
     }
 
@@ -87,7 +87,7 @@ public class AnimalMemberController {
     }
     /************************************************************************************************************/
 
-    /*********************  이메일 & 아이디 체크  **************************/
+    /*******************************************  이메일 & 아이디 체크  ********************************************/
 
     @RequestMapping("/animal/emailCheck")
     @ResponseBody
@@ -106,7 +106,7 @@ public class AnimalMemberController {
     }
     /************************************************************************************************************/
 
-
+    /******************************************  사용자 정보 보기  ************************************************/
     @GetMapping("/animal/myInfo")
     public String myInformation(Model model, HttpServletRequest request){
 
@@ -114,8 +114,11 @@ public class AnimalMemberController {
         Object ownerId = session.getAttribute("loginId");
 
         model.addAttribute("animal",as.myInformation(ownerId));
-        return "/animal/myInfo";
+        return "/animal/owner/myInfo";
     }
+    /************************************************************************************************************/
+
+    /******************************************  사용자 정보 수정  ************************************************/
     @GetMapping("/animal/editInfo")
     public String editInfo(AnimalMemberDTO animalDTO, Model model, HttpServletRequest request){
 
@@ -123,7 +126,7 @@ public class AnimalMemberController {
         Object ownerId = session.getAttribute("loginId");
         model.addAttribute("animal",as.myInformation(ownerId));
 
-        return "/animal/editInfo";
+        return "/animal/owner/editInfo";
     }
 
     @PostMapping("/animal/editInfo")
@@ -132,6 +135,7 @@ public class AnimalMemberController {
         as.editInfo(animalDTO);
         as.myInformation(animalDTO.getOwnerId());
 
-        return "redirect:/animal/myInfo";
+        return "/animal/owner/myInfo";
     }
+    /**********************************************************************************************************/
 }

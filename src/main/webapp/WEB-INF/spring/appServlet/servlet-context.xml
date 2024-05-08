@@ -30,6 +30,14 @@
 		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 
+	<!-- 파라미터 로그 인터셉터  -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<beans:bean id="loggerInterceptor" class="com.review.interceptor.ParameterLogInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mapping path="/**"/>

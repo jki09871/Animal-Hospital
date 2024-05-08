@@ -23,6 +23,8 @@ import java.util.Map;
 @Log4j
 public class MedicalReviewService {
 
+    static final String filePath = "c:\\mp\\file\\";
+
     @Setter(onMethod_ = @Autowired)
     private MedicalReviewRepository repository;
 
@@ -57,7 +59,7 @@ public class MedicalReviewService {
 
         if (list.size() > 0){
             for (int i = 0; i < list.size(); i++){
-                File file = new File("c:\\mp\\file\\" + list.get(i).get("STORED_FILE_NAME"));
+                File file = new File(filePath + list.get(i).get("STORED_FILE_NAME"));
 
                 if (file.delete()){
                     repository.removeFile((Integer) list.get(i).get("FILE_NO"));
@@ -92,7 +94,7 @@ public class MedicalReviewService {
         Map<String, Object> fileNum2 = repository.selectFileInfo(fileNum);
 
         if (fileNum2.get("STORED_FILE_NAME") != null){
-            File file = new File("c:\\mp\\file\\" + fileNum2.get("STORED_FILE_NAME"));
+            File file = new File(filePath + fileNum2.get("STORED_FILE_NAME"));
 
             if (file.delete()){
                 System.out.println(fileNo);

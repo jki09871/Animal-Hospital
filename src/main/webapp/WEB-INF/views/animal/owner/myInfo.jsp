@@ -9,7 +9,7 @@
         <table>
             <tr>
                 <th>아이디</th>
-                <td>${sessionScope.loginId}</td>
+                <td>${animal.owner_Id}</td>
             </tr>
             <tr>
                 <th>이메일</th>
@@ -18,10 +18,6 @@
             <tr>
                 <th>핸드폰 번호</th>
                 <td>${animal.phoneNumber}</td>
-            </tr>
-            <tr>
-                <th>동물 아이디</th>
-                <td name="petId">${animal.petId}</td>
             </tr>
         </table>
         <button type="button" onclick="fnDynamic('E');">정보수정</button>

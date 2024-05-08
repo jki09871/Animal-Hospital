@@ -6,21 +6,19 @@
 
     <insert id="signup" parameterType="com.review.dto.AnimalMemberDTO">
         /** 회원 가입 **/
-        INSERT INTO ANIMAL_OWNER
+        INSERT INTO Owner_Tbl
         (
         OWNER_ID,            /** 회원 아이디 **/
         PASSWORD,            /** 회원 비밀번호 **/
         EMAIL,               /** 회원 이메일 **/
-        PHONENUMBER,         /** 회원 핸드폰번호 **/
-        PETID                /** 동물 고유번호 **/
+        PHONENUMBER         /** 회원 핸드폰번호 **/
         )
         VALUES
         (
-        #{ownerId},
+        #{owner_Id},
         #{password},
         #{email},
         #{phoneNumber},
-        #{petId}
         )
     </insert>
 
@@ -29,16 +27,15 @@
             OWNER_ID,            /** 회원 아이디 **/
             PASSWORD,            /** 회원 비밀번호 **/
             EMAIL,               /** 회원 이메일 **/
-            PHONENUMBER,         /** 회원 핸드폰번호 **/
-            PETID                /** 동물 고유번호 **/
-        FROM ANIMAL_OWNER
-        WHERE OWNER_ID = #{ownerId}
+            PHONENUMBER          /** 회원 핸드폰번호 **/
+        FROM Owner_Tbl
+        WHERE OWNER_ID = #{owner_Id}
     </select>
 
     <select id="emailCheck" parameterType="hashMap" resultType="int">
         SELECT
             COUNT(*)
-        FROM ANIMAL_OWNER
+        FROM Owner_Tbl
         WHERE  1 = 1
         <if test="email != null and email != '' ">
             AND  EMAIL =  #{email}
@@ -52,15 +49,14 @@
     select
         OWNER_ID,            /** 회원 아이디 **/
         EMAIL,               /** 회원 이메일 **/
-        PHONENUMBER,         /** 회원 핸드폰번호 **/
-        PETID                /** 동물 고유번호 **/
-    from animal_owner
+        PHONENUMBER          /** 회원 핸드폰번호 **/
+    from Owner_Tbl
     where OWNER_Id = #{ownerId}
     </select>
 
     <select id="editInfo" parameterType="com.review.dto.AnimalMemberDTO">
-        UPDATE ANIMAL_OWNER
-        SET EMAIL = #{email}, PHONENUMBER =  #{phoneNumber}, PETID = #{petId}
+        UPDATE Owner_Tbl
+        SET EMAIL = #{email}, PHONENUMBER =  #{phoneNumber}
         WHERE OWNER_ID = #{ownerId}
     </select>
 </mapper>

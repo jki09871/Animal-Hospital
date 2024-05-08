@@ -25,4 +25,16 @@ public class PetService {
     public List<PetDTO> getPetInfo(String ownerId) {
         return pr.getPetInfo(ownerId);
     }
+
+    public PetDTO petInfoModify(String pet_Id) {
+        return pr.petINfoModify(pet_Id);
+    }
+
+    public void petInfoUpdate(PetDTO petDTO) {
+        pr.petInfoUpdate(petDTO);
+    }
+
+    public void petInfoDelete(String pet_Id) {
+        pr.petInfoDelete(pet_Id);
+    }
 }

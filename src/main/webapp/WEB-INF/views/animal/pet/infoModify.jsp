@@ -19,17 +19,16 @@
     </style>
 </head>
 <body>
-    <form name="petForm" id="petForm" action="/pet/info/write" method="post">
-        <input type="hidden" name="owner_Id" value="<c:out value="${sessionScope.loginId}"/>">
-
+    <form name="petInfoModify" id="petInfoModify" action="/pet/info/modify" method="post">
+        <input type="hidden" name="owner_Id" value="<c:out value="${pet.owner_Id}"/>">
         <table>
             <tr>
                 <th>강아지 이름</th>
-                <td><input type="text" name="pet_name" id="pet_name" autocomplete="off"></td>
+                <td><input type="text" name="pet_name" id="pet_name" autocomplete="off" value="<c:out value="${pet.pet_name}"/>"></td>
             </tr>
             <tr>
                 <th>강아지 생년월일</th>
-                <td><input type="hidden" name="age" id="age" autocomplete="off">
+                <td><input type="text" name="age" id="age" autocomplete="off" value="<c:out value="${pet.age}"/>">
                     <select id="yearSelect">
                         <option value="">연도</option>
                         <!-- 원하는 연도 범위를 설정하세요 -->
@@ -48,15 +47,16 @@
             </tr>
             <tr>
                 <th>마이크로칩 번호</th>
-                <td><input type="text" name="pet_Id" id="petid" autocomplete="off"></td>
+                <td><input type="text" name="pet_Id" id="pet_Id" autocomplete="off" value="<c:out value="${pet.pet_Id}"/>"></td>
             </tr>
             <tr>
                 <th>특이사항</th>
-                <td><textarea type="text" name="significant" id="significant" autocomplete="off"></textarea></td>
+                <td><textarea name="significant" id="significant" autocomplete="off"><c:out value="${pet.significant}"/></textarea></td>
             </tr>
         </table>
-        <button type="button" id="btnPetInfo" name="btn">작성</button>
-        <button type="button" onClick="history.back();" >취소</button>
+        <button type="button" id="PetUpdate" onclick="fnMultiple('U');" name="btn">수정</button>
+        <button type="button" id="PetDel" onclick="fnMultiple('D');" name="btn" >삭제</button>
+        <button type="button"   onclick="fnMultiple('R');">이전</button>
     </form>
 </body>
 <script>
@@ -87,11 +87,31 @@
         let month = $('#monthSelect').val();
         let day = $('#daySelect').val();
 
-        $('#age').val(year + "-" + month + "-" + day);
-        console.log($('#age').val());
-        console.log($('#pet_name').val());
+        if (year === "" || month === "" || day === "") {
+            $('#age').val($('#age').val());
+        } else {
+            $('#age').val(year + "-" + month + "-" + day);
+        }
+
         $('#petForm').submit();
     });
 
+    let url = '';
+    let form = $('#petInfoModify');
+    function fnMultiple(es){
+        switch (es) {
+            case 'U' :
+                url = "/pet/info/modify";
+                break;
+            case 'D' :
+                url = "/pet/info/delete";
+                break;
+            default :
+                history.back();
+                break;
+        }
+        form.attr('action', url);
+        form.submit();
+    }
 </script>
 </html>

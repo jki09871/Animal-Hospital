@@ -29,12 +29,14 @@
                 <th></th> <!-- 수정 버튼 셀 -->
             </tr>
             <c:forEach var="pet" items="${pet}">
-                <tr>
-                    <td>${pet.name}</td>
+                <tr class="pet_info">
+                    <td>${pet.pet_name}</td>
                     <td>${pet.age}</td>
                     <td>${pet.pet_Id}</td>
                     <td>${pet.significant}</td>
-                    <td><button type="button" onclick="fnDynamic('M');" name="btn">수정</button></td>
+                    <td><button type="button" name="btn">
+                        <a href="/pet/info/modify?pet_Id=${pet.pet_Id}">수정</a>
+                    </button></td>
                 </tr>
             </c:forEach>
         </table>
@@ -49,9 +51,6 @@
     let url = '';
     function fnDynamic(se){
         switch (se) {
-            case 'M' :
-                url = '/pet/info/modify';
-                break;
             case 'C' :
                 url = '/animal/myInfo';
                 break;
@@ -61,12 +60,14 @@
     }
 
     $(document).ready(function (){
-        // td 요소의 내용이 비어있을 경우 뒤로가기
-        if ($("td:first").is(":empty")) {
-            alert("등록된 동물이 없습니다.")
-            window.history.back();
+        // pet_info 클래스를 갖는 요소의 존재 여부 확인
+        if ($('.pet_info').length === 0) {
+            alert("등록된 동물이 없습니다.");
+            // window.history.back();
+            form.attr('action', "/animal/myInfo");
+            form.submit();
         }
-    })
+    });
 
 </script>
 

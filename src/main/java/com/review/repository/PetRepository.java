@@ -25,4 +25,16 @@ public class PetRepository {
     public List<PetDTO> getPetInfo(String ownerId) {
         return sql.selectList("Pet.PetInfo", ownerId);
     }
+
+    public PetDTO petINfoModify(String pet_Id) {
+        return sql.selectOne("Pet.InfoModify", pet_Id);
+    }
+
+    public void petInfoUpdate(PetDTO petDTO) {
+        sql.update("Pet.InfoUpdate", petDTO);
+    }
+
+    public void petInfoDelete(String pet_Id) {
+        sql.delete("Pet.InfoDelete", pet_Id);
+    }
 }

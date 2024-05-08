@@ -46,9 +46,6 @@ public class AnimalBoardController {
     public String animalReviewList(Model model, PagingCriteria pagingCriteria, HttpServletRequest request){
         log.info("리뷰 게시판");
 
-        System.out.println("request.getSession() = " + request.getSession());
-
-
         model.addAttribute("list", service.getListPaging(pagingCriteria));
         int total = service.postTotal();
         PageMakerDTO pageMaker = new PageMakerDTO(pagingCriteria, total);
@@ -80,7 +77,6 @@ public class AnimalBoardController {
     public String viewDetails(AnimalReviewDTO reviewDTO, Model model, PagingCriteria criteria, HttpServletRequest request){
 
         HttpSession session = request.getSession();
-        System.out.println("request = " + session.getAttribute("loginId"));
         AnimalReviewDTO information = service.information(reviewDTO.getReviewNum());
         List<Map<String,Object>> fileList = service.selectFileList(reviewDTO.getReviewNum());
 
@@ -110,7 +106,6 @@ public class AnimalBoardController {
     public String correctionAfter(AnimalReviewDTO reviewDTO, Model model, MultipartHttpServletRequest mpRequest, HttpServletRequest request,
                                   RedirectAttributes rttr){
 
-        System.out.println("reviewDTO = " + reviewDTO);
 
         service.correction(reviewDTO, mpRequest);
 

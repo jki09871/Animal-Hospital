@@ -55,7 +55,6 @@ public class AnimalMemberController {
     public String memberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request){
 
         AnimalMemberDTO dbDto = as.userVerification(animalDTO);
-        System.out.println("dbDto = " + dbDto);
         boolean loginResult = false;
         if (dbDto != null){
             Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
@@ -67,7 +66,7 @@ public class AnimalMemberController {
 
         HttpSession session = request.getSession();
         if (loginResult) {
-            session.setAttribute("loginId", animalDTO.getOwnerId());
+            session.setAttribute("loginId", animalDTO.getOwner_Id());
             log.info("로그인 성공");
             return "redirect:/animal/reviewList";
         } else {
@@ -93,7 +92,6 @@ public class AnimalMemberController {
     @ResponseBody
     public boolean emailValidCheck(@RequestParam(required = false) String email,
                                    @RequestParam(required = false) String ownerId){
-        System.out.println("ownerId = " + ownerId);
 
         /** 아이디와 이메일을 맵에 넣어서 유효성체크 **/
         Map<String, Object> valid = new HashMap<>();
@@ -133,7 +131,7 @@ public class AnimalMemberController {
     public String editInfo(AnimalMemberDTO animalDTO, HttpServletRequest request){
 
         as.editInfo(animalDTO);
-        as.myInformation(animalDTO.getOwnerId());
+        as.myInformation(animalDTO.getOwner_Id());
 
         return "/animal/owner/myInfo";
     }

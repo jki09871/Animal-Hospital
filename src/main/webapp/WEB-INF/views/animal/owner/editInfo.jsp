@@ -15,7 +15,7 @@
         <table>
             <tr>
                 <th>아이디</th>
-                <td><input type="text" name="ownerId" id="ownerId" value="${sessionScope.loginId}" readonly>변경불가</td>
+                <td><input type="text" name="ownerId" id="ownerId" value="${animal.owner_Id}" readonly>변경불가</td>
             </tr>
             <tr>
                 <th>이메일</th>

@@ -11,9 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 @Log4j
 @Controller
@@ -37,10 +38,11 @@ public class AnimalController {
         log.info(petDTO);
         ps.petInfoSave(petDTO);
         ps.getPetInfo(petDTO.getPet_Id());
-        rttr.addAttribute("ownerId", petDTO.getOwnerId());
+        rttr.addAttribute("ownerId", petDTO.getOwner_Id());
         return "redirect:/pet/info";
     }
     /************************************************************************************************************/
+    /************************************************  등록 정보  ************************************************/
 
     @GetMapping("/pet/info")
     public String petInfo(@RequestParam ("ownerId") String ownerId , Model model){
@@ -48,5 +50,37 @@ public class AnimalController {
 
         return "/animal/pet/info";
     }
+    /************************************************************************************************************/
 
+    /************************************************  등록 수정  ************************************************/
+    @GetMapping("/pet/info/modify")
+    public String petInfoUpdate(@RequestParam ("pet_Id") String pet_Id , Model model, HttpServletRequest request){
+
+
+
+        model.addAttribute("pet", ps.petInfoModify(pet_Id));
+        return "/animal/pet/infoModify";
+    }
+
+    @PostMapping("/pet/info/modify")
+    public String petInfoUpdate(PetDTO petDTO, RedirectAttributes rttr, @RequestParam("owner_Id") String owner_Id){
+        System.out.println("petDTO = " + petDTO);
+            ps.petInfoUpdate(petDTO);
+
+        rttr.addAttribute("ownerId", owner_Id);
+        ps.getPetInfo(petDTO.getOwner_Id());
+        return "redirect:/pet/info";
+    }
+    /************************************************************************************************************/
+
+    /********************************************  동물 정보 삭제  ************************************************/
+    @PostMapping("/pet/info/delete")
+    public String petInfoDelete(@RequestParam("pet_Id") String pet_Id, @RequestParam("owner_Id") String owner_Id,
+                                RedirectAttributes rttr, HttpServletRequest request){
+        System.out.println("owner_Id = " + owner_Id);
+            ps.petInfoDelete(pet_Id);
+        rttr.addAttribute("ownerId", owner_Id);
+        ps.getPetInfo(owner_Id);
+        return "redirect:/pet/info";
+    }
 }

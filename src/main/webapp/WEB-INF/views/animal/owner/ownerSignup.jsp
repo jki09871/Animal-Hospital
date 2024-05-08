@@ -26,9 +26,6 @@
             <div id="divPn">
                 <input type="text" id="pn" name="phoneNumber" placeholder="전화번호'-'없이입려해주세요" class="input_pn" autocomplete="off" required>
             </div>
-            <div id="divPetId">
-                <input type="text" id="pi" name="petId" placeholder="마이크로칩 번호" class="input_pi" autocomplete="off" required>
-            </div>
         </div> <%-- <div id="signup"> --%>
         <button type="button" onclick="fnJoin();">가입하기</button>
     </form>

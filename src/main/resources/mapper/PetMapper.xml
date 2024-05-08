@@ -5,19 +5,19 @@
 <mapper namespace="Pet">
 
     <insert id="infoSave" parameterType="com.review.dto.PetDTO">
-        INSERT INTO ANIMAL_TABLE
+        INSERT INTO Pet_Tbl
             (
-            OWNER_Id,
-            PET_ID,
-             NAME,
+             OWNER_ID,
+             PET_ID,
+             PET_NAME,
              AGE,
              SIGNIFICANT
              )
              VALUES
              (
-              #{ownerId},
+              #{owner_Id},
               #{pet_Id},
-              #{name},
+              #{pet_name},
               #{age},
               #{significant}
               )
@@ -25,12 +25,37 @@
 
     <select id="PetInfo" parameterType="String" resultType="com.review.dto.PetDTO">
         SELECT
-            PET_Id,
-            NAME,
-            AGE,
+            OWNER_ID,
+            PET_ID,
+            PET_NAME,
+            TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE,
             SIGNIFICANT
-        FROM ANIMAL_TABLE
-        WHERE OWNER_Id = #{ownerId}
+        FROM Pet_Tbl
+        WHERE OWNER_Id =  #{owner_Id}
     </select>
 
+    <select id="InfoModify" parameterType="String" resultType="com.review.dto.PetDTO">
+        SELECT
+            OWNER_ID,
+            PET_ID,
+            PET_NAME,
+            AGE,
+            SIGNIFICANT
+        FROM Pet_Tbl
+        WHERE PET_ID =  #{pet_Id}
+    </select>
+
+    <update id="InfoUpdate" parameterType="com.review.dto.PetDTO">
+        UPDATE Pet_Tbl
+        SET PET_NAME = #{pet_name},
+            AGE = #{age},
+            PET_ID = #{pet_Id},
+            SIGNIFICANT = #{significant}
+        WHERE PET_ID = #{pet_Id}
+    </update>
+
+    <delete id="InfoDelete">
+        DELETE FROM PET_TBL
+        WHERE PET_ID = #{pet_Id}
+    </delete>
 </mapper>

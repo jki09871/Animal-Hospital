@@ -31,14 +31,15 @@
     <div>
 
         <c:if test="${sessionScope.loginId != null}">
-        <button id="regBtn" style="color: green;">글쓰기</button>
-        <button type="button"><a href="/animal/logout">로그아웃</a></button>
-        <button type="button"><a href="/animal/myInfo">내정보</a></button>
+        <button id="regBtn" style="color: green;">write</button>
+        <button type="button"><a href="/animal/logout">Logout</a></button>
+        <button type="button"><a href="/animal/myInfo">myInfo</a></button>
         </c:if>
 
         <c:if test="${sessionScope.loginId == null}">
-        <button type="button"><a href="/animal/login">로그인</a></button>
+        <button type="button"><a href="/animal/login">Login</a></button>
         </c:if>
+        <button type="button"><a href="/">Home</a></button>
     </div>
     <div class="basic animal">
         <table class="table-cell" id="dataTable" >

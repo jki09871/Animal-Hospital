@@ -24,6 +24,7 @@
             <tr>
                 <th>강아지 이름</th>
                 <th>강아지 나이</th>
+                <th>강아지 품종</th>
                 <th>마이크로칩 번호</th>
                 <th>특이사항</th>
                 <th></th> <!-- 수정 버튼 셀 -->
@@ -32,6 +33,7 @@
                 <tr class="pet_info">
                     <td>${pet.pet_name}</td>
                     <td>${pet.age}</td>
+                    <td>${pet.species}</td>
                     <td>${pet.pet_Id}</td>
                     <td>${pet.significant}</td>
                     <td><button type="button" name="btn">

@@ -1,6 +1,6 @@
-package com.review.repository;
+package com.review.repository.animal;
 
-import com.review.dto.AnimalReviewDTO;
+import com.review.dto.animal.AnimalReviewDTO;
 import com.review.paging.PagingCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -50,19 +50,19 @@ public class MedicalReviewRepository {
     }
 
     public void insertFile(Map<String, Object> map) {
-        sql.insert("board.insertFile", map);
+        sql.insert("review.insertFile", map);
     }
 
     public List<Map<String, Object>> selectFileList(int reviewNum){
-        return sql.selectList("board.selectFileList", reviewNum);
+        return sql.selectList("review.selectFileList", reviewNum);
     }
 
     public Map<String, Object> selectFileInfo(Map<String, Object> map){
-        return sql.selectOne("board.selectFileInfo", map);
+        return sql.selectOne("review.selectFileInfo", map);
     }
 
 
     public void removeFile(int fileNo) {
-        sql.delete("board.fileRemove", fileNo);
+        sql.delete("review.fileRemove", fileNo);
     }
 }

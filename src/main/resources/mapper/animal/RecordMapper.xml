@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="record">
+    <insert id="write" parameterType="com.review.dto.animal.PetMedicalRecordDTO">
+        INSERT INTO PET_MEDICAL_RECORD
+        (
+            PET_ID ,           /** 동물 칩 정보 **/
+            PET_NAME ,         /** 동물 이름 **/
+            PET_AGE ,          /** 동물 나이 **/
+            SYMPTOMS ,         /** 증상 **/
+            DIAGNOSIS ,        /** 진단 **/
+            TREATMENT ,        /** 치료 **/
+            PRESCRIPTION       /** 처방전 **/
+         )
+         values
+         (
+            #{pet_Id},
+            #{pet_Name},
+            #{pet_Age},
+            #{symptoms},
+            #{diagnosis},
+            #{treatment},
+            #{prescription}
+         );
+    </insert>
+
+   <select id="recordList" resultType="com.review.dto.animal.PetMedicalRecordDTO">
+        select
+            RECORD_ID,
+            PET_ID ,           /** 동물 칩 정보 **/
+            PET_NAME ,         /** 동물 이름 **/
+            PET_AGE ,          /** 동물 나이 **/
+            SYMPTOMS ,         /** 증상 **/
+            DIAGNOSIS ,        /** 진단 **/
+            TREATMENT ,        /** 치료 **/
+            PRESCRIPTION,      /** 처방전 **/
+            DATE_OF_VISIT
+        from
+             PET_MEDICAL_RECORD
+        ORDER BY
+             PET_ID DESC
+   </select>
+
+    <select id="read" resultType="com.review.dto.animal.PetMedicalRecordDTO">
+        select
+            RECORD_ID,
+            PET_ID ,           /** 동물 칩 정보 **/
+            PET_NAME ,         /** 동물 이름 **/
+            PET_AGE ,          /** 동물 나이 **/
+            SYMPTOMS ,         /** 증상 **/
+            DIAGNOSIS ,        /** 진단 **/
+            TREATMENT ,        /** 치료 **/
+            PRESCRIPTION,      /** 처방전 **/
+            DATE_OF_VISIT
+        from
+            PET_MEDICAL_RECORD
+        WHERE
+            PET_ID = #{pet_Id}
+    </select>
+</mapper>

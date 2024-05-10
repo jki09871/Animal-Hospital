@@ -1,9 +1,9 @@
-package com.review.controller;
+package com.review.controller.animal;
 
-import com.review.dto.AnimalReviewDTO;
+import com.review.dto.animal.AnimalReviewDTO;
 import com.review.paging.PageMakerDTO;
 import com.review.paging.PagingCriteria;
-import com.review.service.MedicalReviewService;
+import com.review.service.animal.MedicalReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

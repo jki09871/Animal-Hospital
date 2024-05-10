@@ -1,4 +1,4 @@
-package com.review.dto;
+package com.review.dto.animal;
 
 import lombok.Data;
 

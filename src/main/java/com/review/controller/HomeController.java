@@ -38,12 +38,12 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 
+		System.out.println("session = " + session.getAttribute("loginId"));;
 		// db 에서 메인 배너 조회.
-		/*
-		 ..
+/*		 ..
 		 model.addAttribute("bannerList", service.selectBannerList());
 
-		* */
+		**/
 		List<String> bannerList = new ArrayList<>();
 		bannerList.add("gallery1.jpg");
 		bannerList.add("gallery2.jpg");

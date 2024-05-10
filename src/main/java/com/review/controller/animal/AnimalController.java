@@ -1,7 +1,7 @@
-package com.review.controller;
+package com.review.controller.animal;
 
-import com.review.dto.PetDTO;
-import com.review.service.PetService;
+import com.review.dto.animal.PetDTO;
+import com.review.service.animal.PetService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,11 +75,11 @@ public class AnimalController {
     /********************************************  동물 정보 삭제  ************************************************/
     @PostMapping("/pet/info/delete")
     public String petInfoDelete(@RequestParam("pet_Id") String pet_Id, @RequestParam("owner_Id") String owner_Id,
-                                RedirectAttributes rttr, HttpServletRequest request){
+                                RedirectAttributes rttr){
         System.out.println("owner_Id = " + owner_Id);
             ps.petInfoDelete(pet_Id);
         rttr.addAttribute("ownerId", owner_Id);
         ps.getPetInfo(owner_Id);
-        return "redirect:/pet/info";
+        return "redirect:/animal/myInfo";
     }
 }

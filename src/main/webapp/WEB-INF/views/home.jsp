@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+
 
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
@@ -27,9 +27,13 @@
 				<li><a href="#pets" class="smooth-scroll">OUR PETS</a></li>
 				<li><a href="#stories" class="smooth-scroll">STORIES</a></li>
 				<li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
-				<li><a href="/board/list" class="smooth-scroll">CONTACT</a></li>
+				<li><a href="/animal/reviewList" class="smooth-scroll">Review</a></li>
+				<c:if test="${sessionScope.loginId == null}">
 				<li><a href="/animal/login" class="smooth-scroll">LOGIN</a></li>
+				</c:if>
+				<c:if test="${sessionScope.loginId != null}">
 				<li><a href="/animal/logout" class="smooth-scroll">LOGOUT</a></li>
+				</c:if>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->

@@ -16,6 +16,10 @@
              cursor: not-allowed; /* 커서 변경 */
          }
 
+        #pet_Id {
+            background-color: #f0f0f0; /* 읽기 전용 배경색 */
+            cursor: not-allowed; /* 커서 변경 */
+        }
     </style>
 </head>
 <body>
@@ -25,6 +29,10 @@
             <tr>
                 <th>강아지 이름</th>
                 <td><input type="text" name="pet_name" id="pet_name" autocomplete="off" value="<c:out value="${pet.pet_name}"/>"></td>
+            </tr>
+            <tr>
+                <th>강아지 품종</th>
+                <td><input type="text" name="species" id="species" autocomplete="off" value="<c:out value="${pet.species}"/>"></td>
             </tr>
             <tr>
                 <th>강아지 생년월일</th>
@@ -68,6 +76,9 @@
         $('#age').on('mousedown', function(event) {
             event.preventDefault();
         });
+        $('#pet_Id').on('mousedown', function(event) {
+            event.preventDefault();
+        });
         // 일 선택 옵션 생성
         $('#daySelect').empty(); // 일 선택 요소 비우기
         for (var i = 1; i <= 31; i++) {
@@ -82,19 +93,6 @@
         }
     });
 
-    $('#btnPetInfo').on('click', function (){
-        let year = $('#yearSelect').val();
-        let month = $('#monthSelect').val();
-        let day = $('#daySelect').val();
-
-        if (year === "" || month === "" || day === "") {
-            $('#age').val($('#age').val());
-        } else {
-            $('#age').val(year + "-" + month + "-" + day);
-        }
-
-        $('#petForm').submit();
-    });
 
     let url = '';
     let form = $('#petInfoModify');
@@ -102,9 +100,24 @@
         switch (es) {
             case 'U' :
                 url = "/pet/info/modify";
+                let year = $('#yearSelect').val();
+                let month = $('#monthSelect').val();
+                let day = $('#daySelect').val();
+
+                if (year === "" || month === "" || day === "") {
+                    $('#age').val($('#age').val());
+                } else {
+                    $('#age').val(year + "-" + month + "-" + day);
+                }
                 break;
             case 'D' :
                 url = "/pet/info/delete";
+                if (confirm("정보를 삭제하시겠습니까?")){
+                    alert("삭제되었습니다.")
+                }else {
+                    alert("취소되었습니다.")
+                    return;
+                }
                 break;
             default :
                 history.back();

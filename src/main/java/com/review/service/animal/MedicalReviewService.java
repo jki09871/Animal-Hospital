@@ -1,8 +1,8 @@
-package com.review.service;
+package com.review.service.animal;
 
-import com.review.dto.AnimalReviewDTO;
+import com.review.dto.animal.AnimalReviewDTO;
 import com.review.paging.PagingCriteria;
-import com.review.repository.MedicalReviewRepository;
+import com.review.repository.animal.MedicalReviewRepository;
 import com.review.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,7 +10,6 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.w3c.dom.ls.LSInput;
 
 import java.io.File;
 import java.io.IOException;

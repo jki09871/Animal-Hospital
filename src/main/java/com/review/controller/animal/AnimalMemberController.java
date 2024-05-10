@@ -1,7 +1,7 @@
-package com.review.controller;
+package com.review.controller.animal;
 
-import com.review.dto.AnimalMemberDTO;
-import com.review.service.AnimalService;
+import com.review.dto.animal.AnimalMemberDTO;
+import com.review.service.animal.OwnerService;
 import com.review.util.Pbkdf2PasswordEncoderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,7 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AnimalMemberController {
     @Setter(onMethod_ = @Autowired)
-    private AnimalService as;
+    private OwnerService as;
 
     /************************************************  회원 가입  ************************************************/
     @GetMapping("/animal/signup")

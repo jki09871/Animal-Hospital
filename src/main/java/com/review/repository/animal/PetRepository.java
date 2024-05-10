@@ -1,13 +1,12 @@
-package com.review.repository;
+package com.review.repository.animal;
 
-import com.review.dto.PetDTO;
+import com.review.dto.animal.PetDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class PetRepository {
     }
 
     public PetDTO petINfoModify(String pet_Id) {
-        return sql.selectOne("Pet.InfoModify", pet_Id);
+        return sql.selectOne("Pet.InfoSelect", pet_Id);
     }
 
     public void petInfoUpdate(PetDTO petDTO) {

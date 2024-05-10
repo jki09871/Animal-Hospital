@@ -4,14 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Pet">
 
-    <insert id="infoSave" parameterType="com.review.dto.PetDTO">
+    <insert id="infoSave" parameterType="com.review.dto.animal.PetDTO">
         INSERT INTO Pet_Tbl
             (
              OWNER_ID,
              PET_ID,
              PET_NAME,
              AGE,
-             SIGNIFICANT
+             SIGNIFICANT,
+             SPECIES
              )
              VALUES
              (
@@ -19,39 +20,48 @@
               #{pet_Id},
               #{pet_name},
               #{age},
-              #{significant}
+              #{significant},
+              #{species}
               )
     </insert>
 
-    <select id="PetInfo" parameterType="String" resultType="com.review.dto.PetDTO">
+    <select id="PetInfo" parameterType="String" resultType="com.review.dto.animal.PetDTO">
         SELECT
             OWNER_ID,
             PET_ID,
             PET_NAME,
+            SPECIES,
             TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE,
             SIGNIFICANT
         FROM Pet_Tbl
         WHERE OWNER_Id =  #{owner_Id}
     </select>
 
-    <select id="InfoModify" parameterType="String" resultType="com.review.dto.PetDTO">
+    <select id="InfoSelect" parameterType="String" resultType="com.review.dto.animal.PetDTO">
         SELECT
             OWNER_ID,
             PET_ID,
             PET_NAME,
+            SPECIES,
             AGE,
             SIGNIFICANT
         FROM Pet_Tbl
         WHERE PET_ID =  #{pet_Id}
     </select>
 
-    <update id="InfoUpdate" parameterType="com.review.dto.PetDTO">
+    <update id="InfoUpdate" parameterType="com.review.dto.animal.PetDTO">
         UPDATE Pet_Tbl
-        SET PET_NAME = #{pet_name},
+        SET
+
+            PET_NAME = #{pet_name},
+
+            SPECIES = #{species},
+
             AGE = #{age},
-            PET_ID = #{pet_Id},
+
             SIGNIFICANT = #{significant}
-        WHERE PET_ID = #{pet_Id}
+
+        WHERE PET_ID = #{pet_Id};
     </update>
 
     <delete id="InfoDelete">

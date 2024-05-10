@@ -28,8 +28,13 @@
                 <td><input type="text" name="pet_name" id="pet_name" autocomplete="off"></td>
             </tr>
             <tr>
+                <th>강아지 품종</th>
+                <td><input type="text" name="species" id="species" autocomplete="off"></td>
+            </tr>
+            <tr>
                 <th>강아지 생년월일</th>
-                <td><input type="hidden" name="age" id="age" autocomplete="off">
+                <td>
+                    <input type="hidden" name="age" id="age" autocomplete="off">
                     <select id="yearSelect">
                         <option value="">연도</option>
                         <!-- 원하는 연도 범위를 설정하세요 -->
@@ -44,7 +49,8 @@
 
                     <select id="daySelect">
                         <option value="">일</option>
-                    </select></td>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th>마이크로칩 번호</th>
@@ -65,9 +71,6 @@
     });
 
     $(document).ready(function() {
-        $('#age').on('mousedown', function(event) {
-            event.preventDefault();
-        });
         // 일 선택 옵션 생성
         $('#daySelect').empty(); // 일 선택 요소 비우기
         for (var i = 1; i <= 31; i++) {

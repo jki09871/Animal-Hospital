@@ -1,20 +1,17 @@
-package com.review.repository;
+package com.review.repository.animal;
 
-import com.review.dto.AnimalMemberDTO;
-import com.review.dto.AnimalReviewDTO;
-import com.review.paging.PagingCriteria;
+import com.review.dto.animal.AnimalMemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Map;
 
 @Repository
 @Log4j
 @RequiredArgsConstructor
-public class AnimalRepository {
+public class OwnerRepository {
 
     private final SqlSessionTemplate sql;
 

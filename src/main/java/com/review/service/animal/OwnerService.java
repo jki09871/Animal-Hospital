@@ -1,7 +1,7 @@
-package com.review.service;
+package com.review.service.animal;
 
-import com.review.dto.AnimalMemberDTO;
-import com.review.repository.AnimalRepository;
+import com.review.dto.animal.AnimalMemberDTO;
+import com.review.repository.animal.OwnerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -13,10 +13,10 @@ import java.util.Map;
 @Log4j
 @Service
 @RequiredArgsConstructor
-public class AnimalService {
+public class OwnerService {
 
     @Setter(onMethod_ = @Autowired)
-    private AnimalRepository ar;
+    private OwnerRepository ar;
 
     /********************** 회원가입 **********************/
     public int postSignupScreen(AnimalMemberDTO animalDTO) {

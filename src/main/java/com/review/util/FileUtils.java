@@ -1,7 +1,6 @@
 package com.review.util;
 
-import com.review.dto.AnimalReviewDTO;
-import com.review.dto.BoardDTO;
+import com.review.dto.animal.AnimalReviewDTO;
 import com.review.repository.BoardRepository;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

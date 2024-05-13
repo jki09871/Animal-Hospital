@@ -70,7 +70,8 @@ public class MemberController {
         HttpSession session = request.getSession();
         boolean loginResult = false;
         if (memberDTO != null){
-            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+//            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            session.setAttribute("loginEmail", memberDTO);
             return "redirect:/board/list";
         } else {
             return "/member/login";

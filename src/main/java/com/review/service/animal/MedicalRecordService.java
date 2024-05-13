@@ -1,6 +1,7 @@
 package com.review.service.animal;
 
 import com.review.dto.animal.PetMedicalRecordDTO;
+import com.review.paging.PagingCriteria;
 import com.review.repository.animal.MedicalRecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,11 +22,23 @@ public class MedicalRecordService {
     public void prescription(PetMedicalRecordDTO recordDTO) {
         recordRepository.prescription(recordDTO);
     }
-    public List<PetMedicalRecordDTO> recordList(PetMedicalRecordDTO recordDTO){
-        return recordRepository.recordList(recordDTO);
+    public List<PetMedicalRecordDTO> recordList(PagingCriteria pagingCriteria){
+        return recordRepository.recordList(pagingCriteria);
     }
 
     public List<PetMedicalRecordDTO> prescriptionDetails(PetMedicalRecordDTO recordDTO) {
         return recordRepository.prescriptionDetails(recordDTO);
+    }
+
+    public PetMedicalRecordDTO recordEdit(PetMedicalRecordDTO recordDTO) {
+        return recordRepository.recordEdit(recordDTO);
+    }
+
+    public void editAndSend(PetMedicalRecordDTO recordDTO) {
+         recordRepository.editAndSend(recordDTO);
+    }
+
+    public int postTotal(PagingCriteria cri) {
+        return recordRepository.postTotal(cri);
     }
 }

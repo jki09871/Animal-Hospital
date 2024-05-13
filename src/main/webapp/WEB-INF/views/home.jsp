@@ -27,7 +27,7 @@
 				<li><a href="#pets" class="smooth-scroll">OUR PETS</a></li>
 				<li><a href="#stories" class="smooth-scroll">STORIES</a></li>
 				<li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
-				<li><a href="/animal/reviewList" class="smooth-scroll">Review</a></li>
+				<li><a href="/animal/reviewList" class="smooth-scroll">REVIEW</a></li>
 				<c:if test="${sessionScope.loginId == null}">
 				<li><a href="/animal/login" class="smooth-scroll">LOGIN</a></li>
 				</c:if>

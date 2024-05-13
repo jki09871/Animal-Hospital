@@ -38,7 +38,7 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-	<mvc:interceptors>
+	<!--<mvc:interceptors>
 		<mvc:interceptor>
 			<mapping path="/**"/>
 			<exclude-mapping path="/animal/login"/>
@@ -51,6 +51,6 @@
 			<exclude-mapping path="/board/msg"/>
 			<beans:bean class="com.review.interceptor.LogInterceptor" />
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors>-->
 
 </beans:beans>

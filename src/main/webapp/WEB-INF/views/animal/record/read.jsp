@@ -1,36 +1,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script src="/resources/jquery-3.7.1.js"></script>
+
 <html>
 <head>
     <title>Medical Record Details</title>
     <style>
-        /* 컨테이너 스타일링 */
-        .container {
-            width: 60%;
+        table {
+            width: 80%;
             margin: 20px auto;
-            padding: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
             background-color: #f2f2f2;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            font-family: Arial, sans-serif;
         }
-
         h2 {
+            /* 수평 중앙 정렬하기 */
             text-align: center;
-            color: #333;
         }
-
-        /* 각 항목 스타일링 */
-        .detail-item {
-            margin-bottom: 20px;
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
         }
-
-        .detail-label {
-            font-weight: bold;
-        }
-
-        /* 작성 버튼 스타일링 */
-        .edit-button {
+        .btn {
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
@@ -39,48 +37,62 @@
             cursor: pointer;
             font-size: 16px;
             text-decoration: none;
-            float: right;
         }
-
-        .edit-button:hover {
+        .btn:hover {
             background-color: #45a049;
         }
     </style>
 </head>
 <body>
     <h2>Medical Record Details</h2>
+    <div class="btn-container">
+    <button class="btn">목록</button>
+    </div>
+    <table>
+        <tr>
+            <th>PET_NAME</th>
+<%--            <th>PET_ID</th>--%>
+            <th>DATE_OF_VISIT</th>
+            <th>SYMPTOMS</th>
+            <th>VETERINARIAN</th>
+        </tr>
+
     <c:forEach var="readList" items="${read}">
-        <div class="container">
-            <div class="detail-item">
-                <span class="detail-label">Pet ID:</span>
-                <span>${readList.pet_Id}</span>
-            </div>
-            <div class="detail-item">
-                <span class="detail-label">Pet Name:</span>
-                <span>${readList.pet_Name}</span>
-            </div>
-            <div class="detail-item">
-                <span class="detail-label">Pet Age:</span>
-                <span>${readList.pet_Age}</span>
-            </div>
-            <div class="detail-item">
-                <span class="detail-label">Symptoms:</span>
-                <span>${readList.symptoms}</span>
-            </div>
-            <div class="detail-item">
-                <span class="detail-label">Diagnosis:</span>
-                <span>${readList.diagnosis}</span>
-            </div>
-            <div class="detail-item">
-                <span class="detail-label">Treatment:</span>
-                <span>${readList.treatment}</span>
-            </div>
-            <div class="detail-item">
-                <span class="detail-label">Prescription:</span>
-                <span>${readList.prescription}</span>
-            </div>
-            <a href="/pet/prescription/edit?record_Id=${record_Id}" class="edit-button">Edit</a>
-        </div>
+        <tr class="pet_info">
+            <td>${readList.pet_Name}(${readList.calculated_age}살)</td>
+<%--            <td>${readList.pet_Id}</td>--%>
+            <td><a class="move" href="${readList.record_Id}">
+                <fmt:formatDate value="${readList.date_Of_Visit}" pattern="yyyy-MM-dd"/></a></td>
+            <td>${readList.symptoms}</td>
+            <td>${readList.doctor}</td>
+        </tr>
     </c:forEach>
+    </table>
+
+
+    <form method="get" action="/pet/prescription/list" id="readForm">
+        <input type="hidden" name="pageNum" value="<c:out value="${pageNum}"/>">
+        <input type="hidden" name="amount" value="<c:out value="${amount}"/>">
+        <input type="hidden" name="keyword" value="<c:out value="${keyword}"/>">
+    </form>
+
 </body>
+
+<script>
+    let readForm = $('#readForm');
+
+    $('.btn').on('click', function (){
+        readForm.submit();
+    })
+
+    $('.move').on('click', function (e) {
+        e.preventDefault();
+
+        readForm.find('#newinput').remove();
+
+        readForm.append("<input type='hidden' id='newinput' name='record_Id' value='" + $(this).attr("href") + "'>");
+        readForm.attr('action', '/pet/prescription/details/unravel');
+        readForm.submit();
+    })
+</script>
 </html>

@@ -73,9 +73,10 @@
 <h2>Add Medical Record</h2>
     <form action="/pet/prescription/edit" method="POST">
         <input type="hidden" name="record_Id" id="record_Id" value="${edit.record_Id}">
-        <input type="hidden" name="pageNum" value="<c:out value="${pageNum}"/>">
-        <input type="hidden" name="amount" value="<c:out value="${amount}"/>">
-        <input type="hidden" name="keyword" value="<c:out value="${keyword}"/>">
+        <input type="hidden" name="pageNum" value="<c:out value="${cri.pageNum}"/>">
+        <input type="hidden" name="amount" value="<c:out value="${cri.amount}"/>">
+        <input type="hidden" name="keyword" value="<c:out value="${cri.keyword}"/>">
+        <input type="hidden" name="type" value="<c:out value="${cri.type}"/>">
 
         <label for="pet_Id">Pet ID(마이크로칩 번호):</label><br>
         <input type="text" id="pet_Id" name="pet_Id" required autocomplete="off" value="${edit.pet_Id}"><br><br>

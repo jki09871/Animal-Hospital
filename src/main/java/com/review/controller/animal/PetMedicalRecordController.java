@@ -27,6 +27,8 @@ public class PetMedicalRecordController {
     @Setter(onMethod_ = @Autowired)
     private MedicalRecordService recordService;
 
+    /*******************************************  처방전 작성  ********************************************/
+
     @GetMapping("/pet/prescription/record")
     public String writePrescription(){
         return "/animal/record/prescription";
@@ -37,29 +39,31 @@ public class PetMedicalRecordController {
         recordService.prescription(recordDTO);
         return "redirect:/pet/prescription/list";
     }
+    /************************************************************************************************************/
+
+    /*******************************************  처방전 리스트  ********************************************/
 
     @GetMapping("/pet/prescription/list")
-    public String prescriptionList( Model model, PagingCriteria cri, HttpServletRequest request){
-        model.addAttribute("recordList", recordService.recordList(cri));
+    public String prescriptionList( Model model, PagingCriteria pagingCriteria, HttpServletRequest request){
 
 
+        int total = recordService.postTotal(pagingCriteria);
+        model.addAttribute("recordList", recordService.recordList(pagingCriteria));
+        model.addAttribute("pageMaker", new PageMakerDTO(pagingCriteria, total));
 
-//        model.addAttribute("pageNum", request.getParameter("pageNum"));
-//        model.addAttribute("amount", request.getParameter("amount"));
 
-
-        int total = recordService.postTotal(cri);
-        PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
-        model.addAttribute("pageMaker", pageMaker);
         return "/animal/record/list";
     }
+    /************************************************************************************************************/
+
+    /***************************************  pet_id로 확인하는 처방전  ********************************************/
+
 
     @GetMapping("/pet/prescription/details")
-    public String prescriptionRead(PetMedicalRecordDTO recordDTO, Model model,HttpServletRequest request){
+    public String prescriptionRead(PetMedicalRecordDTO recordDTO,PagingCriteria cri, Model model){
 
-        model.addAttribute("keyword", request.getParameter("keyword"));
-        model.addAttribute("pageNum", request.getParameter("pageNum"));
-        model.addAttribute("amount", request.getParameter("amount"));
+        model.addAttribute("cri", cri);
+
 
 
         List<PetMedicalRecordDTO> readList = recordService.prescriptionDetails(recordDTO);
@@ -67,21 +71,23 @@ public class PetMedicalRecordController {
 
         return "/animal/record/read";
     }
+    /************************************************************************************************************/
+
+    /***************************************  처방전 수정  ********************************************/
+
 
     @GetMapping("/pet/prescription/edit")
-    public String prescriptionEdit(PetMedicalRecordDTO recordDTO, Model model, HttpServletRequest request){
+    public String prescriptionEdit(PetMedicalRecordDTO recordDTO, Model model,PagingCriteria cri){
 
-        model.addAttribute("pageNum", request.getParameter("pageNum"));
-        model.addAttribute("amount", request.getParameter("amount"));
-        model.addAttribute("keyword", request.getParameter("keyword"));
-
+        model.addAttribute("cri", cri);
 
         model.addAttribute("edit",recordService.recordEdit(recordDTO));
         return "/animal/record/edit";
     }
 
     @PostMapping("/pet/prescription/edit")
-    public String sendCorrectedPrescription(PetMedicalRecordDTO recordDTO, HttpServletRequest request, RedirectAttributes rttr){
+    public String sendCorrectedPrescription(PetMedicalRecordDTO recordDTO, HttpServletRequest request,
+                                            PagingCriteria cri, RedirectAttributes rttr){
         recordService.editAndSend(recordDTO);
         recordService.prescriptionDetails(recordDTO);
 
@@ -89,20 +95,24 @@ public class PetMedicalRecordController {
         rttr.addAttribute("pageNum", request.getParameter("pageNum"));
         rttr.addAttribute("amount", request.getParameter("amount"));
         rttr.addAttribute("keyword", request.getParameter("keyword"));
-
+        rttr.addAttribute("type", request.getParameter("type"));
 
         return "redirect:/pet/prescription/details/unravel";
     }
+    /************************************************************************************************************/
+
+    /***************************************  처방전 상세  ********************************************/
 
     @GetMapping("/pet/prescription/details/unravel")
-    public String prescriptionUnravel(PetMedicalRecordDTO recordDTO, Model model, HttpServletRequest request){
-        model.addAttribute("pageNum", request.getParameter("pageNum"));
-        model.addAttribute("amount", request.getParameter("amount"));
-        model.addAttribute("keyword", request.getParameter("keyword"));
+    public String prescriptionUnravel(PetMedicalRecordDTO recordDTO, Model model, PagingCriteria cri){
+        model.addAttribute("cri", cri);
+
 
         model.addAttribute("read",recordService.recordEdit(recordDTO));
 
 
         return "/animal/record/unravel";
     }
+    /************************************************************************************************************/
+
 }

@@ -29,27 +29,25 @@
          );
     </insert>
 
-   <select id="recordList" resultType="com.review.dto.animal.PetMedicalRecordDTO">
-       /** 처방전 등록된 동물 보기 **/
+    <select id="recordList" resultType="com.review.dto.animal.PetDTO">
+        /** 처방전 등록된 동물 보기 **/
+        SELECT * FROM (
+            SELECT
+                PET_ID,
+                PET_NAME,
+                TIMESTAMPDIFF(YEAR, AGE, CURDATE()) + 1 AS AGE , /** 동물 나이 계산값 **/
+                SPECIES,
+                SIGNIFICANT
+            FROM
+                PET_TBL
+                    <if test="keyword != null">
+                        <include refid="PagingCriteria"></include>
+                    </if>
+                ) AS T1
+            LIMIT #{skip}, #{amount}
+    </select>
 
-       SELECT * from (
-           SELECT
-           PET_ID,
-           MAX(PET_NAME) AS PET_NAME,                                            /** 동물 이름 **/
-           MAX(PET_AGE) AS PET_AGE,                                              /** 동물 생년월일 **/
-           TIMESTAMPDIFF(YEAR, MAX(PET_AGE), CURDATE()) + 1 AS CALCULATED_AGE ,  /** 동물 나이 계산값 **/
-           MAX(DATE_OF_VISIT) AS DATE_OF_VISIT                                  /** 가장 최근 진료 날짜 **/
-       FROM
-           PET_MEDICAL_RECORD
-            <if test="keyword != null">
-                where PET_NAME like concat('%',#{keyword},'%')
-            </if>
-       GROUP BY
-           PET_ID) AS T1
-        LIMIT #{skip}, #{amount}
-   </select>
-
-    <select id="read" resultType="com.review.dto.animal.PetMedicalRecordDTO">
+    <select id="read" resultType="com.review.dto.animal.PetMedicalRecordDTO" >
         /** 해당동물의 처방전 리스트 **/
 
         SELECT
@@ -83,7 +81,7 @@
             PET_MEDICAL_RECORD
         WHERE
             RECORD_ID = #{record_Id}
-    </select>
+    </select><!---->
 
     <update id="editSend" parameterType="com.review.dto.animal.PetMedicalRecordDTO">
         update PET_MEDICAL_RECORD
@@ -101,7 +99,28 @@
     <select id="postTotal" resultType="int">
         SELECT COUNT(*) FROM PET_MEDICAL_RECORD
         <if test="keyword != null">
-            where PET_NAME like concat('%',#{keyword},'%')
+            <include refid="PagingCriteria"></include>
         </if>
     </select>
+
+    <!-- 검색 조건문 -->
+    <sql id="PagingCriteria">
+        <trim prefix="where (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'N'.toString()">
+                            PET_NAME LIKE CONCAT('%',#{keyword},'%')
+                        </when>
+                        <when test="type == 'I'.toString()">
+                            PET_ID LIKE CONCAT('%',#{keyword},'%')
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+
+    </sql>
+
+
 </mapper>

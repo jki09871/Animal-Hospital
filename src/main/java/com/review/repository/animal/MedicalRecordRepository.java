@@ -1,6 +1,7 @@
 package com.review.repository.animal;
 
 import com.review.controller.animal.PetMedicalRecordController;
+import com.review.dto.animal.PetDTO;
 import com.review.dto.animal.PetMedicalRecordDTO;
 import com.review.paging.PagingCriteria;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class MedicalRecordRepository {
         sql.insert("record.write", recordDTO);
     }
 
-    public List<PetMedicalRecordDTO> recordList(PagingCriteria pagingCriteria){
+    public List<PetDTO> recordList(PagingCriteria pagingCriteria){
         return sql.selectList("record.recordList", pagingCriteria);
     }
 

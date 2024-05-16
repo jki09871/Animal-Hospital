@@ -15,7 +15,7 @@
         <table>
             <tr>
                 <th>아이디</th>
-                <td><input type="text" name="ownerId" id="ownerId" value="${animal.owner_Id}" readonly>변경불가</td>
+                <td><input type="text" name="owner_Id" id="ownerId" value="${animal.owner_Id}" readonly>변경불가</td>
             </tr>
             <tr>
                 <th>이메일</th>
@@ -28,10 +28,6 @@
             <tr>
                 <th>핸드폰 번호</th>
                 <td><input type="text" name="phoneNumber" id="phoneNumber" value="${animal.phoneNumber}"></td>
-            </tr>
-            <tr>
-                <th>동물 아이디</th>
-                <td><input type="text" name="petId" id="petId" value="${animal.petId}"></td>
             </tr>
         </table>
         <button type="submit" onclick="editInfo();">정보수정</button>

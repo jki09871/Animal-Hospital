@@ -1,60 +1,100 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmf" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        table {
+            width: 50%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-container {
+            text-align: center;
+        }
+        button {
+            margin: 0 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>reviewNum</th>
-            <td>${animal.reviewNum}</td>
-        </tr>
-        <tr>
-            <th>writer</th>
-            <td>${animal.writer}</td>
-        </tr>
-        <tr>
-            <th>title</th>
-            <td>${animal.title}</td>
-        </tr>
-        <tr>
-            <th>content</th>
-            <td>${animal.content}</td>
-        </tr>
-        <tr>
-            <th>time</th>
-            <td>
-                <fmf:formatDate value="${animal.regdate}" pattern="yyyy-MM-dd"/>
-            </td>
-        </tr>
-    </table>
-    </div>
-    <span>파일 목록</span>
-    <div class="form-group" style="border: 1px solid #dbdbdb;">
-        <c:forEach var="file" items="${file}">
-            <a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
-        </c:forEach>
-    </div>
-    <button onclick="fnDynamic('L')">목록</button>
-<%--    <c:if test="${sessionScope.loginId != null }">--%>
-    <button onclick="fnDynamic('U')">수정</button>
-    <button onclick="fnDynamic('D')">삭제</button>
-<%--    </c:if>--%>
-    <form method="get" action="/animal/correction/" id="readForm">
-        <input type="hidden" name="reviewNum" value="<c:out value="${animal.reviewNum}"/>">
-        <input type="hidden" name="pageNum" value="<c:out value="${criteria.pageNum}"/>">
-        <input type="hidden" name="amount" value="<c:out value="${criteria.amount}"/>">
-        <input type="hidden" id="FILE_NO" name="FILE_NO" value="">
-    </form>
-</body>
-
+<table>
+    <tr>
+        <th>Review Number</th>
+        <td>${animal.reviewNum}</td>
+    </tr>
+    <tr>
+        <th>Writer</th>
+        <td>${animal.writer}</td>
+    </tr>
+    <tr>
+        <th>Title</th>
+        <td>${animal.title}</td>
+    </tr>
+    <tr>
+        <th>Content</th>
+        <td>${animal.content}</td>
+    </tr>
+    <tr>
+        <th>Time</th>
+        <td><fmt:formatDate value="${animal.regdate}" pattern="yyyy-MM-dd"/></td>
+    </tr>
+</table>
+<form method="get" action="/animal/correction/" id="readForm">
+    <input type="hidden" name="reviewNum" value="<c:out value='${animal.reviewNum}'/>">
+    <input type="hidden" name="pageNum" value="<c:out value='${criteria.pageNum}'/>">
+    <input type="hidden" name="amount" value="<c:out value='${criteria.amount}'/>">
+    <input type="hidden" id="FILE_NO" name="FILE_NO" value="">
+</form>
+<div class="form-group">
+    <span>File List</span>
+    <br>
+    <c:forEach var="file" items="${file}">
+        <a href="#" class="file-link" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+    </c:forEach>
+</div>
+<div class="btn-container">
+    <button onclick="fnDynamic('L')">Go Back</button>
+    <c:if test="${sessionScope.loginId != null }">
+        <button onclick="fnDynamic('U')">Edit</button>
+        <button onclick="fnDynamic('D')">Delete</button>
+    </c:if>
+</div>
 <script>
-
-
     let form = $('#readForm');
     let url = '';
     function fnDynamic(se){
@@ -63,70 +103,39 @@
                 url = '/animal/reviewList';
                 break;
             case 'U' :
-                if (${sessionScope.loginId == animal.writer}) {
+                if (${sessionScope.loginId.owner_Id == animal.writer}) {
                     url = '/animal/correction';
                     break;
                 }else {
-                    alert("작성자가 아닙니다.");
+                    alert("You are not the author.");
                     return ;
                 }
             default :
-                if (${sessionScope.loginId == animal.writer}) {
-                    // 사용자에게 확인 대화 상자 표시
-                    const isConfirmed = confirm("게시물을 삭제 하시겠습니까?");
-
-                    // 사용자가 확인을 선택했을 경우 true
+                if (${sessionScope.loginId.owner_Id == animal.writer}) {
+                    const isConfirmed = confirm("Do you want to delete this post?");
                     if (isConfirmed) {
-
-                        // 확인을 선택한 경우
-                        alert("삭제 되었습니다..");
-
+                        alert("Deleted successfully.");
                     } else {
-                        //  사용자가 취소를 선택했을 경우 false
-                        alert("삭제가 취소되었습니다.");
+                        alert("Deletion canceled.");
                         return false;
-
                     }
-
-
-                    // // 예제로 사용할 비밀번호
-                    // const correctPassword = "123";
-                    //
-                    // // prompt를 통해 사용자로부터 비밀번호를 입력 받음
-                    // const enteredPassword = prompt("비밀번호를 입력하세요:");
-                    //
-                    // // 입력된 비밀번호가 정확한지 확인하고 결과 반환
-                    // const isCorrectPassword = enteredPassword == correctPassword;
-                    //
-                    // // 비밀번호가 일치하지 않으면 경고 메시지를 표시하고 동작을 멈춤
-                    // if (!isCorrectPassword) {
-                    //     alert("비밀번호가 올바르지 않습니다.");
-                    //     throw new Error("비밀번호가 올바르지 않습니다."); // 에러를 발생시켜 동작을 중단함
-                    // }
-                    //
-                    // // 이후에 실행되는 코드
-                    // alert("비밀번호가 확인되었습니다");
-
-
                     url = '/animal/deletePost';
                     form.attr('method', 'post');
                     break;
                 } else {
-                    alert("작성자가 아닙니다.");
+                    alert("You are not the author.");
                 }
         }
-
         form.attr('action', url);
         form.submit();
     }
 
     function fn_fileDown(fileNo){
-        console.log(fileNo)
         var formObj = $("#readForm");
         $("#FILE_NO").attr("value", fileNo);
         formObj.attr("action", "/animal/fileDown");
         formObj.submit();
     }
-
 </script>
+</body>
 </html>

@@ -66,7 +66,7 @@ public class AnimalMemberController {
 
         HttpSession session = request.getSession();
         if (loginResult) {
-            session.setAttribute("loginId", animalDTO.getOwner_Id());
+            session.setAttribute("loginId", dbDto);
             log.info("로그인 성공");
             return "redirect:/animal/reviewList";
         } else {
@@ -133,7 +133,7 @@ public class AnimalMemberController {
         as.editInfo(animalDTO);
         as.myInformation(animalDTO.getOwner_Id());
 
-        return "/animal/owner/myInfo";
+        return "redirect:/animal/myInfo";
     }
     /**********************************************************************************************************/
 }

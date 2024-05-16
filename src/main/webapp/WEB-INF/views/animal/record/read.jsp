@@ -71,9 +71,10 @@
 
 
     <form method="get" action="/pet/prescription/list" id="readForm">
-        <input type="hidden" name="pageNum" value="<c:out value="${pageNum}"/>">
-        <input type="hidden" name="amount" value="<c:out value="${amount}"/>">
-        <input type="hidden" name="keyword" value="<c:out value="${keyword}"/>">
+        <input type="hidden" name="pageNum" value="<c:out value="${cri.pageNum}"/>">
+        <input type="hidden" name="amount" value="<c:out value="${cri.amount}"/>">
+        <input type="hidden" name="keyword" value="<c:out value="${cri.keyword}"/>">
+        <input type="hidden" name="type" value="<c:out value="${cri.type}"/>">
     </form>
 
 </body>

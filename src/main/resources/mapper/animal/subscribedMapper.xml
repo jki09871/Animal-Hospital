@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manager">
+    <select id="memberList" resultType="com.review.dto.animal.AnimalMemberDTO">
+        SELECT
+            OWNER_ID,
+            EMAIL,
+            PHONENUMBER,
+            GRADE,
+            REGDATE
+        FROM
+            OWNER_TBL
+        ORDER BY
+            REGDATE DESC ;
+    </select>
+
+    <select id="petList" resultType="com.review.dto.animal.PetDTO">
+
+    </select>
+</mapper>

@@ -17,6 +17,13 @@ public class PagingCriteria {
     /** 검색 키워드 **/
     private String keyword;
 
+    /** 검색 타입**/
+    private String type;
+
+    /** 검색 타입 배열 **/
+    private String[] typeArr;
+
+
     /** 기본 생성자 -> 기본 세팅 : pageNum =1, amount = 10 **/
     public PagingCriteria(){
         this(1,10);
@@ -38,5 +45,10 @@ public class PagingCriteria {
         this.skip = (this.pageNum - 1) * amount;
 
         this.amount = amount;
+    }
+
+    public void setType(String type){
+        this.type = type;
+        this.typeArr = type.split("");
     }
 }

@@ -1,5 +1,6 @@
 package com.review.service.animal;
 
+import com.review.dto.animal.PetDTO;
 import com.review.dto.animal.PetMedicalRecordDTO;
 import com.review.paging.PagingCriteria;
 import com.review.repository.animal.MedicalRecordRepository;
@@ -22,7 +23,7 @@ public class MedicalRecordService {
     public void prescription(PetMedicalRecordDTO recordDTO) {
         recordRepository.prescription(recordDTO);
     }
-    public List<PetMedicalRecordDTO> recordList(PagingCriteria pagingCriteria){
+    public List<PetDTO> recordList(PagingCriteria pagingCriteria){
         return recordRepository.recordList(pagingCriteria);
     }
 

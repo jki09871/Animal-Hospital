@@ -25,7 +25,7 @@
         <button type="button" onclick="fnDynamic('W');">애견등록</button>
         <button type="button" onclick="fnDynamic('I');">애견등록확인</button>
 <form id="petForm" action="/animal/myInfo" method="get">
-    <input type="hidden" name="ownerId" id="ownerId" value="<c:out value="${sessionScope.loginId}"/>">
+    <input type="hidden" name="ownerId" id="ownerId" value="<c:out value="${animal.owner_Id}"/>">
 </form>
 
 </body>

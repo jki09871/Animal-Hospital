@@ -79,7 +79,9 @@
             width: 100px;
             height: 36px;
         }
-
+        .search_area select{
+            height: 35px;
+        }
     </style>
 </head>
 <body>
@@ -93,20 +95,28 @@
         <th>Pet ID</th>
         <th>Pet Name</th>
         <th>Pet Age</th>
-        <th>Date of Visit</th>
+        <th>Species</th>
+        <th>Significant</th>
     </tr>
     <c:forEach var="list" items="${recordList}">
         <tr class="pet_info">
             <td>${list.pet_Id}</td>
-            <td><a class="move" href="${list.pet_Id}">${list.pet_Name}</a></td>
-            <td>${list.pet_Age}(${list.calculated_age}살)</td>
-            <td><fmt:formatDate value="${list.date_Of_Visit}" pattern="yyyy-MM-dd"/></td>
+            <td><a class="move" href="${list.pet_Id}">${list.pet_name}</a></td>
+            <td>${list.age}살</td>
+            <td>${list.species}</td>
+            <td>${list.significant}</td>
         </tr>
     </c:forEach>
 </table>
 <div class="container">
     <div class="search_wrap">
         <div class="search_area">
+            <select name="type">
+                    <option value="" <c:out value="${pageMaker.pagingCriteria.type == null?'selected':'' }"/>>--</option>
+                    <option value="N" <c:out value="${pageMaker.pagingCriteria.type eq 'N'?'selected':'' }"/>>동물 이름</option>
+                    <option value="I" <c:out value="${pageMaker.pagingCriteria.type eq 'I'?'selected':'' }"/>>마이크로칩 번호</option>
+                    <option value="IN" <c:out value="${pageMaker.pagingCriteria.type eq 'IN'?'selected':'' }"/>>이름 + 마이크로칩</option>
+            </select>
             <input type="text" name="keyword" value="${pageMaker.pagingCriteria.keyword }">
             <button>Search</button>
         </div>
@@ -133,25 +143,47 @@
         </div>
 </div>
     <form id="pageMove" method="get" action="/pet/prescription/list">
-        <input type="hidden" name="pageNum" value="<c:out value="${pageMaker.pagingCriteria.pageNum}"/>">
-        <input type="hidden" name="amount" value="<c:out value="${pageMaker.pagingCriteria.amount}"/>">
+        <input type="hidden" name="pageNum" value="${pageMaker.pagingCriteria.pageNum}">
+        <input type="hidden" name="amount" value="${pageMaker.pagingCriteria.amount}">
         <input type="hidden" name="keyword" value="${pageMaker.pagingCriteria.keyword }">
+        <input type="hidden" name="type" value="${pageMaker.pagingCriteria.type }">
     </form>
 </body>
 
 <script>
     let pageMove = $('#pageMove');
 
-    $(".search_area button").on("click", function(e){
-        e.preventDefault();
-        let val = $("input[name='keyword']").val();
-        pageMove.find("input[name='keyword']").val(val);
-        pageMove.find("input[name='pageNum']").val(1);
-        pageMove.submit();
-    });
+    $(document).ready(function (){
+        $(".search_area button").on("click", function(e){
+            e.preventDefault();
+
+            let type = $(".search_area select").val();
+            let keyword = $(".search_area input[name='keyword']").val();
+
+            if(!type && keyword){
+                alert("검색 종류를 선택하세요.");
+                return false;
+            }
+
+            if(!keyword && type){
+                alert("키워드를 입력하세요.");
+                return false;
+            }
+
+            if(!type || !keyword){
+                pageMove.submit();
+            }
+
+            pageMove.find("input[name='type']").val(type);
+            pageMove.find("input[name='keyword']").val(keyword);
+            pageMove.find("input[name='pageNum']").val(1);
+            pageMove.submit();
+        });
 
 
-    $(".pageInfo a").on("click", function(e){
+
+
+        $(".pageInfo a").on("click", function(e){
     e.preventDefault();
     pageMove.find("input[name='pageNum']").val($(this).attr("href"));
     pageMove.attr("action", "/pet/prescription/list");
@@ -168,6 +200,7 @@
         pageMove.attr('action', '/pet/prescription/details');
         pageMove.submit();
     })
+});
 </script>
 
 </html>

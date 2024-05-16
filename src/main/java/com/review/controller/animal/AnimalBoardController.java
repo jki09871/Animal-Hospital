@@ -79,7 +79,7 @@ public class AnimalBoardController {
         HttpSession session = request.getSession();
         AnimalReviewDTO information = service.information(reviewDTO.getReviewNum());
         List<Map<String,Object>> fileList = service.selectFileList(reviewDTO.getReviewNum());
-
+        System.out.println("session = " + session.getAttribute("loginId"));
 
         model.addAttribute("file", fileList);
         model.addAttribute("animal", information);

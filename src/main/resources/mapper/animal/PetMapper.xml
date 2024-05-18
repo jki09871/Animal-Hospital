@@ -7,12 +7,12 @@
     <insert id="infoSave" parameterType="com.review.dto.animal.PetDTO">
         INSERT INTO Pet_Tbl
             (
-             OWNER_ID,
-             PET_ID,
-             PET_NAME,
-             AGE,
-             SIGNIFICANT,
-             SPECIES
+             OWNER_ID,                  /* 동물 주인 */
+             PET_ID,                    /* 마이크로칩 번호 */
+             PET_NAME,                  /* 동물 이름 */
+             AGE,                       /* 동물 나이 */
+             SIGNIFICANT,               /* 특이사항 */
+             SPECIES                    /* 종 */
              )
              VALUES
              (
@@ -27,45 +27,44 @@
 
     <select id="PetInfo" parameterType="String" resultType="com.review.dto.animal.PetDTO">
         SELECT
-            OWNER_ID,
-            PET_ID,
-            PET_NAME,
-            SPECIES,
-            TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE,
-            SIGNIFICANT
+            OWNER_ID,                  /* 동물 주인 */
+            PET_ID,                    /* 마이크로칩 번호 */
+            PET_NAME,                  /* 동물 이름 */
+            SPECIES                    /* 종 */
+            TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE, /* 계산된 나이 */
+                SIGNIFICANT,               /* 특이사항 */
         FROM Pet_Tbl
         WHERE OWNER_Id =  #{owner_Id}
     </select>
 
     <select id="InfoSelect" parameterType="String" resultType="com.review.dto.animal.PetDTO">
         SELECT
-            OWNER_ID,
-            PET_ID,
-            PET_NAME,
-            SPECIES,
-            AGE,
-            SIGNIFICANT
-        FROM Pet_Tbl
+            OWNER_ID,                  /* 동물 주인 */
+            PET_ID,                    /* 마이크로칩 번호 */
+            PET_NAME,                  /* 동물 이름 */
+            AGE,                       /* 동물 나이 */
+            SIGNIFICANT,               /* 특이사항 */
+            SPECIES                    /* 종 */
+        FROM PET_TBL
         WHERE PET_ID =  #{pet_Id}
     </select>
 
     <update id="InfoUpdate" parameterType="com.review.dto.animal.PetDTO">
-        UPDATE Pet_Tbl
+        UPDATE PET_TBL
         SET
 
-            PET_NAME = #{pet_name},
-
-            SPECIES = #{species},
-
-            AGE = #{age},
-
-            SIGNIFICANT = #{significant}
+            AGE = #{age},                   /* 동물 나이 */
+            SPECIES = #{species},           /* 종 */
+            PET_NAME = #{pet_name},         /* 동물 이름 */
+            SIGNIFICANT = #{significant}    /* 특이사항 */
 
         WHERE PET_ID = #{pet_Id};
     </update>
 
     <delete id="InfoDelete">
-        DELETE FROM PET_TBL
-        WHERE PET_ID = #{pet_Id}
+        DELETE FROM
+                   PET_TBL
+               WHERE
+                   PET_ID = #{pet_Id}
     </delete>
 </mapper>

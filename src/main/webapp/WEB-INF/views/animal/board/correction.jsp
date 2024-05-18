@@ -171,7 +171,7 @@
             alert("삭제되었습니다.")
 
             // 클릭된 부모 요소 찾아서 삭제
-            $('#fileDel').closest('div').remove();
+            $('.fileRemove').closest('div').remove();
 
             $.ajax({
                 url : '/animal/fileRemove',

@@ -34,6 +34,18 @@
 				<c:if test="${sessionScope.loginId != null}">
 				<li><a href="/animal/logout" class="smooth-scroll">LOGOUT</a></li>
 				</c:if>
+<%--				<c:if test="${sessionScope.loginId.grade == 99}">--%>
+				<form class="navbar-form navbar-right">
+					<div class="form-group">
+						<select class="form-control" onchange='location.href = this.value;'>
+							<option value=''>Choose</option>
+							<option value='/pet/prescription/list'>Prescription List</option>
+							<option value='/subscribers/member'>Subscribers Member</option>
+							<option value='/registered/animal'>Registered Animal</option>
+						</select>
+					</div>
+				</form>
+<%--				</c:if>--%>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->

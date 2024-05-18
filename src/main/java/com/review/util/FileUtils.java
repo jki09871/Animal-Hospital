@@ -2,6 +2,7 @@ package com.review.util;
 
 import com.review.dto.animal.AnimalReviewDTO;
 import com.review.repository.BoardRepository;
+import com.review.repository.animal.MedicalReviewRepository;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.*;
 public class FileUtils {
 
     @Setter(onMethod_ = @Autowired)
-    private BoardRepository repository;
+    private MedicalReviewRepository repository;
     private static final String filePath = "C:\\mp\\file\\"; //파일이 저장될 위치
 
     public List<Map<String, Object>> parseInsertFileInfo(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest) throws IOException {

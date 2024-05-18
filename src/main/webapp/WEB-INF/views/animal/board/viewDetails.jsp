@@ -94,6 +94,10 @@
         <button onclick="fnDynamic('D')">Delete</button>
     </c:if>
 </div>
+<div>
+    <input type="text" id="commentWriter" placeholder="작성자">
+    <input type="text" id="commentContents" placeholder="내용">
+</div>
 <script>
     let form = $('#readForm');
     let url = '';

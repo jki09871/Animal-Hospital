@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 @Log4j
 @RequiredArgsConstructor
-public class ManagerRepository {
+public class SiteAdministratorRepository {
 
     @Setter(onMethod_ = @Autowired)
     private final SqlSessionTemplate sql;
@@ -24,8 +24,15 @@ public class ManagerRepository {
         return sql.selectList("manager.memberList");
     }
 
+    public AnimalMemberDTO memberData(AnimalMemberDTO memberDTO) {
+        return sql.selectOne("manager.memberData", memberDTO);
+    }
 
     public List<PetDTO> petList() {
         return sql.selectList("manager.petList");
+    }
+
+    public PetDTO petData(PetDTO petDTO) {
+        return sql.selectOne("manager.petData", petDTO);
     }
 }

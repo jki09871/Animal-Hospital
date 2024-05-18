@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inquiry">
+    <select id="getList" resultType="com.review.dto.animal.InquiryBoardDTO">
+        SELECT
+            INQUIRYNUM,               /** 문의고유번호 **/
+            TITLE,                    /** 문의제목 **/
+            CONTENT,                  /** 문의내용 **/
+            WRITER,                   /** 작성자 **/
+            REGDATE,                  /** 작성시간 **/
+            UPDATEDATE                /** 수정시간 **/
+        FROM 
+            TBL_INQUIRY 
+        ORDER BY
+            INQUIRYNUM DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO TBL_INQUIRY
+            (
+             INQUIRYNUM,               /** 문의고유번호 **/
+             TITLE,                    /** 문의제목 **/
+             CONTENT,                  /** 문의내용 **/
+             WRITER,                   /** 작성자 **/
+             UPDATEDATE = null                /** 문의 내용 수정 시간 **/
+             )
+            VALUES
+            (
+             DEFAULT,
+             #{title},
+             #{content},
+             #{writer}
+             )
+    </insert>
+
+
+    <select id="read" resultType="com.review.dto.animal.InquiryBoardDTO">
+        SELECT
+            INQUIRYNUM,               /** 문의고유번호 **/
+            TITLE,                    /** 문의제목 **/
+            CONTENT,                  /** 문의내용 **/
+            WRITER,                   /** 작성자 **/
+            REGDATE,                  /** 문의한 시간 **/
+            UPDATEDATE                /** 문의 내용 수정 시간 **/
+        FROM
+            TBL_INQUIRY
+        WHERE
+            INQUIRYNUM = #{inquiryNum}
+
+    </select>
+
+    <delete id="delete">
+        DELETE FROM
+                    TBL_INQUIRY
+               WHERE
+                   INQUIRYNUM=#{inquiryNum}
+
+    </delete>
+
+    <update id="update">
+        UPDATE
+            TBL_INQUIRY
+        SET
+            TITLE = #{title},                 /** 문의제목 **/
+            CONTENT = #{content},             /** 문의내용 **/
+            WRITER = #{writer},               /** 작성자 **/
+            UPDATEDATE = current_timestamp    /** 문의 내용 수정 시간 **/
+        WHERE
+            INQUIRYNUM = #{inquiryNum}
+    </update>
+</mapper>

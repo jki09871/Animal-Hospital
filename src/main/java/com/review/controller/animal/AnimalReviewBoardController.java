@@ -26,7 +26,7 @@ import java.util.Map;
 @Log4j
 @Controller
 @RequiredArgsConstructor
-public class AnimalBoardController {
+public class AnimalReviewBoardController {
 
     @Setter(onMethod_ = @Autowired)
     private MedicalReviewService service;
@@ -41,7 +41,6 @@ public class AnimalBoardController {
     }
 
     /************************************************  게시물 리스트  ************************************************/
-
     @RequestMapping("/animal/reviewList")
     public String animalReviewList(Model model, PagingCriteria pagingCriteria, HttpServletRequest request){
         log.info("리뷰 게시판");

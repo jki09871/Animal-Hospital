@@ -28,7 +28,7 @@
             PASSWORD,            /** 회원 비밀번호 **/
             EMAIL,               /** 회원 이메일 **/
             PHONENUMBER,         /** 회원 핸드폰번호 **/
-            GRADE
+            GRADE                /** 등급 **/
         FROM Owner_Tbl
         WHERE OWNER_ID = #{owner_Id}
     </select>

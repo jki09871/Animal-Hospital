@@ -33,11 +33,11 @@
         /** 처방전 등록된 동물 보기 **/
         SELECT * FROM (
             SELECT
-                PET_ID,
-                PET_NAME,
+                PET_ID ,           /** 동물 칩 정보 **/
+                PET_NAME ,         /** 동물 이름 **/
                 TIMESTAMPDIFF(YEAR, AGE, CURDATE()) + 1 AS AGE , /** 동물 나이 계산값 **/
-                SPECIES,
-                SIGNIFICANT
+                SPECIES,           /** 종 **/
+                SIGNIFICANT        /**  특이사항 **/
             FROM
                 PET_TBL
                     <if test="keyword != null">
@@ -86,12 +86,12 @@
     <update id="editSend" parameterType="com.review.dto.animal.PetMedicalRecordDTO">
         update PET_MEDICAL_RECORD
         set
-            PET_NAME = #{pet_Name},
-            PET_AGE = #{pet_Age},
-            SYMPTOMS = #{symptoms},
-            DIAGNOSIS = #{diagnosis},
-            TREATMENT = #{treatment},
-            PRESCRIPTION = #{prescription}
+            PET_NAME = #{pet_Name},             /** 동물 이름 **/
+            PET_AGE = #{pet_Age},               /** 동물 나이 **/
+            SYMPTOMS = #{symptoms},             /** 증상 **/
+            DIAGNOSIS = #{diagnosis},           /** 진단 **/
+            TREATMENT = #{treatment},           /** 치료 **/
+            PRESCRIPTION = #{prescription}      /** 처방전 **/
         WHERE
             RECORD_ID = #{record_Id}
     </update>

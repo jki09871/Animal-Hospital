@@ -12,23 +12,20 @@
             REGDATE,                  /** 작성시간 **/
             UPDATEDATE                /** 수정시간 **/
         FROM 
-            TBL_INQUIRY 
+            INQUIRY_TBL 
         ORDER BY
             INQUIRYNUM DESC
     </select>
 
     <insert id="insert">
-        INSERT INTO TBL_INQUIRY
+        INSERT INTO INQUIRY_TBL
             (
-             INQUIRYNUM,               /** 문의고유번호 **/
              TITLE,                    /** 문의제목 **/
              CONTENT,                  /** 문의내용 **/
-             WRITER,                   /** 작성자 **/
-             UPDATEDATE = null                /** 문의 내용 수정 시간 **/
+             WRITER                    /** 작성자 **/
              )
             VALUES
             (
-             DEFAULT,
              #{title},
              #{content},
              #{writer}
@@ -45,7 +42,7 @@
             REGDATE,                  /** 문의한 시간 **/
             UPDATEDATE                /** 문의 내용 수정 시간 **/
         FROM
-            TBL_INQUIRY
+            INQUIRY_TBL
         WHERE
             INQUIRYNUM = #{inquiryNum}
 
@@ -53,7 +50,7 @@
 
     <delete id="delete">
         DELETE FROM
-                    TBL_INQUIRY
+                    INQUIRY_TBL
                WHERE
                    INQUIRYNUM=#{inquiryNum}
 
@@ -61,7 +58,7 @@
 
     <update id="update">
         UPDATE
-            TBL_INQUIRY
+            INQUIRY_TBL
         SET
             TITLE = #{title},                 /** 문의제목 **/
             CONTENT = #{content},             /** 문의내용 **/

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+    <insert id="save" parameterType="com.review.dto.animal.InquiryCommentDTO">
+        INSERT INTO INQUIRY_COMMENT_TBL
+            (
+                COMMENTWRITER,          /** 댓글 작성자 **/
+                COMMENTCONTENT,         /** 댓글 내용 **/
+                BOARDID                 /** 문의테이블 번호 **/
+            )
+            VALUES
+            (
+                #{commentWriter},
+                #{commentContent},
+                #{boardId}
+            )
+
+    </insert>
+
+    <select id="findAll" parameterType="int" resultType="com.review.dto.animal.InquiryCommentDTO">
+
+        SELECT
+            ID,                     /** 댓글 고유번호 **/
+            COMMENTWRITER,          /** 댓글 작성자 **/
+            COMMENTCONTENT,         /** 댓글 내용 **/
+            BOARDID,                /** 문의 테이블 번호 **/
+            COMMENTCREATETIME       /** 문의작성 시간 **/
+        FROM
+            INQUIRY_COMMENT_TBL
+        WHERE
+            BOARDID = #{boardId}
+        ORDER BY
+            ID DESC
+
+    </select>
+</mapper>

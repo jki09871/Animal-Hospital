@@ -1,6 +1,8 @@
 package com.review.controller.animal;
 
 import com.review.dto.animal.InquiryBoardDTO;
+import com.review.dto.animal.InquiryCommentDTO;
+import com.review.service.animal.InquiryCommentService;
 import com.review.service.animal.MedicalInquiryService;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -14,14 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Log4j
 @Controller
 @AllArgsConstructor
 public class InquiryBoardController {
 
-    @Setter(onMethod_ = @Autowired)
-    private MedicalInquiryService is;
 
+    private final MedicalInquiryService is;
+    private final InquiryCommentService ics;
 
     @RequestMapping("/pet/inquiry/list")
     public String list(Model model){
@@ -56,8 +60,12 @@ public class InquiryBoardController {
     public String get(@RequestParam("inquiryNum") Long inquiryNum, Model model){
         log.info("/get.....");
         model.addAttribute("board", is.get(inquiryNum));
+        List<InquiryCommentDTO> commentList = ics.commentFindAll(Math.toIntExact(inquiryNum));
+        model.addAttribute("commentList", commentList);
         return "/animal/inquiry/get";
     }
+
+    // 글 수정
     @GetMapping("/pet/inquiry/modify")
     public String getModify(@RequestParam("inquiryNum") Long inquiryNum, Model model){
         log.info("/get.....");

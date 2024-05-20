@@ -27,7 +27,7 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="text-center">게시글 리스트</h1>
+    <h1 class="text-center">Inquiry Board</h1>
     <div class="mb-3 text-right">
         <button id="regBtn" class="btn btn-success">글쓰기</button>
     </div>
@@ -39,17 +39,22 @@
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일</th>
-                <th>수정일</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach var="board" items="${list}">
                 <tr>
-                    <td><c:out value="${board.inquiryNum}"></c:out></td>
-                    <td><a href="/pet/inquiry/get?inquiryNum=${board.inquiryNum}"><c:out value="${board.title}"></c:out></a></td>
-                    <td><c:out value="${board.writer}"></c:out></td>
-                    <td><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd"/></td>
-                    <td><fmt:formatDate value="${board.updateDate}" pattern="yyyy-MM-dd"/></td>
+                    <td><c:out value="${board.INQUIRY_NUM}"/></td>
+                    <c:choose>
+                        <c:when test="${board.CNT > 0}">
+                            <td><a href="/pet/inquiry/get?inquiry_Num=${board.INQUIRY_NUM}"><c:out value="${board.TITLE}"/>(<c:out value="답변완료" />)</a></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><a href="/pet/inquiry/get?inquiry_Num=${board.INQUIRY_NUM}"><c:out value="${board.TITLE}"/></a></td>
+                        </c:otherwise>
+                    </c:choose>
+                    <td><c:out value="${board.WRITER}"/></td>
+                    <td><fmt:formatDate value="${board.REGDATE}" pattern="yyyy-MM-dd"/></td>
                 </tr>
             </c:forEach>
             </tbody>

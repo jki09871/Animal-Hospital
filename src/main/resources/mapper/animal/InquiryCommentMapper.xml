@@ -6,15 +6,15 @@
     <insert id="save" parameterType="com.review.dto.animal.InquiryCommentDTO">
         INSERT INTO INQUIRY_COMMENT_TBL
             (
-                COMMENTWRITER,          /** 댓글 작성자 **/
-                COMMENTCONTENT,         /** 댓글 내용 **/
-                BOARDID                 /** 문의테이블 번호 **/
+                COMMENT_WRITER,          /** 댓글 작성자 **/
+                COMMENT_CONTENT,         /** 댓글 내용 **/
+                INQUIRY_NUM              /** 문의테이블 번호 **/
             )
             VALUES
             (
-                #{commentWriter},
-                #{commentContent},
-                #{boardId}
+                #{comment_Writer},
+                #{comment_Content},
+                #{inquiry_num}
             )
 
     </insert>
@@ -22,17 +22,33 @@
     <select id="findAll" parameterType="int" resultType="com.review.dto.animal.InquiryCommentDTO">
 
         SELECT
-            ID,                     /** 댓글 고유번호 **/
-            COMMENTWRITER,          /** 댓글 작성자 **/
-            COMMENTCONTENT,         /** 댓글 내용 **/
-            BOARDID,                /** 문의 테이블 번호 **/
-            COMMENTCREATETIME       /** 문의작성 시간 **/
+            ID,                       /** 댓글 고유번호 **/
+            COMMENT_WRITER,           /** 댓글 작성자 **/
+            COMMENT_CONTENT,          /** 댓글 내용 **/
+            INQUIRY_NUM,              /** 문의 테이블 번호 **/
+            COMMENT_CREATE_TIME       /** 문의작성 시간 **/
         FROM
             INQUIRY_COMMENT_TBL
         WHERE
-            BOARDID = #{boardId}
+            INQUIRY_NUM = #{inquiry_num}
         ORDER BY
             ID DESC
-
     </select>
+
+    <delete id="delete" parameterType="int">
+        DELETE
+        FROM
+            INQUIRY_COMMENT_TBL
+        WHERE
+            ID = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE
+            INQUIRY_COMMENT_TBL
+        SET
+            COMMENT_CONTENT = #{comment_Content}
+        WHERE
+            ID = #{id}
+    </update>
 </mapper>

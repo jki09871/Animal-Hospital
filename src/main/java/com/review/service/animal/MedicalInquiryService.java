@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Log4j
@@ -23,9 +24,9 @@ public class MedicalInquiryService {
         mir.insert(board);
     }
 
-    public InquiryBoardDTO get(Long inquiryNum) {
-        log.info("get....." + inquiryNum);
-        return mir.read(inquiryNum);
+    public InquiryBoardDTO get(Long inquiry_Num) {
+        log.info("get....." + inquiry_Num);
+        return mir.read(inquiry_Num);
     }
 
 
@@ -34,12 +35,12 @@ public class MedicalInquiryService {
         return mir.update(board) == 1;
     }
 
-    public boolean remove(Long inquiryNum) {
-        log.info("delete....." + inquiryNum);
-        return mir.delete(inquiryNum) == 1;
+    public boolean remove(Long inquiry_Num) {
+        log.info("delete....." + inquiry_Num);
+        return mir.delete(inquiry_Num) == 1;
     }
 
-    public List<InquiryBoardDTO> getList() {
+    public List<Map<String,Object>> getList() {
         log.info("getList.....0");
         return mir.getList();
     }

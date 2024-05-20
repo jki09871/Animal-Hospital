@@ -41,7 +41,7 @@
             </div>
             <div class="btn-group">
                 <button type="submit" class="btn btn-success">등록</button>
-                <button type="reset" class="btn btn-secondary">취소</button>
+                <button type="button" onclick="history.back()" class="btn btn-secondary">취소</button>
             </div>
         </form>
     </div>

@@ -23,7 +23,15 @@ public class InquiryCommentService {
         icr.commentSave(commentDTO);
     }
 
-    public List<InquiryCommentDTO> commentFindAll(int boardId) {
-       return icr.commentFindAll(boardId);
+    public List<InquiryCommentDTO> commentFindAll(int inquiry_num) {
+       return icr.commentFindAll(inquiry_num);
+    }
+
+    public void commentDelete(int id) {
+        icr.commentDelete(id);
+    }
+
+    public void commentUpdate(InquiryCommentDTO commentDTO) {
+        icr.commentUpdate(commentDTO);
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 @Log4j
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class MedicalInquiryRepository {
     private final SqlSessionTemplate sql;
 
 
-    public List<InquiryBoardDTO> getList(){
+    public List<Map<String,Object>> getList(){
         return sql.selectList("inquiry.getList");
     }
 
@@ -27,13 +29,13 @@ public class MedicalInquiryRepository {
         
     }
 
-    public InquiryBoardDTO read(long inquiryNum){
-        return sql.selectOne("inquiry.read", inquiryNum);
+    public InquiryBoardDTO read(long inquiry_Num){
+        return sql.selectOne("inquiry.read", inquiry_Num);
         
     }
 
-    public int delete(long inquiryNum){
-        return sql.delete("inquiry.delete", inquiryNum);
+    public int delete(long inquiry_Num){
+        return sql.delete("inquiry.delete", inquiry_Num);
     }
 
     public int update(InquiryBoardDTO board){

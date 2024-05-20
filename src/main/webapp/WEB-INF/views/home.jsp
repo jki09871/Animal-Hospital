@@ -16,7 +16,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="#" title="Animal Adoption Bootstrap Theme">
+			<a  onclick="location.reload()" title="Animal Adoption Bootstrap Theme">
 				<img class="logo" src="/resources/animal-adoption/images/logo.png" alt="Animal Adoption Bootstrap Theme" style="margin-top:5px;" />
 			</a>
 		</div>
@@ -28,6 +28,7 @@
 				<li><a href="#stories" class="smooth-scroll">STORIES</a></li>
 				<li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
 				<li><a href="/animal/reviewList" class="smooth-scroll">REVIEW</a></li>
+				<li><a href="/pet/inquiry/list" class="smooth-scroll">INQUIRY</a></li>
 				<c:if test="${sessionScope.loginId == null}">
 				<li><a href="/animal/login" class="smooth-scroll">LOGIN</a></li>
 				</c:if>

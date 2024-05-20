@@ -22,7 +22,15 @@ public class InquiryCommentRepository {
         sql.insert("comment.save", commentDTO);
     }
 
-    public List<InquiryCommentDTO> commentFindAll(int boardId) {
-        return sql.selectList("comment.findAll", boardId);
+    public List<InquiryCommentDTO> commentFindAll(int inquiry_num) {
+        return sql.selectList("comment.findAll", inquiry_num);
+    }
+
+    public void commentDelete(int id) {
+        sql.delete("comment.delete", id);
+    }
+
+    public void commentUpdate(InquiryCommentDTO commentDTO) {
+        sql.update("comment.update", commentDTO);
     }
 }

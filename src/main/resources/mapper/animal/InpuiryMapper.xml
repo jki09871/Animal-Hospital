@@ -2,21 +2,24 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="inquiry">
-    <select id="getList" resultType="com.review.dto.animal.InquiryBoardDTO">
-        SELECT
-            INQUIRYNUM,               /** 문의고유번호 **/
-            TITLE,                    /** 문의제목 **/
-            CONTENT,                  /** 문의내용 **/
-            WRITER,                   /** 작성자 **/
-            REGDATE,                  /** 작성시간 **/
-            UPDATEDATE                /** 수정시간 **/
-        FROM 
-            INQUIRY_TBL 
-        ORDER BY
-            INQUIRYNUM DESC
-    </select>
 
+<mapper namespace="inquiry">
+
+    <select id="getList" resultType="java.util.HashMap">
+
+
+        SELECT
+            A.INQUIRY_NUM,
+            A.TITLE,
+            A.CONTENT,
+            A.WRITER,
+            A.REGDATE,
+             (SELECT COUNT(*) FROM INQUIRY_COMMENT_TBL B where A.INQUIRY_NUM = B.INQUIRY_NUM) AS CNT
+        FROM
+            INQUIRY_TBL A
+        ORDER BY
+            INQUIRY_NUM DESC;
+    </select>
     <insert id="insert">
         INSERT INTO INQUIRY_TBL
             (
@@ -35,16 +38,16 @@
 
     <select id="read" resultType="com.review.dto.animal.InquiryBoardDTO">
         SELECT
-            INQUIRYNUM,               /** 문의고유번호 **/
+            INQUIRY_NUM,               /** 문의고유번호 **/
             TITLE,                    /** 문의제목 **/
             CONTENT,                  /** 문의내용 **/
             WRITER,                   /** 작성자 **/
             REGDATE,                  /** 문의한 시간 **/
-            UPDATEDATE                /** 문의 내용 수정 시간 **/
+            UPDATE_DATE                /** 문의 내용 수정 시간 **/
         FROM
             INQUIRY_TBL
         WHERE
-            INQUIRYNUM = #{inquiryNum}
+            INQUIRY_NUM = #{inquiry_Num}
 
     </select>
 
@@ -52,7 +55,7 @@
         DELETE FROM
                     INQUIRY_TBL
                WHERE
-                   INQUIRYNUM=#{inquiryNum}
+                   INQUIRY_NUM=#{inquiry_Num}
 
     </delete>
 
@@ -63,8 +66,8 @@
             TITLE = #{title},                 /** 문의제목 **/
             CONTENT = #{content},             /** 문의내용 **/
             WRITER = #{writer},               /** 작성자 **/
-            UPDATEDATE = current_timestamp    /** 문의 내용 수정 시간 **/
+            UPDATE_DATE = current_timestamp    /** 문의 내용 수정 시간 **/
         WHERE
-            INQUIRYNUM = #{inquiryNum}
+            INQUIRY_NUM = #{inquiry_Num}
     </update>
 </mapper>

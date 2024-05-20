@@ -31,6 +31,7 @@ public class InquiryBoardController {
     public String list(Model model){
         log.info("list.....");
         model.addAttribute("list", is.getList());
+        System.out.println("is.getList() = " + is.getList());
         return "/animal/inquiry/list";
 
     }
@@ -43,13 +44,10 @@ public class InquiryBoardController {
     //글 쓰기
     @PostMapping("/pet/inquiry/register")
     public String register(InquiryBoardDTO board, RedirectAttributes rttr){
-        /** @Conteroller 어노테이션이 붙고, 컴포넌트스캔에 패키지가 지정되어 있다면
-            매개변수 인자들은 스프링이 자동으로 생성 할당 함.
-            <context:component-scan base-package="com.review.controller" />
-         **/
+
         log.info("register: " + board);
         is.register(board);
-        rttr.addFlashAttribute("result", board.getInquiryNum());
+        rttr.addFlashAttribute("result", board.getInquiry_Num());
         // 리다이렉트 시키면서 1회용 값을 전달.
         return "redirect:/pet/inquiry/list";
     }
@@ -57,19 +55,19 @@ public class InquiryBoardController {
 
     // 글 읽기
     @GetMapping("/pet/inquiry/get")
-    public String get(@RequestParam("inquiryNum") Long inquiryNum, Model model){
+    public String get(@RequestParam("inquiry_Num") Long inquiry_Num, Model model){
         log.info("/get.....");
-        model.addAttribute("board", is.get(inquiryNum));
-        List<InquiryCommentDTO> commentList = ics.commentFindAll(Math.toIntExact(inquiryNum));
+        model.addAttribute("board", is.get(inquiry_Num));
+        List<InquiryCommentDTO> commentList = ics.commentFindAll(Math.toIntExact(inquiry_Num));
         model.addAttribute("commentList", commentList);
         return "/animal/inquiry/get";
     }
 
     // 글 수정
     @GetMapping("/pet/inquiry/modify")
-    public String getModify(@RequestParam("inquiryNum") Long inquiryNum, Model model){
+    public String getModify(@RequestParam("inquiry_Num") Long inquiry_Num, Model model){
         log.info("/get.....");
-        model.addAttribute("board", is.get(inquiryNum));
+        model.addAttribute("board", is.get(inquiry_Num));
         return "/animal/inquiry/modify";
     }
 
@@ -78,19 +76,18 @@ public class InquiryBoardController {
     public String modify(InquiryBoardDTO board, RedirectAttributes rttr){
         log.info("modify" + board);
         if (is.modify(board)){
-            is.get(board.getInquiryNum());
-            Long inquiryNum = board.getInquiryNum();
-            rttr.addAttribute("inquiryNum",inquiryNum);
+            is.get(board.getInquiry_Num());
+            Long inquiry_Num = board.getInquiry_Num();
+            rttr.addAttribute("inquiry_Num",inquiry_Num);
         }
-        /** 수정이 성공하면 success 메세지가 포함되어 이동. 실패해도 메세지 뺴고 이동. **/
         return "redirect:/pet/inquiry/get";
     }
 
     // 글 삭제
     @PostMapping("/pet/inquiry/remove")
-    public String remove(@RequestParam("inquiryNum") Long inquiryNum, RedirectAttributes rttr) {
-        log.info("remove" + inquiryNum);
-        if (is.remove(inquiryNum)) {
+    public String remove(@RequestParam("inquiry_Num") Long inquiry_Num, RedirectAttributes rttr) {
+        log.info("remove" + inquiry_Num);
+        if (is.remove(inquiry_Num)) {
             rttr.addFlashAttribute("result", "success");
         }
         return "redirect:/pet/inquiry/list";

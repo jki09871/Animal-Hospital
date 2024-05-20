@@ -19,8 +19,8 @@ public class InquiryCommentDTO {
      * **/
 
     private Long id;
-    private String commentWriter;
-    private String commentContent;
-    private int boardId;
-    private Date commentCreateTime;
+    private String comment_Writer;
+    private String comment_Content;
+    private int inquiry_num;
+    private Date comment_Create_Time;
 }

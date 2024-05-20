@@ -18,10 +18,10 @@ public class InquiryBoardDTO {
      *   PRIMARY KEY (`inquiryNum`)
      * );
     * **/
-    private Long inquiryNum;
+    private Long inquiry_Num;
     private String title;
     private String content;
     private String writer;
     private Date regdate;
-    private Date updateDate;
+    private Date update_Date;
 }

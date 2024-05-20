@@ -32,9 +32,7 @@
 <div class="container">
     <div class="panel-body">
         <form role="form" id="modifyForm" action="/pet/inquiry/modify" method="post">
-            <input type="hidden" name="inquiryNum" value="${board.inquiryNum}">
-            <input type="hidden" name="pageNum" value="${cri.pageNum}">
-            <input type="hidden" name="amount" value="${cri.amount}">
+            <input type="hidden" name="inquiry_Num" value="${board.inquiry_Num}">
             <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" id="title" name="title" value="<c:out value='${board.title}'/>">

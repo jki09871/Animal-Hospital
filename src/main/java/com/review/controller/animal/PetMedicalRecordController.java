@@ -10,11 +10,12 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,16 +61,35 @@ public class PetMedicalRecordController {
 
 
     @GetMapping("/pet/prescription/details")
-    public String prescriptionRead(PetMedicalRecordDTO recordDTO,PagingCriteria cri, Model model){
+    @ResponseBody
+    public ModelAndView prescriptionRead(PetMedicalRecordDTO recordDTO, PagingCriteria cri, Model model, RedirectAttributes rttr,
+                                         @RequestParam(value = "pet_Id", required = false) Integer pet_Id,
+                                         @RequestParam(value = "endTime", required = false) String endTime,
+                                         @RequestParam(value = "startTime", required = false) String startTime){
 
-        model.addAttribute("cri", cri);
+        Map<String , Object> multiple = new HashMap<>();
+        multiple.put("pet_Id", pet_Id);
+        multiple.put("startTime", startTime);
+        multiple.put("endTime", endTime);
+
+        List<Map<String,Object>> readList = recordService.prescriptionDetails(multiple);
+        ModelAndView view = new ModelAndView();
+
+        int size = readList.size();
+        if (size <= 0){
+            rttr.addAttribute("cri", cri);
+            rttr.addAttribute("read", readList);
+            rttr.addAttribute("pet_Id", pet_Id);
+            view.setViewName("redirect:/pet/prescription/details");
+            return view;
+        }
 
 
+        view.setViewName("/animal/record/read");
+        view.addObject("cri", cri);
+        view.addObject("read", readList);
 
-        List<PetMedicalRecordDTO> readList = recordService.prescriptionDetails(recordDTO);
-        model.addAttribute("read",readList);
-
-        return "/animal/record/read";
+        return view;
     }
     /************************************************************************************************************/
 
@@ -89,7 +109,7 @@ public class PetMedicalRecordController {
     public String sendCorrectedPrescription(PetMedicalRecordDTO recordDTO, HttpServletRequest request,
                                             PagingCriteria cri, RedirectAttributes rttr){
         recordService.editAndSend(recordDTO);
-        recordService.prescriptionDetails(recordDTO);
+        recordService.prescriptionDetails((Map<String, Object>) recordDTO);
 
         rttr.addAttribute("record_Id", request.getParameter("record_Id"));
         rttr.addAttribute("pageNum", request.getParameter("pageNum"));
@@ -115,4 +135,14 @@ public class PetMedicalRecordController {
     }
     /************************************************************************************************************/
 
+
+//    @PostMapping("/pet/prescription/details/time")
+//    @ResponseBody
+//    public String timeSearch (@RequestParam("startTime")Date startTime,
+//                              @RequestParam("endTime")Date endTime){
+//
+//        System.out.println("startTime = " + startTime);
+//        System.out.println("endTime = " + endTime);
+//        return null;
+//    }
 }

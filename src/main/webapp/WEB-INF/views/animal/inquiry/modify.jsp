@@ -10,23 +10,8 @@
     <script src="/resources/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .form-group label {
-            font-weight: bold;
-        }
-        .btn-toolbar {
-            margin-top: 20px;
-        }
-        .btn-toolbar .btn {
-            margin-right: 10px; /* Adds space between buttons */
-        }
-    </style>
+    <link rel="stylesheet" href="/resources/inquiry.css">
+
 </head>
 <body>
 <div class="container">

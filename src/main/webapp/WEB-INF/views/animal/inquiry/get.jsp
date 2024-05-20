@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fmf" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -11,56 +12,7 @@
     <script src="/resources/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .panel-body {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .form-group input, .form-group textarea {
-            background-color: #e9ecef;
-            border: none;
-        }
-        .btn a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .btn a:hover {
-            color: #fff;
-        }
-        #comment-list table {
-            width: 100%;
-            margin-top: 20px;
-        }
-        #comment-list th, #comment-list td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        #comment-list th {
-            background-color: #f2f2f2;
-        }
-        #comment-form {
-            margin-top: 20px;
-        }
-        #comment-form input {
-            width: calc(100% - 110px);
-            margin-right: 10px;
-        }
-        #comment-form button {
-            width: 100px;
-        }
-        .text-right {
-            text-align: right;
-        }
-    </style>
+    <link rel="stylesheet" href="/resources/inquiry.css">
 </head>
 <body>
 <div class="container">
@@ -68,6 +20,10 @@
     <div class="panel-body">
         <div class="form-group">
             <label for="inquiry_Num">게시물 번호</label>
+            <div class="btn-group">
+                <a href="/pet/inquiry/modify?inquiry_Num=${board.inquiry_Num}" class="btn btn-warning">수정</a>
+                <a href="/pet/inquiry/list" class="btn btn-info">목록</a>
+            </div>
             <input type="text" class="form-control" id="inquiry_Num" name="inquiry_Num" value="<c:out value='${board.inquiry_Num}'/>" readonly>
         </div>
         <div class="form-group">
@@ -81,10 +37,6 @@
         <div class="form-group">
             <label for="writer">작성자</label>
             <input type="text" class="form-control" id="writer" name="writer" value="<c:out value='${board.writer}'/>" readonly>
-        </div>
-        <div class="text-center">
-            <a href="/pet/inquiry/modify?inquiry_Num=${board.inquiry_Num}" class="btn btn-warning">수정</a>
-            <a href="/pet/inquiry/list" class="btn btn-info">목록</a>
         </div>
 
         <div id="comment-list">

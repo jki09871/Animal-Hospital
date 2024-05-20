@@ -2,6 +2,8 @@ package com.review.paging;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class PagingCriteria {
 
@@ -22,6 +24,9 @@ public class PagingCriteria {
 
     /** 검색 타입 배열 **/
     private String[] typeArr;
+
+    private String startTime;
+    private String endTime;
 
 
     /** 기본 생성자 -> 기본 세팅 : pageNum =1, amount = 10 **/

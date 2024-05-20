@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +28,8 @@ public class MedicalRecordService {
         return recordRepository.recordList(pagingCriteria);
     }
 
-    public List<PetMedicalRecordDTO> prescriptionDetails(PetMedicalRecordDTO recordDTO) {
-        return recordRepository.prescriptionDetails(recordDTO);
+    public List<Map<String, Object>> prescriptionDetails(Map<String , Object> multiple) {
+        return recordRepository.prescriptionDetails(multiple);
     }
 
     public PetMedicalRecordDTO recordEdit(PetMedicalRecordDTO recordDTO) {

@@ -34,8 +34,8 @@
             PET_NAME,           /** 동물 이름 **/
             SPECIES,            /** 종 **/
             SIGNIFICANT,        /** 특이사항 **/
-            OWNER_ID            /** 주인 아이디 **/
-                TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE, /** 계산된 나이 **/
+            OWNER_ID,           /** 주인 아이디 **/
+            TIMESTAMPDIFF(YEAR,AGE,CURDATE()) + 1 AS AGE /** 계산된 나이 **/
         FROM
             PET_TBL
     </select>
@@ -46,8 +46,8 @@
             PET_NAME,           /** 동물 이름 **/
             SPECIES,            /** 종 **/
             SIGNIFICANT,        /** 특이사항 **/
-            OWNER_ID            /** 주인 아이디 **/
-                TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE, /** 계산된 나이 **/
+            OWNER_ID,            /** 주인 아이디 **/
+            TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE /** 계산된 나이 **/
         FROM
             PET_TBL
         WHERE PET_ID = #{pet_Id}

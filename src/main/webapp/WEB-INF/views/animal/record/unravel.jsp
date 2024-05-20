@@ -64,7 +64,7 @@
     </div>
     <div class="detail-item">
         <span class="detail-label">Pet Age(나이):</span>
-        <span>${read.pet_Age}</span>
+        <span>${read.pet_Age}(${read.calculated_age}살)</span>
     </div>
     <div class="detail-item">
         <span class="detail-label">Symptoms(증상):</span>

@@ -10,26 +10,16 @@
     <script src="/resources/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .table th, .table td {
-            vertical-align: middle;
-        }
-        #regBtn {
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="/resources/inquiry.css">
+
+
 </head>
 <body>
 <div class="container">
     <h1 class="text-center">Inquiry Board</h1>
     <div class="mb-3 text-right">
-        <button id="regBtn" class="btn btn-success">글쓰기</button>
+        <button id="regBtn" onclick="multiple_btn('R');" class="btn btn-success">글쓰기</button>
+        <button id="homBtn" onclick="multiple_btn('H');" class="btn btn-success">홈</button>
     </div>
     <div class="basic board">
         <table class="table table-striped table-bordered" id="dataTable">
@@ -63,12 +53,18 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        console.log("목록 페이지");
-        $('#regBtn').on('click', function (e){
+
+function multiple_btn(es){
+    switch (es) {
+        case 'R' :
             self.location = "/pet/inquiry/register";
-        });
-    });
+            break;
+        default :
+            self.location = "/";
+    }
+
+};
+
 </script>
 </body>
 </html>

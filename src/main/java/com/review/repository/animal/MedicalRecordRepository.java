@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Log4j
@@ -29,8 +30,8 @@ public class MedicalRecordRepository {
         return sql.selectList("record.recordList", pagingCriteria);
     }
 
-    public List<PetMedicalRecordDTO> prescriptionDetails(PetMedicalRecordDTO recordDTO) {
-        return sql.selectList("record.read", recordDTO);
+    public List<Map<String,Object>> prescriptionDetails(Map<String, Object> multiple) {
+        return sql.selectList("record.read", multiple);
     }
 
     public PetMedicalRecordDTO recordEdit(PetMedicalRecordDTO recordDTO) {

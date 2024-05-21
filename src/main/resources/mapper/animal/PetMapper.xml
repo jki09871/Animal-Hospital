@@ -30,9 +30,9 @@
             OWNER_ID,                  /* 동물 주인 */
             PET_ID,                    /* 마이크로칩 번호 */
             PET_NAME,                  /* 동물 이름 */
-            SPECIES                    /* 종 */
-            TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE, /* 계산된 나이 */
-                SIGNIFICANT,               /* 특이사항 */
+            SPECIES,                   /* 종 */
+            SIGNIFICANT,               /* 특이사항 */
+            TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE /* 계산된 나이 */
         FROM Pet_Tbl
         WHERE OWNER_Id =  #{owner_Id}
     </select>

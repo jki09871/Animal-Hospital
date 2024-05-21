@@ -8,7 +8,7 @@
     <form action="/animal/signup" method="post" name="joinFrom" id="joinFrom">
         <div id="signup">
             <div id="divId">
-                <input type="text" id="id" name="ownerId" placeholder="아이디" class="input_id"  autocomplete="off" required>
+                <input type="text" id="id" name="owner_Id" placeholder="아이디" class="input_id"  autocomplete="off" required>
                 <button type="button" id="idCheck" name="idCheck" onclick="fn_idCheck()">아이디 확인</button>
                 <div id="idCheckResult">영문자로 시작하며 숫자 6~20자를 이용해주세요</div>
             </div>
@@ -206,7 +206,6 @@
             var userPassword = $('#pw');    // 사용자 비밀번호
             var userEmail = $('#em');       // 사용자 이메일
             var userPhoneNum = $('#pn');    // 사용자 핸드폰 번호
-            var userPetId = $('#pi');       // 사용자 동물 고유번호
 
 
             if (!userid.val() || $('#idCheckResult').data("result") === 0 || $('#idCheckResult').data("IdResult") === 0) {
@@ -228,11 +227,7 @@
                 userPhoneNum.focus();
                 e.preventDefault();
                 return;
-            } else if (!userPetId.val()) {
-                userPetId.focus();
-                e.preventDefault();
-                return;
-            } else if (valid) {
+            }  else if (valid) {
                 alert("회원가입이 완료 되었습니다.")
                 $("#joinFrom").submit();
             }

@@ -55,10 +55,12 @@
                         <td>${comment.comment_Writer}</td>
                         <td>${comment.comment_Content}</td>
                         <td><fmt:formatDate value="${comment.comment_Create_Time}" pattern="yyyy-MM-dd"/></td>
+                        <c:if test="${sessionScope.loginId.grade == 99}">
                         <td class="text-right">
                             <button class="btn btn-danger" onclick="deleteComment(${comment.id}, this)">삭제</button>
                             <button class="btn btn-dark" id="comment_Id" onclick="openEditModal(${comment.id}, this)">수정</button>
                         </td>
+                        </c:if>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -81,6 +83,7 @@
                                 <input type="hidden" id="editCommentId">
                             </form>
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                             <button type="button" class="btn btn-primary">저장</button>
@@ -90,15 +93,26 @@
             </div>
         </div>
 
+        <c:if test="${sessionScope.loginId.grade == 99}">
         <div id="comment-form">
             <input type="hidden" id="comment_Writer" value="<c:out value='${sessionScope.loginId.owner_Id}'/>">
             <input type="text" id="comment_Content" placeholder="내용">
             <button id="comment-write-btn" class="btn btn-primary" onclick="commentWrite()">답변</button>
         </div>
+        </c:if>
     </div>
 </div>
 
 <script>
+
+    $('.btn-warning').on('click', function (){
+        let writer = $('#writer').val();
+        let owner = "${sessionScope.loginId.owner_Id}";
+        if (writer != owner){
+            alert("작성자가 아닙니다.")
+            return false;
+        }
+    })
     function openEditModal(commentId, buttonElement) {
         // 현재 댓글 내용을 가져와서 모달에 채우기
         var row = $(buttonElement).closest('tr');

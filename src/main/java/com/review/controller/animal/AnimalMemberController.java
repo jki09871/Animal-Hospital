@@ -7,12 +7,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +27,9 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 public class AnimalMemberController {
+
+    @Setter(onMethod_ = @Autowired)
+    private JavaMailSender mailSender;
     @Setter(onMethod_ = @Autowired)
     private OwnerService as;
 
@@ -31,6 +41,28 @@ public class AnimalMemberController {
     }
     @PostMapping("/animal/signup")
     public String postSignupScreen(AnimalMemberDTO animalDTO){
+
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            messageHelper.setFrom("ghdwjdrl1234@gmail.com");
+
+            messageHelper.setTo(animalDTO.getEmail()); /** 받을 이메일 */
+            messageHelper.setSubject("안녕하세요! 동물 입양센터입니다."); /** 이메일 제목 */
+            messageHelper.setText("이메일 :" + animalDTO.getEmail() + "아이디 :" + animalDTO.getOwner_Id() +
+                                    "핸드폰 번호 :" + animalDTO.getPhoneNumber()); /** 내용*/
+            FileSystemResource fileSystemResource = new FileSystemResource(new File("C:\\js\\api\\123.html"));
+            messageHelper.addAttachment("html.html", fileSystemResource);
+
+            FileSystemResource file = new FileSystemResource(new File("C:\\mp\\file\\03b3eedcc5aa4f15b87bf65121495816.png"));
+            messageHelper.addInline("그냥 사진.png", file);
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
 
         Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
 
@@ -136,4 +168,32 @@ public class AnimalMemberController {
         return "redirect:/animal/myInfo";
     }
     /**********************************************************************************************************/
+
+
+    //mailSend code
+
+    @GetMapping("animal/owner/mail")
+    public String mailSend(){
+        return "/animal/owner/mailSender";
+    }
+    @PostMapping("/animal/owner/mail")
+    public String mailSend(HttpServletRequest request, String name, String email, String phone, String message ){
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            messageHelper.setFrom("ghdwjdrl1234@gmail.com");
+
+            messageHelper.setTo("ghdwjdrl56@naver.com");
+            messageHelper.setSubject("테스용 메시지 내 이름 :" + name + "입니다.");
+            messageHelper.setText(message + "연락처는 " + phone + "이메일 주소는 " + email + "이다.");
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "redirect:/";
+    }
+
 }

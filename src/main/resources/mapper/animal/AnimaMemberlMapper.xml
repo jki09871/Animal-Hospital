@@ -18,7 +18,7 @@
         #{owner_Id},
         #{password},
         #{email},
-        #{phoneNumber},
+        #{phoneNumber}
         )
     </insert>
 

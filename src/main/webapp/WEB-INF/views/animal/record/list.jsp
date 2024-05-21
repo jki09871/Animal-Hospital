@@ -92,11 +92,11 @@
 </div>
 <table>
     <tr>
-        <th>Pet ID</th>
-        <th>Pet Name</th>
-        <th>Pet Age</th>
-        <th>Species</th>
-        <th>Significant</th>
+        <th>마이크로칩 번호</th>
+        <th>동물 이름</th>
+        <th>동물 나이</th>
+        <th>견종</th>
+        <th>특이사항</th>
     </tr>
     <c:forEach var="list" items="${recordList}">
         <tr class="pet_info">

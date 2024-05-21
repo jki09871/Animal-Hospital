@@ -1,24 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
+<link rel="stylesheet" href="/resources/styles.css">
+
 <html>
 <head>
     <title>Title</title>
-    <style>
-        table{ border-collapse : collapse; }  /*이중선 제거*/
-        th,td{
-            width: 100px;
-            height: 50px;
-            text-align: center;
-            border: 1px solid #000;
-
-            /*vertical-align: top;	!* 위 *!*/
-            /*vertical-align: bottom;   !* 아래 *!*/
-            vertical-align: middle;   /* 가운데 */
-        }
-    </style>
 </head>
 <body>
+<div class="container">
     <form name="petForm" id="petForm" action="/animal/pet/info" method="get">
         <table class="pet-table">
             <tr>
@@ -36,17 +26,19 @@
                     <td>${pet.species}</td>
                     <td>${pet.pet_Id}</td>
                     <td>${pet.significant}</td>
-                    <td><button type="button" name="btn">
-                        <a href="/pet/info/modify?pet_Id=${pet.pet_Id}">수정</a>
-                    </button></td>
+                    <td>
+                        <button type="button" class="btn-modify">
+                            <a href="/pet/info/modify?pet_Id=${pet.pet_Id}" style="color: inherit; text-decoration: none;">수정</a>
+                        </button>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
-                <div>
-                    <button type="button" onclick="fnDynamic('C');" name="btn">확인</button>
-                </div>
+        <div class="btn-group">
+            <button type="button" onclick="fnDynamic('C');" class="btn-modify">확인</button>
+        </div>
     </form>
-
+</div>
 </body>
 <script>
     let form = $('#petForm');
@@ -65,12 +57,9 @@
         // pet_info 클래스를 갖는 요소의 존재 여부 확인
         if ($('.pet_info').length === 0) {
             alert("등록된 동물이 없습니다.");
-            // window.history.back();
             form.attr('action', "/animal/myInfo");
             form.submit();
         }
     });
-
 </script>
-
 </html>

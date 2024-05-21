@@ -55,31 +55,31 @@
 <body>
 <div class="container">
     <div class="detail-item">
-        <span class="detail-label">Pet ID(마이크로칩 번호):</span>
+        <span class="detail-label">마이크로칩 번호 : </span>
         <span>${read.pet_Id}</span>
     </div>
     <div class="detail-item">
-        <span class="detail-label">Pet Name(이름):</span>
+        <span class="detail-label">이름 : </span>
         <span>${read.pet_Name}</span>
     </div>
     <div class="detail-item">
-        <span class="detail-label">Pet Age(나이):</span>
+        <span class="detail-label">나이 : </span>
         <span>${read.pet_Age}(${read.calculated_age}살)</span>
     </div>
     <div class="detail-item">
-        <span class="detail-label">Symptoms(증상):</span>
+        <span class="detail-label">증상 : </span>
         <span>${read.symptoms}</span>
     </div>
     <div class="detail-item">
-        <span class="detail-label">Diagnosis(진단):</span>
+        <span class="detail-label">진단 : </span>
         <span>${read.diagnosis}</span>
     </div>
     <div class="detail-item">
-        <span class="detail-label">Treatment(치료):</span>
+        <span class="detail-label">치료 : </span>
         <span>${read.treatment}</span>
     </div>
     <div class="detail-item">
-        <span class="detail-label">Prescription(처방):</span>
+        <span class="detail-label">처방 : </span>
         <span>${read.prescription}</span>
     </div>
     <a href="${read.record_Id}"  class="edit-button" id="edit">수정</a>

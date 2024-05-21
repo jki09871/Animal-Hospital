@@ -1,11 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<script src="/resources/jquery-3.7.1.js"></script>
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-    <title>Title</title> 
+    <meta charset="UTF-8">
+    <title>회원 정보</title>
+    <link rel="stylesheet" href="/resources/styles.css">
+    <script src="/resources/jquery-3.7.1.js"></script>
 </head>
 <body>
+<header>
+    <nav>
+        <a href="/">홈</a>
+    </nav>
+</header>
+<div class="container">
+    <div class="panel-body">
         <table>
             <tr>
                 <th>아이디</th>
@@ -20,15 +30,17 @@
                 <td>${animal.phoneNumber}</td>
             </tr>
         </table>
-        <button type="button" onclick="fnDynamic('E');">정보수정</button>
-        <button type="button" onclick="fnDynamic('L');">이전</button>
-        <button type="button" onclick="fnDynamic('W');">애견등록</button>
-        <button type="button" onclick="fnDynamic('I');">애견등록확인</button>
-<form id="petForm" action="/animal/myInfo" method="get">
-    <input type="hidden" name="ownerId" id="ownerId" value="<c:out value="${animal.owner_Id}"/>">
-</form>
-
-</body>
+        <div class="btn-group">
+            <button type="button" class="btn" onclick="fnDynamic('E');">정보수정</button>
+            <button type="button" class="btn" onclick="fnDynamic('L');">이전</button>
+            <button type="button" class="btn" onclick="fnDynamic('W');">애견등록</button>
+            <button type="button" class="btn" onclick="fnDynamic('I');">애견등록확인</button>
+        </div>
+        <form id="petForm" action="/animal/myInfo" method="get">
+            <input type="hidden" name="ownerId" id="ownerId" value="<c:out value='${animal.owner_Id}'/>">
+        </form>
+    </div>
+</div>
 <script>
     let form = $('#petForm');
     let url = '';
@@ -52,4 +64,5 @@
         form.submit();
     }
 </script>
+</body>
 </html>

@@ -33,27 +33,27 @@
         <div class="card-body">
             <table class="table table-bordered">
                 <tr>
-                    <th>PET_ID</th>
+                    <th>마이크로칩</th>
                     <td><c:out value="${data.pet_Id}"/></td>
                 </tr>
                 <tr>
-                    <th>OWNER_ID</th>
+                    <th>주인(ID)</th>
                     <td><c:out value="${data.owner_Id}"/></td>
                 </tr>
                 <tr>
-                    <th>PET_NAME</th>
+                    <th>동물 이름</th>
                     <td><c:out value="${data.pet_name}"/></td>
                 </tr>
                 <tr>
-                    <th>SPECIES</th>
+                    <th>동물 종</th>
                     <td><c:out value="${data.species}"/></td>
                 </tr>
                 <tr>
-                    <th>AGE</th>
+                    <th>동물 나이</th>
                     <td><c:out value="${data.age}"/>(살)</td>
                 </tr>
                 <tr>
-                    <th>SIGNIFICANT</th>
+                    <th>특이사항</th>
                     <td><c:out value="${data.significant}"/></td>
                 </tr>
             </table>

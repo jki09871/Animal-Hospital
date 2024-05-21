@@ -73,12 +73,12 @@
     <table>
         <thead>
             <tr>
-                <th>PET_ID</th>
-                <th>OWNER_ID</th>
-                <th>PET_NAME</th>
-                <th>AGE</th>
-                <th>SPECIES</th>
-                <th>SIGNIFICANT</th>
+                <th>마이크로칩 번호</th>
+                <th>주인(ID)</th>
+                <th>동물 이름</th>
+                <th>동물 나이</th>
+                <th>동물 종</th>
+                <th>특이사항</th>
             </tr>
         </thead>
         <tbody>

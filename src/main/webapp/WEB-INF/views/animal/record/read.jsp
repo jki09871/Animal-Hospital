@@ -15,11 +15,12 @@
             width: 80%;
             margin: 20px auto;
             border-collapse: collapse;
+            text-align: center;
         }
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
         th {
             background-color: #f2f2f2;
@@ -57,11 +58,11 @@
     </div>
     <table>
         <tr>
-            <th>PET_NAME</th>
+            <th>동물 이름</th>
 <%--            <th>PET_ID</th>--%>
-            <th>DATE_OF_VISIT</th>
-            <th>SYMPTOMS</th>
-            <th>VETERINARIAN</th>
+            <th>방문 날짜</th>
+            <th>증상</th>
+            <th>수의사</th>
         </tr>
 
     <c:forEach var="readList" items="${read}">

@@ -64,29 +64,29 @@
 <h2>Add Medical Record</h2>
     <form action="/pet/prescription/record" method="POST">
 
-        <label for="doctor">Doctor(수의자):</label><br>
+        <label for="doctor">수의자:</label><br>
         <input type="text" id="doctor" name="doctor" required autocomplete="off"><br><br>
 
-        <label for="pet_Id">Pet ID(마이크로칩 번호):</label><br>
+        <label for="pet_Id">마이크로칩 번호:</label><br>
         <input type="text" id="pet_Id" name="pet_Id" required autocomplete="off"><br><br>
 
-        <label for="pet_Name">Pet Name(이름):</label><br>
+        <label for="pet_Name">이름:</label><br>
         <input type="text" id="pet_Name" name="pet_Name" required autocomplete="off"><br><br>
 
-        <label for="pet_Age">Pet Age(나이):</label><br>
+        <label for="pet_Age">나이:</label><br>
         <input type="date" id="pet_Age" name="pet_Age" required autocomplete="off"><br><br>
 
 
-        <label for="symptoms">Symptoms(증상):</label><br>
+        <label for="symptoms">증상:</label><br>
         <textarea id="symptoms" name="symptoms" rows="4" cols="50" required autocomplete="off"></textarea><br><br>
 
-        <label for="diagnosis">Diagnosis(진단):</label><br>
+        <label for="diagnosis">진단:</label><br>
         <textarea id="diagnosis" name="diagnosis" rows="4" cols="50" required autocomplete="off"></textarea><br><br>
 
-        <label for="treatment">Treatment(치료):</label><br>
+        <label for="treatment">치료:</label><br>
         <textarea id="treatment" name="treatment" rows="4" cols="50" required autocomplete="off"></textarea><br><br>
 
-        <label for="prescription">Prescription(처방):</label><br>
+        <label for="prescription">처방:</label><br>
         <textarea id="prescription" name="prescription" rows="4" cols="50" required autocomplete="off"></textarea><br><br>
 
         <button type="submit" class="submit-button">작성</button>

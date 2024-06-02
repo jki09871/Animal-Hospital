@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
 <html>
 <head>
@@ -83,14 +84,14 @@
     <h1>AnimalReviewList</h1>
     <div class="menu">
         <c:if test="${sessionScope.loginId.owner_Id != null}">
-            <button id="regBtn">Write</button>
-            <button><a href="/animal/logout">Logout</a></button>
-            <button><a href="/animal/myInfo">My Info</a></button>
+            <button id="regBtn">게시글 작성</button>
+            <button><a href="/animal/logout">로그아웃</a></button>
+            <button><a href="/animal/myInfo">내정보</a></button>
         </c:if>
         <c:if test="${sessionScope.loginId == null}">
-            <button><a href="/animal/login">Login</a></button>
+            <button><a href="/animal/login">로그인</a></button>
         </c:if>
-        <button><a href="/">Home</a></button>
+        <button><a href="/">홈</a></button>
     </div>
 </div>
 <div class="basic animal">
@@ -163,3 +164,4 @@
     });
 </script>
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

@@ -6,8 +6,6 @@
     <title>Title</title>
     <link rel="stylesheet" href="/resources/petWrite.css">
     <link rel="stylesheet" href="/resources/styles.css">
-
-
 </head>
 <body>
 <div class="container">

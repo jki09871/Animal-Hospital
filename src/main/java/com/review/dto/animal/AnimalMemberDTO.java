@@ -23,4 +23,6 @@ public class AnimalMemberDTO {
     private String phoneNumber;
     private int grade;
     private Date regDate;
+    private int post;
+    private int comment;
 }

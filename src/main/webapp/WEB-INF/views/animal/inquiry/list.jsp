@@ -2,6 +2,8 @@
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,3 +70,4 @@ function multiple_btn(es){
 </script>
 </body>
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

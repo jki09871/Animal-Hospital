@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
     <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
     <link rel="stylesheet" href="/resources/inquiry.css">
+    <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
 </head>
 <body>
@@ -121,3 +122,4 @@
     }
 </script>
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

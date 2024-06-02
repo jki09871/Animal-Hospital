@@ -3,6 +3,7 @@
 <script src="/resources/jquery-3.7.1.js"></script>
 <link rel="stylesheet" href="/resources/petWrite.css">
 <link rel="stylesheet" href="/resources/styles.css">
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
 <html>
 <head>
@@ -109,3 +110,4 @@
     }
 </script>
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

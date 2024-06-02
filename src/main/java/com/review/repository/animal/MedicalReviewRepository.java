@@ -1,6 +1,7 @@
 package com.review.repository.animal;
 
 import com.review.dto.animal.AnimalReviewDTO;
+import com.review.dto.animal.InquiryCommentDTO;
 import com.review.paging.PagingCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -65,4 +66,10 @@ public class MedicalReviewRepository {
     public void removeFile(int fileNo) {
         sql.delete("review.fileRemove", fileNo);
     }
+
+    public List<AnimalReviewDTO> myWriting(String ownerId){
+
+        return sql.selectList("review.myWriting", ownerId);
+    }
+
 }

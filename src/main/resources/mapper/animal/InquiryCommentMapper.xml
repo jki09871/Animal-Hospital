@@ -19,8 +19,7 @@
 
     </insert>
 
-    <select id="findAll" parameterType="int" resultType="com.review.dto.animal.InquiryCommentDTO">
-
+    <select id="findAll" parameterType="hashMap" resultType="com.review.dto.animal.InquiryCommentDTO">
         SELECT
             ID,                       /** 댓글 고유번호 **/
             COMMENT_WRITER,           /** 댓글 작성자 **/
@@ -33,6 +32,22 @@
             INQUIRY_NUM = #{inquiry_num}
         ORDER BY
             ID DESC
+    </select>
+
+    <select id="commentIWrote" resultType="map" parameterType="hashMap">
+        SELECT
+            B.TITLE AS title,                           <!-- 문의 제목 -->
+            A.ID AS id,                                 <!-- 댓글 고유번호 -->
+            A.COMMENT_WRITER AS commentWriter,          <!-- 댓글 작성자 -->
+            A.COMMENT_CONTENT AS commentContent,        <!-- 댓글 내용 -->
+            A.INQUIRY_NUM AS inquiryNum,                <!-- 문의 테이블 번호 -->
+            A.COMMENT_CREATE_TIME AS commentCreateTime  <!-- 문의작성 시간 -->
+        FROM
+            INQUIRY_COMMENT_TBL A
+        INNER JOIN
+            INQUIRY_TBL B ON A.INQUIRY_NUM = B.INQUIRY_NUM
+        WHERE
+            A.COMMENT_WRITER = #{ownerId}
     </select>
 
     <delete id="delete" parameterType="int">

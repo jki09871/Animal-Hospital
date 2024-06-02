@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j
 @Controller
@@ -25,7 +27,9 @@ public class InquiryCommentController {
     public @ResponseBody List<InquiryCommentDTO> commentSave(@ModelAttribute InquiryCommentDTO commentDTO, Model model) {
         System.out.println("commentDTO = " + commentDTO);
         ics.commentSave(commentDTO);
-        List<InquiryCommentDTO> commentList = ics.commentFindAll(commentDTO.getInquiry_num());
+        Map<String, Object> num = new HashMap<>();
+        num.put("inquiry_num", commentDTO.getInquiry_num());
+        List<InquiryCommentDTO> commentList = ics.commentFindAll(num);
         return commentList;
     }
 

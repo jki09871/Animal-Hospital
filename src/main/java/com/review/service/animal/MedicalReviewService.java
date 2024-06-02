@@ -1,6 +1,7 @@
 package com.review.service.animal;
 
 import com.review.dto.animal.AnimalReviewDTO;
+import com.review.dto.animal.InquiryCommentDTO;
 import com.review.paging.PagingCriteria;
 import com.review.repository.animal.MedicalReviewRepository;
 import com.review.util.FileUtils;
@@ -103,4 +104,9 @@ public class MedicalReviewService {
             }
         }
     }
+
+    public List<AnimalReviewDTO> myWriting(String ownerId) {
+        return repository.myWriting(ownerId); // 개인이 쓴 게시글 조회
+    }
+
 }

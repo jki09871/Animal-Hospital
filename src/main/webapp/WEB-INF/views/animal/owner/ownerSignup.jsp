@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="/resources/jquery-3.7.1.js"></script>
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
 <html>
 <head>
@@ -235,3 +236,4 @@
         }
 </script>
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

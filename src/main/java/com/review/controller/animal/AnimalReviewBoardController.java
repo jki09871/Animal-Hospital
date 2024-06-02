@@ -43,6 +43,9 @@ public class AnimalReviewBoardController {
     /************************************************  게시물 리스트  ************************************************/
     @RequestMapping("/animal/reviewList")
     public String animalReviewList(Model model, PagingCriteria pagingCriteria, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if (session.getAttribute("loginId") == null)
+            return "redirect:/animal/login?toURL="+request.getRequestURL();
         log.info("리뷰 게시판");
 
         model.addAttribute("list", service.getListPaging(pagingCriteria));
@@ -123,8 +126,8 @@ public class AnimalReviewBoardController {
     /************************************************************************************************************/
 
     /************************************************  게시물 삭제  ************************************************/
-    @PostMapping("/animal/deletePost")
-    public String deletePost(@RequestParam("reviewNum") int reviewNum,Model model, HttpServletRequest request, RedirectAttributes rttr){
+    @GetMapping("/animal/deletePost")
+    public String deletePost(@RequestParam("reviewNum") int reviewNum, Model model, HttpServletRequest request, RedirectAttributes rttr){
         service.deleteUsingNum(reviewNum);
 
         rttr.addAttribute("amount", request.getParameter("amount"));

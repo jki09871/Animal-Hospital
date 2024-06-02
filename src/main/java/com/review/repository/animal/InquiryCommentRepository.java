@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Log4j
@@ -22,7 +23,7 @@ public class InquiryCommentRepository {
         sql.insert("comment.save", commentDTO);
     }
 
-    public List<InquiryCommentDTO> commentFindAll(int inquiry_num) {
+    public List<InquiryCommentDTO> commentFindAll(Map<String, Object> inquiry_num) {
         return sql.selectList("comment.findAll", inquiry_num);
     }
 

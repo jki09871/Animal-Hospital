@@ -6,9 +6,9 @@
 
     <insert id="signup" parameterType="com.review.dto.animal.AnimalMemberDTO">
         /** 회원 가입 **/
-        INSERT INTO Owner_Tbl
+        INSERT INTO OWNER_TBL
         (
-        OWNER_ID,            /** 회원 아이디 **/
+        OWNER_ID,           /** 회원 아이디 **/
         PASSWORD,            /** 회원 비밀번호 **/
         EMAIL,               /** 회원 이메일 **/
         PHONENUMBER         /** 회원 핸드폰번호 **/
@@ -29,14 +29,16 @@
             EMAIL,               /** 회원 이메일 **/
             PHONENUMBER,         /** 회원 핸드폰번호 **/
             GRADE                /** 등급 **/
-        FROM Owner_Tbl
-        WHERE OWNER_ID = #{owner_Id}
+        FROM
+            OWNER_TBL
+        WHERE
+            OWNER_ID = #{owner_Id}
     </select>
 
     <select id="emailCheck" parameterType="hashMap" resultType="int">
         SELECT
             COUNT(*)
-        FROM Owner_Tbl
+        FROM OWNER_TBL
         WHERE  1 = 1
         <if test="email != null and email != '' ">
             AND  EMAIL =  #{email}
@@ -48,16 +50,39 @@
 
     <select id="myInfo" resultType="com.review.dto.animal.AnimalMemberDTO">
     select
+        (
+        SELECT
+            COUNT(*)
+        FROM
+            MEDICAL_REVIEW_BAORD            /** 리뷰 몇개 썼는지 개수 찾는 쿼리 **/
+        WHERE
+            WRITER = #{owner_Id}
+        ) AS  POST,
+
+        (
+        SELECT
+            COUNT(*)
+        FROM
+            INQUIRY_COMMENT_TBL             /** 댓글 몇개 썼는지 개수 찾는 쿼리 **/
+         WHERE
+            COMMENT_WRITER =  #{owner_Id})
+            AS COMMENT,
+
         OWNER_ID,            /** 회원 아이디 **/
         EMAIL,               /** 회원 이메일 **/
         PHONENUMBER          /** 회원 핸드폰번호 **/
-    from Owner_Tbl
-    where OWNER_Id = #{owner_Id}
+    from
+        OWNER_TBL
+    where
+        OWNER_Id = #{owner_Id}
     </select>
 
     <update id="editInfo" parameterType="com.review.dto.animal.AnimalMemberDTO">
-        UPDATE Owner_Tbl
-        SET EMAIL = #{email}, PHONENUMBER =  #{phoneNumber}
-        WHERE OWNER_ID = #{owner_Id}
+        UPDATE
+            OWNER_TBL
+        SET
+            EMAIL = #{email}, PHONENUMBER =  #{phoneNumber}
+        WHERE
+            OWNER_ID = #{owner_Id}
     </update>
 </mapper>

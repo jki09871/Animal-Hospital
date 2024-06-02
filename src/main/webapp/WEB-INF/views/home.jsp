@@ -36,7 +36,7 @@
 				<li><a href="/animal/myInfo">MY INFO</a></li>
 				<li><a href="/animal/logout" class="smooth-scroll">LOGOUT</a></li>
 				</c:if>
-<%--				<c:if test="${sessionScope.loginId.grade == 99}">--%>
+				<c:if test="${sessionScope.loginId.grade == 99}">
 				<form class="navbar-form navbar-right">
 					<div class="form-group">
 						<select class="form-control" onchange='location.href = this.value;'>
@@ -47,7 +47,7 @@
 						</select>
 					</div>
 				</form>
-<%--				</c:if>--%>
+				</c:if>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->

@@ -71,14 +71,30 @@
             WRITER,                             /** 작성자 **/
             REGDATE,                            /** 작성 시간 **/
             UPDATETDATE
-            FROM MEDICAL_REVIEW_BAORD
-            ORDER BY REVIEWNUM DESC
+            FROM
+                MEDICAL_REVIEW_BAORD
+            ORDER BY
+                REVIEWNUM DESC
                           ) as T1
             LIMIT #{skip}, #{amount}
     </select>
 
     <select id="postTotal" resultType="int">
         SELECT COUNT(*) FROM MEDICAL_REVIEW_BAORD
+    </select>
+
+    <select id="myWriting" resultType="com.review.dto.animal.AnimalReviewDTO">
+        SELECT
+            REVIEWNUM,                          /** 등록 번호 **/
+            TITLE,                              /** 제목 **/
+            CONTENT,                            /** 내용 **/
+            REGDATE                             /** 작성 시간 **/
+        FROM
+            MEDICAL_REVIEW_BAORD
+        WHERE
+            WRITER = #{ownerId}
+        ORDER BY
+            REVIEWNUM DESC
     </select>
 
 

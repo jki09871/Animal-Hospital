@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
 <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
+
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
@@ -172,3 +174,4 @@
 
 </script>
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
 <html>
 <head>
@@ -94,3 +95,4 @@
 </body>
 
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Log4j
@@ -23,7 +24,7 @@ public class InquiryCommentService {
         icr.commentSave(commentDTO);
     }
 
-    public List<InquiryCommentDTO> commentFindAll(int inquiry_num) {
+    public List<InquiryCommentDTO> commentFindAll(Map<String, Object> inquiry_num) {
        return icr.commentFindAll(inquiry_num);
     }
 

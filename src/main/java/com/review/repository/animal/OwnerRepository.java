@@ -1,11 +1,13 @@
 package com.review.repository.animal;
 
 import com.review.dto.animal.AnimalMemberDTO;
+import com.review.dto.animal.InquiryCommentDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -36,5 +38,9 @@ public class OwnerRepository {
 
     public void editInfo(AnimalMemberDTO animalDTO) {
         sql.update("animal.editInfo", animalDTO);
+    }
+
+    public List<InquiryCommentDTO> commentIWrote(Map<String,Object> ownerId) { // 나의 활동 댓글 리스트
+        return sql.selectList("comment.commentIWrote", ownerId);
     }
 }

@@ -14,9 +14,7 @@
             });
         });
     </script>
-    <script>alert("테스트")</script>
-    <script>alert("nMsg")</script>
-    <script>alert("msg")</script>
+<script>alert("안녕")</script>
 </head>
 <body>
 <form id="testForm" action="/xss/globalFilter.do" method="post">

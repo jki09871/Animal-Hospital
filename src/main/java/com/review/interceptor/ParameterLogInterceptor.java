@@ -25,12 +25,12 @@ public class ParameterLogInterceptor extends HandlerInterceptorAdapter  {
         HandlerMethod method = (HandlerMethod)obj;
 
         System.out.println("########## LoggerInterceptor 시작  ##########");
-        System.out.println("");
+        System.out.println(" ");
         System.out.println("#### bean :: " + method.getBean());
         System.out.println("#### method :: " + method.getMethod().getName());
         System.out.println("#### getRequestURI :: " + request.getRequestURI());
         System.out.println("#### getRequestURL :: " + request.getRequestURL());
-        System.out.println("");
+        System.out.println(" ");
         Enumeration params = request.getParameterNames();
         System.out.println("---------------------------- 파라미터 시작  ----------------------------");
         while (params.hasMoreElements()){
@@ -38,7 +38,7 @@ public class ParameterLogInterceptor extends HandlerInterceptorAdapter  {
             System.out.println(name + " : " +request.getParameter(name));
         }
         System.out.println("---------------------------- 파라미터 종료  ----------------------------");
-        System.out.println("");
+        System.out.println(" ");
         System.out.println("########## LoggerInterceptor 종료  ##########");
         
         return true; // 반환이 false라면 controller로 요청을 안함

@@ -7,14 +7,13 @@
 
     <select id="getList" resultType="java.util.HashMap">
 
-
         SELECT
             A.INQUIRY_NUM,
             A.TITLE,
             A.CONTENT,
             A.WRITER,
             A.REGDATE,
-             (SELECT COUNT(*) FROM INQUIRY_COMMENT_TBL B where A.INQUIRY_NUM = B.INQUIRY_NUM) AS CNT
+             (SELECT COUNT(*) FROM INQUIRY_COMMENT_TBL B WHERE A.INQUIRY_NUM = B.INQUIRY_NUM) AS CNT
         FROM
             INQUIRY_TBL A
         ORDER BY

@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
 <html>
 <head>
@@ -132,7 +133,7 @@
 
                     <%-- 각 번호 페이지 버튼 --%>
                     <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                        <li class="pageInfo_btn ${pageMaker.pagingCriteria.pageNum == num ? "active":""}"><a href="${num}">${num}</a> </li>
+                        <li class="pageInfo_btn ${pageMaker.pagingCriteria.pageNum == num ? "active":""}"><a href="${num}">${num}</a></li>
                     </c:forEach>
 
                     <c:if test="${pageMaker.next}">
@@ -204,3 +205,4 @@
 </script>
 
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

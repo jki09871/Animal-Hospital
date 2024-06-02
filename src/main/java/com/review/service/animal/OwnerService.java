@@ -1,6 +1,7 @@
 package com.review.service.animal;
 
 import com.review.dto.animal.AnimalMemberDTO;
+import com.review.dto.animal.InquiryCommentDTO;
 import com.review.repository.animal.OwnerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Log4j
@@ -53,5 +55,9 @@ public class OwnerService {
 
     public void editInfo(AnimalMemberDTO animalDTO) {
         ar.editInfo(animalDTO);
+    }
+
+    public List<InquiryCommentDTO> commentIWrote(Map<String,Object> ownerId) {
+        return ar.commentIWrote(ownerId);
     }
 }

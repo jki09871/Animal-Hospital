@@ -2,6 +2,8 @@
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label for="writer">작성자</label>
-                <input type="text" class="form-control" id="writer" name="writer">
+                <input type="text" class="form-control" id="writer" name="writer" value="${sessionScope.loginId.owner_Id}" readonly>
             </div>
             <div class="btn-group">
                 <button type="submit" class="btn btn-success">등록</button>
@@ -39,3 +41,5 @@
 </div>
 </body>
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>
+

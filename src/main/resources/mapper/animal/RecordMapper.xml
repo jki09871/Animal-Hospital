@@ -101,7 +101,7 @@
     </update>
 
     <select id="postTotal" resultType="int">
-        SELECT COUNT(*) FROM PET_MEDICAL_RECORD
+        SELECT COUNT(*) FROM PET_TBL
         <if test="keyword != null">
             <include refid="PagingCriteria"></include>
         </if>

@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j
 @Controller
@@ -36,7 +40,13 @@ public class InquiryBoardController {
 
     }
     @GetMapping("/pet/inquiry/register")
-    public String GetRegister(){
+    public String GetRegister(HttpServletRequest request, String toURL, Model model){
+        HttpSession session = request.getSession();
+        String msg = "로그인 후 이용해주세요";
+        if (session.getAttribute("loginId") == null) {
+            model.addAttribute("msg", msg);
+            return "redirect:/animal/login?toURL=" + request.getRequestURL();
+        }
         log.info("Get Register........");
         return "/animal/inquiry/register";
     }
@@ -57,8 +67,10 @@ public class InquiryBoardController {
     @GetMapping("/pet/inquiry/get")
     public String get(@RequestParam("inquiry_Num") Long inquiry_Num, Model model){
         log.info("/get.....");
+        Map<String, Object> num = new HashMap<>();
+        num.put("inquiry_num", inquiry_Num);
         model.addAttribute("board", is.get(inquiry_Num));
-        List<InquiryCommentDTO> commentList = ics.commentFindAll(Math.toIntExact(inquiry_Num));
+        List<InquiryCommentDTO> commentList = ics.commentFindAll(num);
         model.addAttribute("commentList", commentList);
         return "/animal/inquiry/get";
     }

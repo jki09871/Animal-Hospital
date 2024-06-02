@@ -1,6 +1,7 @@
 package com.review.controller.animal;
 
 import com.review.dto.animal.AnimalMemberDTO;
+import com.review.service.animal.MedicalReviewService;
 import com.review.service.animal.OwnerService;
 import com.review.util.Pbkdf2PasswordEncoderUtil;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,6 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.HashMap;
@@ -33,6 +35,8 @@ public class AnimalMemberController {
     @Setter(onMethod_ = @Autowired)
     private OwnerService as;
 
+    @Setter(onMethod_ = @Autowired)
+    MedicalReviewService mrs;
     /************************************************  회원 가입  ************************************************/
     @GetMapping("/animal/signup")
     public String signupScreenGet(){
@@ -84,7 +88,8 @@ public class AnimalMemberController {
     }
     
     @PostMapping("/animal/login")
-    public String memberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request){
+    public String memberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request,
+                              HttpServletResponse response, String toURL, boolean rememberId){
 
         AnimalMemberDTO dbDto = as.userVerification(animalDTO);
         boolean loginResult = false;
@@ -95,12 +100,26 @@ public class AnimalMemberController {
                 loginResult = true;
             }
         }
+        if (rememberId){
+            // 1. 쿠키에 아이디 저장
+            Cookie cookie = new Cookie("owner_Id", dbDto.getOwner_Id());
+            // 2. 응답에 저장
+            response.addCookie(cookie);
+        } else {
+            // 1. 쿠키 삭제
+            Cookie cookie = new Cookie("owner_Id", dbDto.getOwner_Id());
+            // 2. 쿠키 삭제
+            cookie.setMaxAge(0);
+            // 3. 응답에 저장
+            response.addCookie(cookie);
+        }
 
         HttpSession session = request.getSession();
         if (loginResult) {
             session.setAttribute("loginId", dbDto);
             log.info("로그인 성공");
-            return "redirect:/animal/reviewList";
+            toURL = toURL == null || toURL.equals("") ? "/" : toURL;
+            return "redirect:"+toURL;
         } else {
             log.info("로그인 실패");
             return "/animal/owner/login";
@@ -167,33 +186,27 @@ public class AnimalMemberController {
 
         return "redirect:/animal/myInfo";
     }
+
+
+    /************************************  나의 활동 게시물  ********************************************/
+    @GetMapping("/animal/postIWrote")
+    public String postIWrote(@RequestParam("ownerId")String ownerId, Model model){
+        System.out.println("ownerId = " + ownerId);
+
+        model.addAttribute("list", mrs.myWriting(ownerId));
+
+        return "animal/owner/postIWrote";
+    }
     /**********************************************************************************************************/
 
+    /************************************  나의 활동 댓글  ********************************************/
+    @GetMapping("/animal/commentIWrote")
+    public String commentIWrote(@RequestParam("ownerId")String ownerId, Model model){
+        Map<String, Object> commentIWrote = new HashMap<>();
+        commentIWrote.put("ownerId", ownerId);
 
-    //mailSend code
+        model.addAttribute("list", as.commentIWrote(commentIWrote));
 
-    @GetMapping("animal/owner/mail")
-    public String mailSend(){
-        return "/animal/owner/mailSender";
+        return "animal/owner/commentIWrote";
     }
-    @PostMapping("/animal/owner/mail")
-    public String mailSend(HttpServletRequest request, String name, String email, String phone, String message ){
-        try {
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-
-            messageHelper.setFrom("ghdwjdrl1234@gmail.com");
-
-            messageHelper.setTo("ghdwjdrl56@naver.com");
-            messageHelper.setSubject("테스용 메시지 내 이름 :" + name + "입니다.");
-            messageHelper.setText(message + "연락처는 " + phone + "이메일 주소는 " + email + "이다.");
-
-            mailSender.send(mimeMessage);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-
-        return "redirect:/";
-    }
-
 }

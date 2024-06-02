@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="/resources/jquery-3.7.1.js"></script>
+<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,11 +90,12 @@
     </c:forEach>
 </div>
 <div class="btn-container">
-    <button onclick="fnDynamic('L')">Go Back</button>
+    <button onclick="fnDynamic('L')">목록</button>
     <c:if test="${sessionScope.loginId != null }">
-        <button onclick="fnDynamic('U')">Edit</button>
-        <button onclick="fnDynamic('D')">Delete</button>
+        <button onclick="fnDynamic('U')">수정</button>
+        <button onclick="fnDynamic('D')">삭제</button>
     </c:if>
+    <button onclick="history.back()">이전</button>
 </div>
 
 <script>
@@ -108,23 +111,22 @@
                     url = '/animal/correction';
                     break;
                 }else {
-                    alert("You are not the author.");
+                    alert("작성자가 아닙니다.");
                     return ;
                 }
             default :
                 if (${sessionScope.loginId.owner_Id == animal.writer}) {
-                    const isConfirmed = confirm("Do you want to delete this post?");
+                    const isConfirmed = confirm("게시물을 삭제하시겠습니까?");
                     if (isConfirmed) {
-                        alert("Deleted successfully.");
+                        alert("삭제되었습니다.");
                     } else {
-                        alert("Deletion canceled.");
+                        alert("삭제가 취소되었습니다.");
                         return false;
                     }
                     url = '/animal/deletePost';
-                    form.attr('method', 'post');
                     break;
                 } else {
-                    alert("You are not the author.");
+                    alert("작성자가 아닙니다.");
                 }
         }
         form.attr('action', url);
@@ -140,3 +142,4 @@
 </script>
 </body>
 </html>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

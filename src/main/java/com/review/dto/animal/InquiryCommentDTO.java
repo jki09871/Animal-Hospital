@@ -23,4 +23,5 @@ public class InquiryCommentDTO {
     private String comment_Content;
     private int inquiry_num;
     private Date comment_Create_Time;
+    private String title;
 }

@@ -74,16 +74,6 @@ public class PetMedicalRecordController {
         List<Map<String,Object>> readList = recordService.prescriptionDetails(multiple);
         ModelAndView view = new ModelAndView();
 
-        int size = readList.size();
-        if (size <= 0){
-            rttr.addAttribute("cri", cri);
-            rttr.addAttribute("read", readList);
-            rttr.addAttribute("pet_Id", pet_Id);
-            view.setViewName("redirect:/pet/prescription/details");
-            return view;
-        }
-
-
         view.setViewName("/animal/record/read");
         view.addObject("cri", cri);
         view.addObject("read", readList);
@@ -108,7 +98,6 @@ public class PetMedicalRecordController {
     public String sendCorrectedPrescription(PetMedicalRecordDTO recordDTO, HttpServletRequest request,
                                             PagingCriteria cri, RedirectAttributes rttr){
         recordService.editAndSend(recordDTO);
-        recordService.prescriptionDetails((Map<String, Object>) recordDTO);
 
         rttr.addAttribute("record_Id", request.getParameter("record_Id"));
         rttr.addAttribute("pageNum", request.getParameter("pageNum"));

@@ -3,6 +3,7 @@ package com.review.repository.animal;
 
 import com.review.dto.animal.AnimalMemberDTO;
 import com.review.dto.animal.PetDTO;
+import com.review.paging.PagingCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -28,11 +29,15 @@ public class SiteAdministratorRepository {
         return sql.selectOne("manager.memberData", memberDTO);
     }
 
-    public List<PetDTO> petList() {
-        return sql.selectList("manager.petList");
+    public List<PetDTO> petList(PagingCriteria cri) {
+        return sql.selectList("manager.petList", cri);
     }
 
     public PetDTO petData(PetDTO petDTO) {
         return sql.selectOne("manager.petData", petDTO);
+    }
+
+    public int registeredAnimal(PagingCriteria cri) {
+        return sql.selectOne("manager.postTotal", cri);
     }
 }

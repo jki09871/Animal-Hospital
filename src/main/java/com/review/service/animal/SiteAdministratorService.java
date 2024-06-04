@@ -2,6 +2,7 @@ package com.review.service.animal;
 
 import com.review.dto.animal.AnimalMemberDTO;
 import com.review.dto.animal.PetDTO;
+import com.review.paging.PagingCriteria;
 import com.review.repository.animal.SiteAdministratorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -27,11 +28,15 @@ public class SiteAdministratorService {
         return mr.memberData(memberDTO);
     }
 
-    public List<PetDTO> animalList() {
-        return mr.petList();
+    public List<PetDTO> animalList(PagingCriteria cri) {
+        return mr.petList(cri);
     }
 
     public PetDTO petData(PetDTO petDTO) {
         return mr.petData(petDTO);
+    }
+
+    public int postTotal(PagingCriteria cri) {
+        return mr.registeredAnimal(cri);
     }
 }

@@ -11,5 +11,5 @@ public class PetDTO {
     private String species;
     private String age;
     private String significant;
-
+    private String phoneNumber;
 }

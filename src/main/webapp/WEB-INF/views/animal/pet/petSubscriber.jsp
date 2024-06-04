@@ -95,9 +95,9 @@
         </form>
     </div>
 </div>
-
-
 <script>
+
+
     let listForm = $('#memberList');
 
    $('.move').on('click', function (e){

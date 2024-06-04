@@ -2,6 +2,9 @@ package com.review.controller.animal;
 
 import com.review.dto.animal.AnimalMemberDTO;
 import com.review.dto.animal.PetDTO;
+import com.review.paging.PageMakerDTO;
+import com.review.paging.PagingCriteria;
+import com.review.service.animal.MedicalRecordService;
 import com.review.service.animal.SiteAdministratorService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,6 +23,7 @@ public class SiteAdministratorController {
     @Setter(onMethod_ = @Autowired)
     private SiteAdministratorService sa;
 
+
     /** 회원가입자 리스트 보기 **/
     @RequestMapping("/subscribers/member")
     public String RegisteredMember(Model model){
@@ -34,10 +38,20 @@ public class SiteAdministratorController {
         return "/animal/owner/memberData";
     }
     @RequestMapping("/registered/animal")
-    public String RegisteredAnimal(Model model){
+    public String RegisteredAnimal(Model model, PagingCriteria cri){
 
-        model.addAttribute("petList", sa.animalList());
+        model.addAttribute("petList", sa.animalList(cri));
         return "/animal/pet/petSubscriber";
+    }
+
+    @RequestMapping("/registered/petNumberSearch")
+    public String PetNumberSearch(Model model, PagingCriteria pagingCriteria){
+
+        int total = sa.postTotal(pagingCriteria);
+        model.addAttribute("petList", sa.animalList(pagingCriteria));
+        model.addAttribute("pageMaker", new PageMakerDTO(pagingCriteria, total));
+
+        return "/animal/pet/petNumberSearch";
     }
 
     @GetMapping("/registered/look")

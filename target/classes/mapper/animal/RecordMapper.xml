@@ -14,10 +14,11 @@
             DIAGNOSIS ,        /** 진단 **/
             TREATMENT ,        /** 치료 **/
             PRESCRIPTION,      /** 처방전 **/
-            DOCTOR
+            DOCTOR,
+            DATE_OF_VISIT
          )
          VALUES
-         (
+        (
             #{pet_Id},
             #{pet_Name},
             #{pet_Age},
@@ -25,7 +26,8 @@
             #{diagnosis},
             #{treatment},
             #{prescription},
-            #{doctor}
+            #{doctor},
+            #{date_Of_Visit}
          );
     </insert>
 
@@ -45,6 +47,7 @@
                     </if>
                 ) AS T1
             LIMIT #{skip}, #{amount}
+
     </select>
 
     <select id="read" resultType="java.util.HashMap" >
@@ -62,8 +65,8 @@
             PET_MEDICAL_RECORD
         WHERE
             PET_ID = #{pet_Id}
-            <if test="startTime != null">
-                AND DATE(DATE_OF_VISIT) BETWEEN #{startTime} AND #{endTime}
+            <if test="startTime != null and startTime != ''">
+                AND DATE_OF_VISIT BETWEEN #{startTime} AND #{endTime}
             </if>
         ORDER BY
             RECORD_ID DESC
@@ -85,7 +88,7 @@
             PET_MEDICAL_RECORD
         WHERE
             RECORD_ID = #{record_Id}
-    </select><!---->
+    </select>
 
     <update id="editSend" parameterType="java.util.HashMap">
         UPDATE PET_MEDICAL_RECORD

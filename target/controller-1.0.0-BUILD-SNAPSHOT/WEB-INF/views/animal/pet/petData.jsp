@@ -61,5 +61,4 @@
     </div>
 </div>
 
-</div>
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

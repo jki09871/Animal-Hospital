@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -60,23 +62,24 @@ public class PetMedicalRecordController {
 
 
     @GetMapping("/pet/prescription/details")
-    @ResponseBody
-    public ModelAndView prescriptionRead(PetMedicalRecordDTO recordDTO, PagingCriteria cri, Model model, RedirectAttributes rttr,
-                                         @RequestParam(value = "pet_Id", required = false) Integer pet_Id,
-                                         @RequestParam(value = "endTime", required = false) String endTime,
-                                         @RequestParam(value = "startTime", required = false) String startTime){
+    public ModelAndView prescriptionRead(PagingCriteria cri, @RequestParam(value = "pet_Id", required = false) String pet_Id,
+                                                             @RequestParam(value = "endTime", required = false) String endTime,
+                                                             @RequestParam(value = "startTime", required = false) String startTime){
 
+        ModelAndView view = new ModelAndView();
         Map<String , Object> multiple = new HashMap<>();
         multiple.put("pet_Id", pet_Id);
         multiple.put("startTime", startTime);
         multiple.put("endTime", endTime);
 
+
+
         List<Map<String,Object>> readList = recordService.prescriptionDetails(multiple);
-        ModelAndView view = new ModelAndView();
 
         view.setViewName("/animal/record/read");
         view.addObject("cri", cri);
         view.addObject("read", readList);
+        view.addObject("Time", multiple);
 
         return view;
     }
@@ -123,14 +126,4 @@ public class PetMedicalRecordController {
     }
     /************************************************************************************************************/
 
-
-//    @PostMapping("/pet/prescription/details/time")
-//    @ResponseBody
-//    public String timeSearch (@RequestParam("startTime")Date startTime,
-//                              @RequestParam("endTime")Date endTime){
-//
-//        System.out.println("startTime = " + startTime);
-//        System.out.println("endTime = " + endTime);
-//        return null;
-//    }
 }

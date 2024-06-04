@@ -1,69 +1,71 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
-    <style>
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            text-align: center;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        h2 {
-            /* 수평 중앙 정렬하기 */
-            text-align: center;
-        }
-        .btn-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .btn {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+<style>
+    table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    h2 {
+        /* 수평 중앙 정렬하기 */
+        text-align: center;
+    }
+    .btn-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .btn {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+    }
+    .btn:hover {
+        background-color: #45a049;
+    }
+</style>
 
 <div class="container-stories">
     <div class="container">
         <div class="basic animal">
-            <h1 class="text-primary text-center" style="margin-top: 90px;">등록된 동물</h1>
+            <h1 class="text-primary text-center">등록된 동물</h1>
             <div class="btn-container">
             <button class="btn">목록</button>
-               <a> <input type="text" id="datepicker1" placeholder="시작 날짜" autocomplete="off"> ~
-                   <input type="text" id="datepicker2" placeholder="끝 날짜" autocomplete="off"></a>
+               <a> <input type="text" id="datepicker1" placeholder="시작 날짜" autocomplete="off" value="${Time.startTime}" }> ~
+                   <input type="text" id="datepicker2" placeholder="끝 날짜" autocomplete="off" value="${Time.endTime}">
+               </a>
                 <button type="button" id="timeBtn">검색</button>
             </div>
             <table>
-                <tr>
-                    <th>동물 이름</th>
-        <%--            <th>PET_ID</th>--%>
-                    <th>방문 날짜</th>
-                    <th>증상</th>
-                    <th>수의사</th>
-                </tr>
+
+            <tr>
+                <th>동물 이름</th>
+                <th>방문 날짜</th>
+                <th>증상</th>
+                <th>수의사</th>
+            </tr>
 
             <c:forEach var="readList" items="${read}">
                 <tr class="pet_info">
                     <td>${readList.PET_NAME}(${readList.CALCULATED_AGE}살)</td>
-        <%--            <td>${readList.pet_Id}</td>--%>
-                    <td><a class="move" href="${readList.RECORD_ID}">
-                        <fmt:formatDate value="${readList.DATE_OF_VISIT}" pattern="yyyy-MM-dd"/></a></td>
+                    <td><a class="move" href="${readList.RECORD_ID}">${readList.DATE_OF_VISIT}</a></td>
                     <td>${readList.SYMPTOMS}</td>
                     <td>${readList.DOCTOR}</td>
                 </tr>
@@ -87,10 +89,9 @@
 
 
 <script>
-
     let readForm = $('#readForm');
 
-    $('.btn').on('click', function (){
+    $('.btn').click(function (){
         readForm.submit();
     })
 
@@ -102,21 +103,19 @@
         readForm.append("<input type='hidden' id='newinput' name='record_Id' value='" + $(this).attr("href") + "'>");
         readForm.attr('action', '/pet/prescription/details/unravel');
         readForm.submit();
-    })
+    });
     $(function() {
         let currentDate = new Date();
-        let startDatePicker = $("#datepicker1");
-        let endDatePicker = $("#datepicker2");
 
-        startDatePicker.datepicker({
+        $("#datepicker1").datepicker({
             maxDate: currentDate, // 오늘 날짜까지만 선택 가능
             onSelect: function(selectedDate) {
-                let minDate = startDatePicker.datepicker("getDate");
-                endDatePicker.datepicker("option", "minDate", minDate); // 시작 날짜 이후로 종료 날짜 설정
+                let minDate = $("#datepicker1").datepicker("getDate");
+                $("#datepicker2").datepicker("option", "minDate", minDate); // 시작 날짜 이후로 종료 날짜 설정
             }
         });
 
-        endDatePicker.datepicker({
+        $("#datepicker2").datepicker({
             maxDate: currentDate // 오늘 날짜까지만 선택 가능
         });
     });
@@ -139,23 +138,7 @@
         readForm.find("input[name='endTime']").val(endTime);
         readForm.find("input[name='pet_Id']").val(pet_Id);
         readForm.submit();
-
-        // $.ajax({
-        //     type : 'get',
-        //     url : '/pet/prescription/details',
-        //     data : {
-        //         startTime : startTime,
-        //         endTime : endTime,
-        //         pet_Id : pet_Id
-        //     },
-        //     success : function (success){
-        //
-        //
-        //     }
-        // })
-
-
-    })
+    });
 
     $.datepicker.setDefaults({
         dateFormat: 'yy-mm-dd',	//날짜 포맷이다. 보통 yy-mm-dd 를 많이 사용하는것 같다.

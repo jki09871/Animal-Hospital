@@ -27,7 +27,7 @@ public class PetMedicalRecordDTO {
     private String pet_Name;
     private String pet_Age;
     private String calculated_age;
-    private Date date_Of_Visit;
+    private String date_Of_Visit;
     private String symptoms;
     private String diagnosis;
     private String treatment;

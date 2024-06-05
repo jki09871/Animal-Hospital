@@ -84,7 +84,7 @@
                 <tr>
                     <th>아이디</th>
                     <td>
-                        <input type="text" name="owner_Id" id="ownerId" value="${animal.owner_Id}" disabled><br>변경불가
+                        <input type="text" name="owner_Id" id="owner_Id" value="${animal.owner_Id}" disabled><br>변경불가
                     </td>
                 </tr>
                 <tr>
@@ -147,7 +147,7 @@
                 alert("취소되었습니다.")
                 $('#em').val("${animal.email}");
                 $('#em').prop('disabled', true);
-                $('#emailCheckResult').data("result", 1);
+                $('#emailCheckResult').data("EmailResult", 1);
                 $('#emailCheckResult').text("")
                 $('.changingEmailBtn').toggle();
             } else {
@@ -184,11 +184,11 @@
             var emailCheck = $('#em').val();
             var emailValid = validateEmail(emailCheck);
             if (emailValid) {
-                $('#emailCheckResult').data("result", 1);
+                $('#emailCheckResult').data("EmailResult1", 1);
                 $('#emailCheckResult').text("이메일 확인버튼을 눌러주세요.")
                 return true;
             } else {
-                $('#emailCheckResult').data("result", 0);
+                $('#emailCheckResult').data("EmailResult", 0);
                 $('#emailCheckResult').text("올바르지 않는 이메일 입니다.");
                 return false;
             }
@@ -198,7 +198,10 @@
     function fn_emailCheck(){
         var email = $('#em').val();
 
-        if ($('#emailCheckResult').data("result") === 1) {
+
+        if ($('#emailCheckResult').data("EmailResult1") === 1) {
+            $('#emailCheckResult').data('EmailResult', 0);
+
             $.ajax({
                 url: "/animal/emailCheck",
                 type: "GET",
@@ -206,7 +209,6 @@
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-
                     if (data == false) {
                         $('#emailCheckResult').data('EmailResult', 0);
                         $('#emailCheckResult').text("중복된 이메일 입니다.")
@@ -262,6 +264,9 @@
 
                     // 확인을 선택한 경우
                     alert("수정 되었습니다.");
+                    $('#em').prop('disabled', false);
+                    $('#pn').prop('disabled', false);
+                    $('#owner_Id').prop('disabled', false);
                     form.submit();
 
                 } else {

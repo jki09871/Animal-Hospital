@@ -94,8 +94,10 @@
                         <input type="text" id="em" name="email" placeholder="이메일" class="input-email" value="${animal.email}" onclick="Email();" autocomplete="off" disabled>
                             <div id="emailCheckResult" class="email-check-result"></div>
                             <button type="button" id="emailModify">이메일 변경</button>
-                            <button type="button"  id="emailReset">변경취소</button>
-                            <button type="button" id="emailCheck" name="emailCheck" onclick="fn_emailCheck()">이메일 확인</button>
+                                <div class="changingEmailBtn" style="display: none;">
+                                    <button type="button"  id="emailReset" >변경취소</button>
+                                    <button type="button" id="emailCheck" name="emailCheck" onclick="fn_emailCheck()">이메일 확인</button>
+                                </div>
                         </form>
                     </td>
                 </tr>
@@ -104,8 +106,8 @@
                     <td>
                         <input type="text" name="phoneNumber" id="pn" placeholder="'-' 빼고 입력해주세요" value="${animal.phoneNumber}" class="phone-number" disabled>
                         <div id="phoneNumberCheckResult" class="phone-number-check-result"></div>
-                        <button type="button" id="phoneNumberModify">전화번호 변경</button>
-                        <button type="button"  id="phoneReset">변경취소</button>
+                        <button type="button" id="phoneNumberModify" >전화번호 변경</button>
+                        <button type="button"  id="phoneReset" style="display: none;" >변경취소</button>
                     </td>
                 </tr>
             </table>
@@ -125,9 +127,18 @@
 
         $('#emailModify').on('click', function (){
             $('#em').prop('disabled', false);
-        })
+            if($('.changingEmailBtn').css("display") == "none"){
+                $('.changingEmailBtn').show();
+
+            }
+        });
+
         $('#phoneNumberModify').on('click', function (){
             $('#pn').prop('disabled', false);
+            if($('#phoneReset').css("display") == "none"){
+                $('#phoneReset').show();
+
+            }
         })
         $('#emailReset').on('click', function(){
             const isConfirmed = confirm("이메일 변경을 취소 하시겠습니까?");
@@ -138,6 +149,7 @@
                 $('#em').prop('disabled', true);
                 $('#emailCheckResult').data("result", 1);
                 $('#emailCheckResult').text("")
+                $('.changingEmailBtn').toggle();
             } else {
                 return false;
             }
@@ -151,6 +163,7 @@
                 $('#pn').prop('disabled', true);
                 $('#emailCheckResult').data("result", 1);
                 $('#phoneNumberCheckResult').text("")
+                $('#phoneReset').toggle();
             } else {
                 return false;
             }

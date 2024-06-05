@@ -35,7 +35,6 @@ public class InquiryBoardController {
     public String list(Model model){
         log.info("list.....");
         model.addAttribute("list", is.getList());
-        System.out.println("is.getList() = " + is.getList());
         return "/animal/inquiry/list";
 
     }

@@ -91,6 +91,11 @@
 <script>
     let readForm = $('#readForm');
 
+    $(document).ready(function (){
+        let pet_Id = "${cookie.pet_Id.value}";
+        console.log(pet_Id);
+    })
+
     $('.btn').click(function (){
         readForm.submit();
     })
@@ -123,7 +128,7 @@
     $('#timeBtn').on('click', function (){
         let startTime = $('#datepicker1').val();
         let endTime = $('#datepicker2').val();
-        let pet_Id = $('#pet_id').val();
+        let pet_Id = "${cookie.pet_Id.value}";
 
         if (startTime == ''){
             alert("시작 시간을 선택해주세요");

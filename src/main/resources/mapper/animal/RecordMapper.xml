@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="record">
     <insert id="write" parameterType="com.review.dto.animal.PetMedicalRecordDTO">
-        /** 처방전 작성 **/
+/**************************** 처방전 작성 RecordMapper.xml - write *********************************/
+
         INSERT INTO PET_MEDICAL_RECORD
         (
             PET_ID ,           /** 동물 칩 정보 **/
@@ -14,25 +15,28 @@
             DIAGNOSIS ,        /** 진단 **/
             TREATMENT ,        /** 치료 **/
             PRESCRIPTION,      /** 처방전 **/
-            DOCTOR,
-            DATE_OF_VISIT
+            DOCTOR,            /** 의사 **/
+            DATE_OF_VISIT      /** 방문 날짜 **/
          )
          VALUES
         (
-            #{pet_Id},
-            #{pet_Name},
-            #{pet_Age},
-            #{symptoms},
-            #{diagnosis},
-            #{treatment},
-            #{prescription},
-            #{doctor},
-            #{date_Of_Visit}
+            #{pet_Id},          /** 동물 칩 정보 **/
+            #{pet_Name},        /** 동물 이름 **/
+            #{pet_Age},         /** 동물 나이 **/
+            #{symptoms},        /** 증상 **/
+            #{diagnosis},       /** 진단 **/
+            #{treatment},       /** 치료 **/
+            #{prescription},    /** 처방전 **/
+            #{doctor},          /** 의사 **/
+            #{date_Of_Visit}    /** 방문 날짜 **/
          );
+
+/**************************** 처방전 작성 RecordMapper.xml - write *********************************/
     </insert>
 
     <select id="recordList" resultType="com.review.dto.animal.PetDTO">
-        /** 처방전 등록된 동물 보기 **/
+/**************************** 처방전 목록 RecordMapper.xml - recordList *********************************/
+
         SELECT * FROM (
             SELECT
                 PET_ID ,           /** 동물 칩 정보 **/
@@ -48,10 +52,12 @@
                 ) AS T1
             LIMIT #{skip}, #{amount}
 
+/**************************** 처방전 목록 RecordMapper.xml - recordList *********************************/
     </select>
 
     <select id="read" resultType="java.util.HashMap" >
-        /** 해당동물의 처방전 리스트 **/
+/**************************** 특정 동물 처방전 리스트 RecordMapper.xml - read *********************************/
+
 
         SELECT
             RECORD_ID,         /** 번호 **/
@@ -70,11 +76,16 @@
             </if>
         ORDER BY
             RECORD_ID DESC
+
+/**************************** 특정 동물 처방전 리스트 RecordMapper.xml - read *********************************/
+
     </select>
 
     <select id="edit" resultType="com.review.dto.animal.PetMedicalRecordDTO">
+/**************************** 특정 동물 처방전 상세 보기 RecordMapper.xml - edit *********************************/
+
         SELECT
-            RECORD_ID,
+            RECORD_ID,         /** 처방전 고유 번호**/
             PET_ID ,           /** 동물 칩 정보 **/
             PET_NAME ,         /** 동물 이름 **/
             PET_AGE ,          /** 동물 나이 **/
@@ -87,10 +98,14 @@
         FROM
             PET_MEDICAL_RECORD
         WHERE
-            RECORD_ID = #{record_Id}
+            RECORD_ID = #{record_Id}    /** 처방전 고유 번호**/
+
+/**************************** 특정 동물 처방전 상세 보기 RecordMapper.xml - edit *********************************/
     </select>
 
     <update id="editSend" parameterType="java.util.HashMap">
+/**************************** 처방전 수정 RecordMapper.xml - editSend *********************************/
+
         UPDATE PET_MEDICAL_RECORD
         SET
             PET_NAME = #{pet_Name},             /** 동물 이름 **/
@@ -101,13 +116,22 @@
             PRESCRIPTION = #{prescription}      /** 처방전 **/
         WHERE
             RECORD_ID = #{record_Id}
+
+/**************************** 처방전 수정 RecordMapper.xml - editSend *********************************/
     </update>
 
     <select id="postTotal" resultType="int">
-        SELECT COUNT(*) FROM PET_TBL
+/**************************** 처방전 총 개수 RecordMapper.xml - postTotal *********************************/
+
+        SELECT
+            COUNT(*)
+        FROM
+            PET_TBL
         <if test="keyword != null">
             <include refid="PagingCriteria"></include>
         </if>
+
+/**************************** 처방전 총 개수 RecordMapper.xml - postTotal *********************************/
     </select>
 
     <!-- 검색 조건문 -->

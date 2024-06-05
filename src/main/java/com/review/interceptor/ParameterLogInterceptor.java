@@ -1,10 +1,8 @@
 package com.review.interceptor;
 
-import com.review.controller.HomeController;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -12,10 +10,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
-
+@Log4j2
 public class ParameterLogInterceptor extends HandlerInterceptorAdapter  {
 
-    //private Logger log = LogManager.getLogger(this.getClass());
+//    private Logger log = (Logger) LogManager.getLogger(this.getClass());
 
     @Override
     public boolean preHandle(// 매개변수 Object는 핸들러 정보를 의미한다.
@@ -24,22 +22,22 @@ public class ParameterLogInterceptor extends HandlerInterceptorAdapter  {
     	if(!(obj instanceof HandlerMethod)) return true;    	
         HandlerMethod method = (HandlerMethod)obj;
 
-        System.out.println("########## LoggerInterceptor 시작  ##########");
-        System.out.println(" ");
-        System.out.println("#### bean :: " + method.getBean());
-        System.out.println("#### method :: " + method.getMethod().getName());
-        System.out.println("#### getRequestURI :: " + request.getRequestURI());
-        System.out.println("#### getRequestURL :: " + request.getRequestURL());
-        System.out.println(" ");
+        log.debug("########## LoggerInterceptor 시작  ##########");
+        log.debug(" ");
+        log.debug("#### bean :: " + method.getBean());
+        log.debug("#### method :: " + method.getMethod().getName());
+        log.debug("#### getRequestURI :: " + request.getRequestURI());
+        log.debug("#### getRequestURL :: " + request.getRequestURL());
+        log.debug(" ");
         Enumeration params = request.getParameterNames();
-        System.out.println("---------------------------- 파라미터 시작  ----------------------------");
+        log.debug("---------------------------- 파라미터 시작  ----------------------------");
         while (params.hasMoreElements()){
             String name = (String)params.nextElement();
-            System.out.println(name + " : " +request.getParameter(name));
+            log.debug(name + " : " +request.getParameter(name));
         }
-        System.out.println("---------------------------- 파라미터 종료  ----------------------------");
-        System.out.println(" ");
-        System.out.println("########## LoggerInterceptor 종료  ##########");
+        log.debug("---------------------------- 파라미터 종료  ----------------------------");
+        log.debug(" ");
+        log.debug("########## LoggerInterceptor 종료  ##########");
         
         return true; // 반환이 false라면 controller로 요청을 안함
     }

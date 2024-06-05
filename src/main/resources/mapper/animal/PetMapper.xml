@@ -5,6 +5,8 @@
 <mapper namespace="Pet">
 
     <insert id="infoSave" parameterType="com.review.dto.animal.PetDTO">
+/**************************** 동물 등록 PetMapper.xml - infoSave *********************************/
+
         INSERT INTO Pet_Tbl
             (
              OWNER_ID,                  /* 동물 주인 */
@@ -16,16 +18,20 @@
              )
              VALUES
              (
-              #{owner_Id},
-              #{pet_Id},
-              #{pet_name},
-              #{age},
-              #{significant},
-              #{species}
+              #{owner_Id},              /* 동물 주인 */
+              #{pet_Id},                /* 마이크로칩 번호 */
+              #{pet_name},              /* 동물 이름 */
+              #{age},                   /* 동물 나이 */
+              #{significant},           /* 특이사항 */
+              #{species}                /* 종 */
               )
+
+/**************************** 동물 등록 PetMapper.xml - infoSave *********************************/
     </insert>
 
     <select id="PetInfo" parameterType="String" resultType="com.review.dto.animal.PetDTO">
+/**************************** 동물 정보 PetMapper.xml - PetInfo *********************************/
+
         SELECT
             OWNER_ID,                  /* 동물 주인 */
             PET_ID,                    /* 마이크로칩 번호 */
@@ -33,11 +39,18 @@
             SPECIES,                   /* 종 */
             SIGNIFICANT,               /* 특이사항 */
             TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE /* 계산된 나이 */
-        FROM Pet_Tbl
-        WHERE OWNER_Id =  #{owner_Id}
+        FROM
+            Pet_Tbl
+        WHERE
+            OWNER_Id =  #{owner_Id}     /* 주인 아이디 */
+
+/**************************** 동물 정보 PetMapper.xml - PetInfo *********************************/
+
     </select>
 
     <select id="InfoSelect" parameterType="String" resultType="com.review.dto.animal.PetDTO">
+/**************************** 동물 정보 상세보기 PetMapper.xml - InfoSelect *********************************/
+
         SELECT
             OWNER_ID,                  /* 동물 주인 */
             PET_ID,                    /* 마이크로칩 번호 */
@@ -45,26 +58,39 @@
             AGE,                       /* 동물 나이 */
             SIGNIFICANT,               /* 특이사항 */
             SPECIES                    /* 종 */
-        FROM PET_TBL
-        WHERE PET_ID =  #{pet_Id}
+        FROM
+            PET_TBL
+        WHERE
+            PET_ID =  #{pet_Id}
+
+/**************************** 동물 정보 상세보기 PetMapper.xml - InfoSelect *********************************/
     </select>
 
     <update id="InfoUpdate" parameterType="com.review.dto.animal.PetDTO">
-        UPDATE PET_TBL
-        SET
+/**************************** 동물 정보 상세보기 PetMapper.xml - InfoUpdate *********************************/
 
+        UPDATE
+            PET_TBL
+        SET
             AGE = #{age},                   /* 동물 나이 */
             SPECIES = #{species},           /* 종 */
             PET_NAME = #{pet_name},         /* 동물 이름 */
             SIGNIFICANT = #{significant}    /* 특이사항 */
 
         WHERE PET_ID = #{pet_Id};
+
+/**************************** 동물 정보 상세보기 PetMapper.xml - InfoUpdate *********************************/
     </update>
 
     <delete id="InfoDelete">
+/**************************** 동물 정보 삭제 PetMapper.xml - InfoDelete *********************************/
+
         DELETE FROM
                    PET_TBL
                WHERE
                    PET_ID = #{pet_Id}
+
+/**************************** 동물 정보 삭제 PetMapper.xml - InfoDelete *********************************/
+
     </delete>
 </mapper>

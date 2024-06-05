@@ -5,7 +5,8 @@
 <mapper namespace="animal">
 
     <insert id="signup" parameterType="com.review.dto.animal.AnimalMemberDTO">
-        /** 회원 가입 **/
+/*********************** 회원 가입 AnimaMemberMapper.xml -  signup **************************/
+
         INSERT INTO OWNER_TBL
         (
         OWNER_ID,           /** 회원 아이디 **/
@@ -20,9 +21,14 @@
         #{email},
         #{phoneNumber}
         )
+
+/*********************** 회원 가입 AnimaMemberMapper.xml -  signup **************************/
+
     </insert>
 
     <select id="login" parameterType="com.review.dto.animal.AnimalMemberDTO" resultType="com.review.dto.animal.AnimalMemberDTO">
+/*********************** 로그인 AnimaMemberMapper.xml -  login **************************/
+
         SELECT
             OWNER_ID,            /** 회원 아이디 **/
             PASSWORD,            /** 회원 비밀번호 **/
@@ -33,9 +39,13 @@
             OWNER_TBL
         WHERE
             OWNER_ID = #{owner_Id}
+
+/*********************** 로그인 AnimaMemberMapper.xml -  login **************************/
     </select>
 
     <select id="emailCheck" parameterType="hashMap" resultType="int">
+/*********************** 이메일 체크 AnimaMemberMapper.xml -  emailCheck **************************/
+
         SELECT
             COUNT(*)
         FROM OWNER_TBL
@@ -46,9 +56,13 @@
         <if test="ownerId != null and ownerId != '' ">
             AND  OWNER_ID =  #{ownerId}
         </if>
+
+/*********************** 이메일 체크 AnimaMemberMapper.xml -  emailCheck **************************/
     </select>
 
     <select id="myInfo" resultType="com.review.dto.animal.AnimalMemberDTO">
+/*********************** 내 정보 AnimaMemberMapper.xml -  myInfo **************************/
+
     select
         (
         SELECT
@@ -68,21 +82,28 @@
             COMMENT_WRITER =  #{owner_Id})
             AS COMMENT,
 
-        OWNER_ID,            /** 회원 아이디 **/
-        EMAIL,               /** 회원 이메일 **/
-        PHONENUMBER          /** 회원 핸드폰번호 **/
+        OWNER_ID,                           /** 회원 아이디 **/
+        EMAIL,                              /** 회원 이메일 **/
+        PHONENUMBER                         /** 회원 핸드폰번호 **/
     from
         OWNER_TBL
     where
         OWNER_Id = #{owner_Id}
+
+/*********************** 내 정보 AnimaMemberMapper.xml -  myInfo **************************/
     </select>
 
     <update id="editInfo" parameterType="com.review.dto.animal.AnimalMemberDTO">
+/*********************** 내 정보 수정 AnimaMemberMapper.xml.xml -  editInfo **************************/
+
         UPDATE
             OWNER_TBL
         SET
             EMAIL = #{email}, PHONENUMBER =  #{phoneNumber}
         WHERE
             OWNER_ID = #{owner_Id}
+
+/*********************** 내 정보 수정 AnimaMemberMapper.xml -  editInfo **************************/
+
     </update>
 </mapper>

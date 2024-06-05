@@ -33,7 +33,7 @@
                         <c:forEach var="file" items="${file}" varStatus="var">
                             <div>
                                 <a href="#" id="fileName" class="${file.FILE_NO}">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
-                                <button type="button" class="fileRemove" onclick="fnDel('${file.BNO}', '${file.FILE_NO}')">Remove</button>
+                                <button type="button" class="fileRemove" onclick="fnDel('${file.BNO}', '${file.FILE_NO}', this)">삭제</button>
                             </div>
                         </c:forEach>
                     </div>
@@ -82,24 +82,19 @@
     var fileIndex = 1;
     $('#fileAdd_btn').on('click', function () {
         $("#fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
-            + "<button type='button' class='fileRemove' onclick='fnDel(this)' id='fileDel'>삭제</button></div>");
+            + "<button type='button' class='fileRemove' id='fileDel'>삭제</button></div>");
 
     });
 
-    function fnDel(reviewNum, fileNo){
-        console.log(reviewNum);
-        console.log(fileNo);
+    function fnDel(reviewNum, fileNo, element) {
 
-        if (confirm("파일을 삭제하시겠습니까?")){
-            alert("삭제되었습니다.")
 
-            // 클릭된 부모 요소 찾아서 삭제
-            $('.fileRemove').closest('div').remove();
-
+        if (reviewNum != '' && reviewNum != null) {
+            $(element).closest('div').remove();
             $.ajax({
-                url : '/animal/fileRemove',
-                method : 'POST',
-                data : {fileNo : fileNo, reviewNum : reviewNum},
+                url: '/animal/fileRemove',
+                method: 'POST',
+                data: {fileNo: fileNo, reviewNum: reviewNum},
                 success: function () {
                     console.log("reviewNum: " + reviewNum);
                     console.log("fileNo: " + fileNo);
@@ -109,12 +104,18 @@
                     console.error("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
                 }
             });
-        } else {
-            return;
         }
+        $(element).closest('div').remove();
     }
-    function cancel(){
 
-    }
+
+    $(document).ready(function() {
+        // 삭제 버튼에 대한 클릭 이벤트 핸들러 설정
+        $(document).off('click', '.fileRemove').on('click', '.fileRemove', function() {
+            var reviewNum = $(this).data('reviewnum');
+            var fileNo = $(this).data('fileno');
+            fnDel(reviewNum, fileNo, this);
+        });
+    });
 </script>
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

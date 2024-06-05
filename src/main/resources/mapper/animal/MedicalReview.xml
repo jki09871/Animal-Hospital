@@ -5,24 +5,31 @@
 <mapper namespace="review">
 
     <insert id="reviewScreen" parameterType="com.review.dto.animal.AnimalReviewDTO" useGeneratedKeys="true" keyProperty="reviewNum">
+/*********************** 리뷰 게시글 작성 MedicalReview.xml - reviewScreen *************************/
+
         INSERT INTO MEDICAL_REVIEW_BAORD
         (
-            TITLE ,       -- 리뷰 제목 --
-            CONTENT ,     -- 리뷰 내용 --
+            TITLE ,           /** 리뷰 제목 **/
+            CONTENT ,         /** 리뷰 내용 **/
             <if test="writer != null and writer != '' ">
-                WRITER        -- 리뷰 작성자 --
+                WRITER        /** 리뷰 작성자 **/
             </if>
-        ) values
-            (
+        )
+        values
+        (
              #{title},
              #{content},
             <if test="writer != null and writer != '' ">
                 #{writer}
             </if>
-            )
+        )
+
+/*********************** 리뷰 게시글 작성 MedicalReview.xml - reviewScreen *************************/
     </insert>
 
     <select id="findAll" resultType="com.review.dto.animal.AnimalReviewDTO">
+/**************************** 리뷰 전체 게시글 보기 MedicalReview.xml - findAll *********************************/
+
         SELECT
             REVIEWNUM,                          /** 등록 번호 **/
             TITLE,                              /** 제목 **/
@@ -30,39 +37,66 @@
             WRITER,                             /** 작성자 **/
             REGDATE,                            /** 작성 시간 **/
             UPDATETDATE                         /** 수정 시간 **/
-            FROM MEDICAL_REVIEW_BAORD
-        ORDER BY REVIEWNUM DESC
+        FROM
+                MEDICAL_REVIEW_BAORD
+        ORDER BY
+            REVIEWNUM DESC
+
+/*************************** 리뷰 전체 게시글 보기 MedicalReview.xml - findAll ******************************/
     </select>
 
     <select id="read" parameterType="int" resultType="com.review.dto.animal.AnimalReviewDTO">
+/**************************** 리뷰 게시글 상세보기 MedicalReview.xml - read *********************************/
+
         SELECT
             REVIEWNUM,                          /** 등록 번호 **/
             TITLE,                              /** 제목 **/
             CONTENT,                            /** 내용 **/
             WRITER,                             /** 작성자 **/
             REGDATE                             /** 작성 시간 **/
-        FROM MEDICAL_REVIEW_BAORD
-        WHERE REVIEWNUM = #{reviewNum}
+        FROM
+            MEDICAL_REVIEW_BAORD
+        WHERE
+            REVIEWNUM = #{reviewNum}            /** 등록 번호 **/
+
+/**************************** 리뷰 게시글 상세보기 MedicalReview.xml - read *********************************/
     </select>
 
     <update id="update" parameterType="com.review.dto.animal.AnimalReviewDTO">
-        UPDATE MEDICAL_REVIEW_BAORD
-        SET UPDATETDATE = CURRENT_TIMESTAMP
+/**************************** 리뷰 게시글 수정 MedicalReview.xml - update *********************************/
+
+        UPDATE
+            MEDICAL_REVIEW_BAORD
+        SET
+            UPDATETDATE = CURRENT_TIMESTAMP                 /** 수정된 날짜 **/
         <if test="title != null and title != '' ">
-            , TITLE =  #{title}
+            , TITLE =  #{title}                             /** 수정된 제목  **/
         </if>
         <if test="content != null and content != '' ">
-            , CONTENT =  #{content}
+            , CONTENT =  #{content}                         /** 수정된 내용 **/
         </if>
-        WHERE REVIEWNUM = #{reviewNum}
+        WHERE
+            REVIEWNUM = #{reviewNum}                        /** 수정된 게시글 번호 **/
+
+/**************************** 리뷰 게시글 수정 MedicalReview.xml - update *********************************/
+
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM MEDICAL_REVIEW_BAORD
-        where REVIEWNUM = #{reviewNum}
+/**************************** 리뷰 게시글 삭제 MedicalReview.xml - delete  *********************************/
+
+        DELETE
+        FROM
+            MEDICAL_REVIEW_BAORD
+        where
+            REVIEWNUM = #{reviewNum}    /** 등록 번호 **/
+
+/**************************** 리뷰 게시글 삭제 MedicalReview.xml - delete  *********************************/
 </delete>
 
     <select id="paging" resultType="com.review.dto.animal.AnimalReviewDTO">
+/**************************** 리뷰 게시글 페이징 MedicalReview.xml - paging *********************************/
+
         select * from (
             SELECT
             REVIEWNUM,                          /** 등록 번호 **/
@@ -76,14 +110,25 @@
             ORDER BY
                 REVIEWNUM DESC
                           ) as T1
-            LIMIT #{skip}, #{amount}
+            LIMIT #{skip}, #{amount}            /** 생략 된 게시물 값 과 보여줄 게시물 값 **/
+
+/**************************** 리뷰 게시글 페이징 MedicalReview.xml - paging *********************************/
     </select>
 
     <select id="postTotal" resultType="int">
-        SELECT COUNT(*) FROM MEDICAL_REVIEW_BAORD
+/**************************** 리뷰 총 게시물 수 MedicalReview.xml - postTotal *********************************/
+
+        SELECT
+            COUNT(*)
+        FROM
+            MEDICAL_REVIEW_BAORD
+
+/**************************** 리뷰 총 게시물 수 MedicalReview.xml - postTotal *********************************/
     </select>
 
     <select id="myWriting" resultType="com.review.dto.animal.AnimalReviewDTO">
+/**************************** 내가 쓴 리뷰 게시물 MedicalReview.xml - myWriting *********************************/
+
         SELECT
             REVIEWNUM,                          /** 등록 번호 **/
             TITLE,                              /** 제목 **/
@@ -92,68 +137,95 @@
         FROM
             MEDICAL_REVIEW_BAORD
         WHERE
-            WRITER = #{ownerId}
+            WRITER = #{ownerId}                 /** 작성자 **/
         ORDER BY
             REVIEWNUM DESC
+
+/**************************** 내가 쓴 리뷰 게시물 MedicalReview.xml - myWriting *********************************/
     </select>
 
 
     <insert id="insertFile" parameterType="hashMap">
-        /** BoardMapper - insertFile */
+/**************************** 리뷰 게시물 파일 추가 *********************************/
         insert into mp_file
         (
-            file_no               /* 파일 번호*/
-        , bno                   /* 보드 bno*/
-        , org_file_name         /* 진짜 파일 이름*/
-        , stored_file_name      /* 랜덤 파일 이름*/
-        , file_size             /* 파일 사이즈*/
-        , regdate               /* 파일 올린 시간*/
-        , del_gb                /* 파일 삭제 시간*/
+            FILE_NO,               /* 파일 번호*/
+            BNO,                   /* 게시물 번호*/
+            ORG_FILE_NAME,         /* 진짜 파일 이름*/
+            STORED_FILE_NAME,      /* 랜덤 파일 이름*/
+            FILE_SIZE,             /* 파일 사이즈*/
+            REGDATE,               /* 파일 올린 시간*/
+            DEL_GB                 /* 파일 삭제 시간*/
         )VALUES
-            (
-                #{FILE_NO}            /* 파일 번호*/
-            , #{reviewNum}                /* 보드 BNO*/
-            , #{ORG_FILE_NAME}      /* 진짜 파일 이름*/
-            , #{STORED_FILE_NAME}   /* 랜덤 파일 이름*/
-            , #{FILE_SIZE}          /* 파일 사이즈*/
-            , SYSDATE()             /* 파일 올린 시간*/
-            , 'N'                   /* 파일 삭제 시간*/
-            )
+        (
+            #{FILE_NO},            /* 파일 번호 */
+            #{reviewNum},          /* 보드 BNO */
+            #{ORG_FILE_NAME},      /* 진짜 파일 이름 */
+            #{STORED_FILE_NAME},   /* 랜덤 파일 이름 */
+            #{FILE_SIZE},          /* 파일 사이즈 */
+            SYSDATE(),             /* 파일 올린 시간 */
+            'N'                    /* 파일 삭제 시간 */
+        )
+/**************************** 리뷰 게시물 파일 추가 *********************************/
     </insert>
 
     <select id="selectFileList" parameterType="int" resultType="hashMap">
-        /** BoardMapper - selectFileList */
+/**************************** 리뷰 게시물 파일 목록  *********************************/
+
         SELECT
-            FILE_NO                                /* 파일 번호*/
-             , ORG_FILE_NAME                          /* 진짜 파일 이름*/
-             , ROUND(FILE_SIZE/1024,1) AS FILE_SIZE   /* 파일 사이즈*/
-             , STORED_FILE_NAME                       /* 랜덤 파일 이름*/
-             , BNO                                    /* 보드 BNO*/
-        FROM MP_FILE
-        WHERE BNO = #{reviewNum}
-          AND DEL_GB = 'N'
-        ORDER BY FILE_NO ASC
+            FILE_NO,                                /* 파일 번호 */
+            ORG_FILE_NAME,                          /* 진짜 파일 이름 */
+            ROUND(FILE_SIZE/1024,1) AS FILE_SIZE,   /* 파일 사이즈 */
+            STORED_FILE_NAME,                       /* 랜덤 파일 이름 */
+            BNO                                     /* 게시물 번호 */
+        FROM
+            MP_FILE
+        WHERE
+            BNO = #{reviewNum}
+          AND
+            DEL_GB = 'N'
+        ORDER BY
+            FILE_NO ASC
+
+/**************************** 리뷰 게시물 파일 목록  *********************************/
     </select>
 
     <select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
-        /** BoardMapper - selectFileInfo */
+/**************************** 리뷰 게시물 파일 정보  *********************************/
+
         SELECT
             STORED_FILE_NAME,
             ORG_FILE_NAME
-        FROM MP_FILE
-        WHERE FILE_NO = #{FILE_NO}
+        FROM
+            MP_FILE
+        WHERE
+            FILE_NO = #{FILE_NO}
+
+/**************************** 리뷰 게시물 파일 정보  *********************************/
     </select>
 
     <delete id="fileRemove">
-        /** BoardMapper - removeFile */
+/**************************** 리뷰 게시물 파일 삭제  *********************************/
 
-        DELETE FROM MP_FILE
-        WHERE FILE_NO = #{FILE_NO}
+        DELETE
+        FROM
+            MP_FILE
+        WHERE
+            FILE_NO = #{FILE_NO}        /** 파일 번호 **/
+
+/**************************** 리뷰 게시물 파일 삭제  *********************************/
     </delete>
 
     <update id="updateFile" parameterType="hashMap">
-        UPDATE MP_FILE SET
+/**************************** 리뷰 게시물 파일 수정  *********************************/
+
+        UPDATE
+            MP_FILE
+        SET
             DEL_GB = 'Y'
-        WHERE FILE_NO = #{FILE_NO}
+        WHERE
+            FILE_NO = #{FILE_NO}        /** 파일 번호 **/
+
+/**************************** 리뷰 게시물 파일 수정  *********************************/
     </update>
 </mapper>

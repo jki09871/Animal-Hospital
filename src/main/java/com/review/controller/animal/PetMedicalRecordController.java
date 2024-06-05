@@ -62,7 +62,7 @@ public class PetMedicalRecordController {
 
 
     @GetMapping("/pet/prescription/details")
-    public ModelAndView prescriptionRead(PagingCriteria cri, @RequestParam(value = "pet_Id", required = false) String pet_Id,
+    public ModelAndView prescriptionRead(PagingCriteria cri,HttpServletResponse response, @RequestParam(value = "pet_Id", required = false) String pet_Id,
                                                              @RequestParam(value = "endTime", required = false) String endTime,
                                                              @RequestParam(value = "startTime", required = false) String startTime){
 
@@ -71,6 +71,10 @@ public class PetMedicalRecordController {
         multiple.put("pet_Id", pet_Id);
         multiple.put("startTime", startTime);
         multiple.put("endTime", endTime);
+
+        Cookie cookie = new Cookie("pet_Id", pet_Id);
+        response.addCookie(cookie);
+
 
 
 

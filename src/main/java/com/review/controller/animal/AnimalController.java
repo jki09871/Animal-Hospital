@@ -10,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Log4j
 @Controller
@@ -22,6 +24,18 @@ public class AnimalController {
 
     @Setter(onMethod_ = @Autowired)
     private PetService ps;
+
+    @RequestMapping("/msg")
+    public String msgForward(HttpServletRequest request){
+
+        request.setAttribute("msg", request.getAttribute("msg"));
+        request.setAttribute("returnUrl", request.getAttribute("returnUrl"));
+        request.setAttribute("method", request.getAttribute("method"));
+
+
+
+        return "/board/msg";
+    }
 
     /************************************************  동물 등록  ************************************************/
     @GetMapping("/pet/info/write")
@@ -44,10 +58,21 @@ public class AnimalController {
     /************************************************  등록 정보  ************************************************/
 
     @GetMapping("/pet/info")
-    public String petInfo(@RequestParam ("ownerId") String ownerId , Model model){
-        model.addAttribute("pet", ps.getPetInfo(ownerId));
+    public String petInfo(@RequestParam ("ownerId") String ownerId , Model model, HttpServletRequest request){
+        List<PetDTO> petInfo = ps.getPetInfo(ownerId);
+        System.out.println("petInfo = " + petInfo);
 
-        return "/animal/pet/info";
+        if (!petInfo.isEmpty()) {
+            model.addAttribute("pet", petInfo);
+            return "/animal/pet/info";
+        }else {
+            String msg = "등록된 동물이 없습니다.";
+            request.setAttribute("msg", msg);
+            request.setAttribute("returnUrl","/animal/myInfo");
+            request.setAttribute("method", "get");
+            return "forward:/msg";
+        }
+
     }
     /************************************************************************************************************/
 

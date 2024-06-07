@@ -7,6 +7,8 @@ import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,5 +44,17 @@ public class OwnerRepository {
 
     public List<InquiryCommentDTO> commentIWrote(Map<String,Object> ownerId) { // 나의 활동 댓글 리스트
         return sql.selectList("comment.commentIWrote", ownerId);
+    }
+
+    public void keepLogin(String owner_Id, String session_key, Date session_limit) throws Exception{
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("owner_Id", owner_Id);
+        paramMap.put("session_key", session_key);
+        paramMap.put("session_limit", session_limit);
+        sql.update("animal.keepLogin", paramMap);
+    }
+
+    public AnimalMemberDTO checkUserWitSessionKey(String value) throws Exception{
+        return sql.selectOne("animal.checkUserWitSessionKey", value);
     }
 }

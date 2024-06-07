@@ -38,19 +38,26 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-	<!--<mvc:interceptors>
-		<mvc:interceptor>
-			<mapping path="/**"/>
-			<exclude-mapping path="/animal/login"/>
-			<exclude-mapping path="/animal/reviewList/**"/>
-			<exclude-mapping path="/animal/viewDetails/**"/>
-			<exclude-mapping path="/"/>
-			<exclude-mapping path="/animal/logout"/>
-			<exclude-mapping path="/animal/signup"/>
-			<exclude-mapping path="/animal/emailCheck"/>
-			<exclude-mapping path="/board/msg"/>
-			<beans:bean class="com.review.interceptor.LogInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>-->
+<!--	<mvc:interceptors>-->
+<!--		<mvc:interceptor>-->
+<!--			<mapping path="/**"/>-->
+<!--			<exclude-mapping path="/animal/login"/>-->
+<!--			<exclude-mapping path="/animal/reviewList/**"/>-->
+<!--			<exclude-mapping path="/animal/viewDetails/**"/>-->
+<!--			<exclude-mapping path="/"/>-->
+<!--			<exclude-mapping path="/animal/logout"/>-->
+<!--			<exclude-mapping path="/animal/signup"/>-->
+<!--			<exclude-mapping path="/animal/emailCheck"/>-->
+<!--			<exclude-mapping path="/board/msg"/>-->
+<!--			<beans:bean class="com.review.interceptor.LogInterceptor" />-->
+<!--		</mvc:interceptor>-->
+<!--	</mvc:interceptors>-->
+
+		<mvc:interceptors>
+			<interceptor>
+				<mvc:mapping path="/**/"/>
+				<beans:bean id="rememberMeInterceptor" class="com.review.interceptor.RememberMeInterceptor"/>
+			</interceptor>
+		</mvc:interceptors>
 
 </beans:beans>

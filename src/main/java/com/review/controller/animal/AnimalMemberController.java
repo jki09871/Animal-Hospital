@@ -14,6 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.WebUtils;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +46,7 @@ public class AnimalMemberController {
         return "/animal/owner/ownerSignup";
     }
     @PostMapping("/animal/signup")
-    public String postSignupScreen(AnimalMemberDTO animalDTO){
+    public <Pbkdf2PownerswordEncoderUtil> String postSignupScreen(AnimalMemberDTO animalDTO){
 
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -86,10 +88,11 @@ public class AnimalMemberController {
         log.info(" 로그인 화면 ");
         return "/animal/owner/login";
     }
-    
+
     @PostMapping("/animal/login")
     public String memberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request,
-                              HttpServletResponse response, String toURL, boolean rememberId){
+                              HttpServletResponse response, String toURL, boolean rememberId) throws Exception {
+
 
         AnimalMemberDTO dbDto = as.userVerification(animalDTO);
         boolean loginResult = false;
@@ -116,6 +119,21 @@ public class AnimalMemberController {
 
         HttpSession session = request.getSession();
         if (loginResult) {
+
+            if(request.getParameter("useCookie")!=null) {
+
+                Cookie loginCookie = new Cookie("loginCookie",session.getId());
+                loginCookie.setPath("/");
+                loginCookie.setMaxAge(60*60*24*7);
+                response.addCookie(loginCookie);
+
+                int amount = 60 * 60 * 24 * 7;
+                Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount)); //로그인 유지 기간 설정
+                as.keepLogin(animalDTO.getOwner_Id(), session.getId(), sessionLimit);
+                
+
+
+            }
             session.setAttribute("loginId", dbDto);
             log.info("로그인 성공");
             toURL = toURL == null || toURL.equals("") ? "/" : toURL;
@@ -128,10 +146,20 @@ public class AnimalMemberController {
 
     /** 로그아웃 **/
     @RequestMapping("/animal/logout")
-    public String memberLogout(HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        if(session != null){
+    public String memberLogout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        Object object = session.getAttribute("loginId");
+        if(object != null){
+            AnimalMemberDTO memberDTO = (AnimalMemberDTO) object;
+            session.removeAttribute("loginId");
             session.invalidate();
+            Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+            if (loginCookie != null){
+                loginCookie.setPath("/");
+                loginCookie.setMaxAge(0);
+                response.addCookie(loginCookie);
+                as.keepLogin(memberDTO.getOwner_Id(), "null", new Date());
+            }
+
         }
         return "redirect:/";
     }

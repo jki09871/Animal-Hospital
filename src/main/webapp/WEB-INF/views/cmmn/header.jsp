@@ -5,6 +5,7 @@
   Time: 오후 7:06
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -86,6 +87,11 @@
                 <option value='/registered/animal'>Registered Animal</option>
               </select>
           </form>
+        </c:if>
+        <c:if test="${sessionScope.loginId.owner_Id != null}">
+          <li>
+            <a class="smooth-scroll">${sessionScope.loginId.owner_Id}님 안녕하세요</a>
+          </li>
         </c:if>
       </ul>
     </div><!-- /.navbar-collapse -->

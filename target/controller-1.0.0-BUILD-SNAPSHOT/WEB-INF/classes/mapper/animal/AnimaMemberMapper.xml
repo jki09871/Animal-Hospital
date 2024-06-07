@@ -106,4 +106,19 @@
 /*********************** 내 정보 수정 AnimaMemberMapper.xml -  editInfo **************************/
 
     </update>
+
+    <update id="keepLogin">
+        UPDATE
+            OWNER_TBL
+        SET
+            SESSION_KEY = #{session_key},
+            session_limit = #{session_limit}
+        WHERE
+            OWNER_ID = #{owner_Id}
+
+    </update>
+
+    <select id="checkUserWitSessionKey" resultType="com.review.dto.animal.AnimalMemberDTO">
+        SELECT * FROM OWNER_TBL WHERE SESSION_KEY = #{value}
+    </select>
 </mapper>

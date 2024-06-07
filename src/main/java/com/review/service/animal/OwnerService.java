@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -59,5 +60,13 @@ public class OwnerService {
 
     public List<InquiryCommentDTO> commentIWrote(Map<String,Object> ownerId) {
         return ar.commentIWrote(ownerId);
+    }
+
+    public void keepLogin(String owner_Id, String session_key, Date session_limit) throws  Exception{
+        ar.keepLogin(owner_Id, session_key, session_limit);
+    }
+
+    public AnimalMemberDTO checkLoginBefore(String value) throws Exception {
+        return ar.checkUserWitSessionKey(value);
     }
 }

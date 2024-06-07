@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 <style>
   .login-container {
@@ -79,6 +79,7 @@
           <input type="password" name="password" placeholder="비밀번호" autocomplete="off" required>
           <input type="hidden" name="toURL" value="${param.toURL}">
           <label><input type="checkbox" name="rememberId"${empty cookie.owner_Id.value ? "":"checked" }> 아이디 기억</label>
+          <label><input type="checkbox" name="useCookie"> 로그인유지</label>
           <input type="submit" value="로그인">
         </form>
         <div class="links">
@@ -90,12 +91,6 @@
 </div>
 
 <script>
-    let msg = "${param.msg}";
-    if (msg != null && msg != ""){
-      console.log(msg);
-      alert(msg);
-    }
-
 
 </script>
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

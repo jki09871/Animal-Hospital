@@ -16,9 +16,9 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
             response, Object handler) throws Exception {
 
         HttpSession session = request.getSession();
-        Object loginEmail = session.getAttribute("loginId");
-        if (loginEmail == null) {
-            response.sendRedirect(request.getContextPath() + "/board/msg");
+        Object loginId = session.getAttribute("loginId");
+        if (loginId == null) {
+            response.sendRedirect(request.getContextPath() + "/animal/login?toURL="+request.getRequestURL());
             return false;
         }
 

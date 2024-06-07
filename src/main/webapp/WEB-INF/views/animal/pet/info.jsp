@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%--<link rel="stylesheet" href="/resources/styles.css">--%>
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 <style>
@@ -43,7 +44,7 @@
     <div class="container">
         <div class="basic animal">
             <h1 class="text-primary text-center" style="margin-top: 90px;">PET INFO</h1>
-                <form name="petForm" id="petForm" action="/animal/pet/info" method="get">
+                <form name="petForm" class="infoForm" id="petForm" action="/animal/pet/info" method="get">
                     <table class="pet-table">
                         <tr>
                             <th>강아지 이름</th>
@@ -68,9 +69,9 @@
                             </tr>
                         </c:forEach>
                     </table>
-                    <div class="btn-group">
-                        <button type="button" onclick="history.back()" class="btn-modify">이전</button>
-                    </div>
+<%--                    <div class="btn-group">--%>
+<%--                        <button type="button" onclick="history.back()" class="btn-modify">이전</button>--%>
+<%--                    </div>--%>
                 </form>
             </div>
         </div>
@@ -79,24 +80,5 @@
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>
 
 <script>
-    // let form = $('#petForm');
-    // let url = '';
-    // function fnDynamic(se){
-    //     switch (se) {
-    //         case 'C' :
-    //             url = '/animal/myInfo';
-    //             break;
-    //     }
-    //     form.attr('action', url);
-    //     form.submit();
-    // }
 
-    $(document).ready(function (){
-        // pet_info 클래스를 갖는 요소의 존재 여부 확인
-        if ($('.pet_info').length === 0) {
-            alert("등록된 동물이 없습니다.");
-            form.attr('action', "/animal/myInfo");
-            form.submit();
-        }
-    });
 </script>

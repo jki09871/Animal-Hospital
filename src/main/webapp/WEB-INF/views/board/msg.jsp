@@ -39,7 +39,7 @@
 
 <noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
 
-<form name="frm" id="frm" method="post" action="<c:url value="${returnUrl}"/>">
+<form name="frm" id="frm" method="get" action="<c:url value="${returnUrl}"/>">
 </form>
 <!--// footer -->
 </body>

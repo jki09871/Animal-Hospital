@@ -31,21 +31,13 @@ public class AnimalReviewBoardController {
     @Setter(onMethod_ = @Autowired)
     private MedicalReviewService service;
 
-    @RequestMapping("/board/msg")
-    public void msgForward(HttpServletRequest request){
-
-        request.setAttribute("msg", "로그인 후 이용해 주세요");
-        request.setAttribute("returnUrl", "/animal/login");
-
-
-    }
 
     /************************************************  게시물 리스트  ************************************************/
     @RequestMapping("/animal/reviewList")
     public String animalReviewList(Model model, PagingCriteria pagingCriteria, HttpServletRequest request){
         HttpSession session = request.getSession();
-        if (session.getAttribute("loginId") == null)
-            return "redirect:/animal/login?toURL="+request.getRequestURL();
+//        if (session.getAttribute("loginId") == null)
+//            return "redirect:/animal/login?toURL="+request.getRequestURL();
         log.info("리뷰 게시판");
 
         model.addAttribute("list", service.getListPaging(pagingCriteria));

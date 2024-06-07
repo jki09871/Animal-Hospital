@@ -25,4 +25,6 @@ public class AnimalMemberDTO {
     private Date regDate;
     private int post;
     private int comment;
+    private String session_key;
+    private Date session_limit;
 }

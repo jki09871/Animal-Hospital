@@ -57,4 +57,16 @@ public class OwnerRepository {
     public AnimalMemberDTO checkUserWitSessionKey(String value) throws Exception{
         return sql.selectOne("animal.checkUserWitSessionKey", value);
     }
+
+    public String findId(Map<String, Object> map) {
+        return sql.selectOne("animal.findId", map);
+    }
+
+    public int findPw(Map<String, Object> map) {
+        return sql.selectOne("animal.findPw", map);
+    }
+
+    public void pwUpdate(Map<String, Object> map){
+        sql.update("animal.pwUpdate", map);
+    }
 }

@@ -19,11 +19,11 @@ import java.util.Map;
 public class OwnerService {
 
     @Setter(onMethod_ = @Autowired)
-    private OwnerRepository ar;
+    private OwnerRepository or;
 
     /********************** 회원가입 **********************/
     public int postSignupScreen(AnimalMemberDTO animalDTO) {
-        return ar.postSignupScreen(animalDTO);
+        return or.postSignupScreen(animalDTO);
     }
     /*****************************************************/
 
@@ -31,7 +31,7 @@ public class OwnerService {
     /***************** 회원가입 중복이메일 확인 **************/
     public boolean joinEmailCheck(Map<String, Object> valid) {
         System.out.println("valid = " + valid);
-      int valid2 = ar.joinEmailCheck(valid);
+      int valid2 = or.joinEmailCheck(valid);
 
         if (valid2 == 0) {
             log.info("사용 가능한 이메일 또는 아이디 입니다.");
@@ -46,27 +46,41 @@ public class OwnerService {
 
     /*********************** 로그인 ***********************/
     public AnimalMemberDTO userVerification(AnimalMemberDTO animalDTO) {
-        return ar.userVerification(animalDTO);
+        return or.userVerification(animalDTO);
     }
     /*****************************************************/
 
     public AnimalMemberDTO myInformation(Object ownerId) {
-       return ar.myInformation(ownerId);
+       return or.myInformation(ownerId);
     }
 
     public void editInfo(AnimalMemberDTO animalDTO) {
-        ar.editInfo(animalDTO);
+        or.editInfo(animalDTO);
     }
 
     public List<InquiryCommentDTO> commentIWrote(Map<String,Object> ownerId) {
-        return ar.commentIWrote(ownerId);
+        return or.commentIWrote(ownerId);
     }
 
     public void keepLogin(String owner_Id, String session_key, Date session_limit) throws  Exception{
-        ar.keepLogin(owner_Id, session_key, session_limit);
+        or.keepLogin(owner_Id, session_key, session_limit);
     }
 
     public AnimalMemberDTO checkLoginBefore(String value) throws Exception {
-        return ar.checkUserWitSessionKey(value);
+        return or.checkUserWitSessionKey(value);
     }
+
+    public String findId(Map<String, Object> map) {
+        return or.findId(map);
+    }
+
+    public int findPw(Map<String, Object> map){
+        return or.findPw(map);
+
+    }
+
+    public void pwUpdate(Map<String, Object> map){
+        or.pwUpdate(map);
+    }
+
 }

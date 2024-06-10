@@ -108,6 +108,8 @@
     </update>
 
     <update id="keepLogin">
+/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
+
         UPDATE
             OWNER_TBL
         SET
@@ -116,9 +118,55 @@
         WHERE
             OWNER_ID = #{owner_Id}
 
+/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
+
     </update>
 
     <select id="checkUserWitSessionKey" resultType="com.review.dto.animal.AnimalMemberDTO">
-        SELECT * FROM OWNER_TBL WHERE SESSION_KEY = #{value}
+/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
+
+        SELECT
+            SESSION_KEY
+        FROM
+            OWNER_TBL
+        WHERE
+            SESSION_KEY = #{value}
+
+/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
+
     </select>
+
+    <select id="findId" parameterType="hashMap" resultType="String">
+/*********************** 아이디 찾기 AnimaMemberMapper.xml.xml -  findId **************************/
+
+        SELECT
+            OWNER_ID
+        FROM
+            OWNER_TBL
+        WHERE
+            EMAIL = #{email} AND PHONENUMBER = #{phone}
+
+/*********************** 아이디 찾기 AnimaMemberMapper.xml.xml -  findId **************************/
+    </select>
+
+    <select id="findPw" parameterType="hashMap" resultType="int">
+
+        SELECT
+            COUNT(*)
+        FROM
+            OWNER_TBL
+        WHERE
+            EMAIL = #{email} AND OWNER_ID = #{owner_Id}
+
+    </select>
+
+    <update id="pwUpdate"  parameterType="hashMap">
+        UPDATE
+            OWNER_TBL
+        SET
+            PASSWORD = #{randomPw}
+        WHERE
+            EMAIL = #{email} AND OWNER_ID = #{owner_Id}
+    </update>
+
 </mapper>

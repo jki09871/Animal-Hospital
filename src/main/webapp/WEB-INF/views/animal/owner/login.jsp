@@ -31,7 +31,7 @@
   .login-container input[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #5cbf2a;
     color: white;
     border: none;
     border-radius: 4px;
@@ -40,7 +40,7 @@
   }
 
   .login-container input[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #5cbf2a;
   }
 
   .login-container label {
@@ -59,13 +59,17 @@
   }
 
   .login-container .links a {
-    color: #007bff;
+    color: white;
     text-decoration: none;
   }
 
   .login-container .links a:hover {
     text-decoration: underline;
   }
+  .btn-outline-primary {
+    background-color: #5cbf2a;
+  }
+
 
 </style>
 
@@ -83,12 +87,15 @@
           <input type="submit" value="로그인">
         </form>
         <div class="links">
-          <a href="/animal/signup">회원가입</a>
+          <button class="btn btn-outline-primary"><a href="/animal/signup">회원가입</a></button>
+          <button class="btn btn-outline-primary" ><a href="/animal/findId">아이디 찾기</a></button>
+          <button class="btn btn-outline-primary" ><a href="/animal/findPw">비밀번호 찾기</a></button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <script>
 

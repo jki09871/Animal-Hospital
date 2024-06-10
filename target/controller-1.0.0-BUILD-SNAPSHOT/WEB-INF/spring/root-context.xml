@@ -39,6 +39,18 @@
 		<property name="username" value="ksifsmtp" />
 		<property name="password" value="xabneftdiaijsejp" />
 		<property name="defaultEncoding" value="utf-8" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+
 		<!--		<property name="username" value="ghdwjdrl1234" />-->
 		<!--		<property name="password" value="gpuiuwexnmkekbjd" />-->
 
@@ -54,7 +66,7 @@
 <!--			</props>-->
 <!--		</property>-->
 
-	</bean>
+
 
 	
 	

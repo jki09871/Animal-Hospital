@@ -410,7 +410,13 @@
 	</div>
 </div>
 
+<script>
+	$(document).ready(function (){
+	if (${pwdExpires != ""}){
 
+	}
+	});
+</script>
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>
 
 

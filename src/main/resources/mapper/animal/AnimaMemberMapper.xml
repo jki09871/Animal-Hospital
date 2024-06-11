@@ -126,7 +126,13 @@
 /*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
 
         SELECT
-            SESSION_KEY
+            OWNER_ID,            /** 회원 아이디 **/
+            PASSWORD,            /** 회원 비밀번호 **/
+            EMAIL,               /** 회원 이메일 **/
+            PHONENUMBER,         /** 회원 핸드폰번호 **/
+            GRADE,               /** 등급 **/
+            PWDEXPIRES,          /** 비번 만료일 **/
+            SESSION_KEY          /** 세션 키 **/
         FROM
             OWNER_TBL
         WHERE
@@ -150,6 +156,7 @@
     </select>
 
     <select id="findPw" parameterType="hashMap" resultType="int">
+/*********************** 비번 찾기 AnimaMemberMapper.xml.xml -  findPw **************************/
 
         SELECT
             COUNT(*)
@@ -158,15 +165,48 @@
         WHERE
             EMAIL = #{email} AND OWNER_ID = #{owner_Id}
 
+/*********************** 비번 찾기 AnimaMemberMapper.xml.xml -  findPw **************************/
+
     </select>
 
     <update id="pwUpdate"  parameterType="hashMap">
+/*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
+
         UPDATE
             OWNER_TBL
         SET
-            PASSWORD = #{randomPw}
+            PASSWORD = #{pwChange}
         WHERE
             EMAIL = #{email} AND OWNER_ID = #{owner_Id}
+
+/*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
     </update>
 
+    <select id="pwdexpires" resultType="com.review.dto.animal.AnimalMemberDTO">
+/*********************** 비번 만료 아이디 찾기  AnimaMemberMapper.xml.xml -  pwdexpires **************************/
+
+        <![CDATA[
+        SELECT
+            OWNER_ID
+        FROM
+            OWNER_TBL
+        WHERE
+            PWDEXPIRES <= date_add(now(), interval -3 month);
+
+/*********************** 비번 만료 아이디 찾기  AnimaMemberMapper.xml.xml -  pwdexpires **************************/
+        ]]>
+    </select>
+
+    <update id="pwChange"  parameterType="hashMap">
+/*********************** 비밀번호 변경  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
+
+        UPDATE
+            OWNER_TBL
+        SET
+            PASSWORD = #{password}
+        WHERE
+            OWNER_ID = #{owner_Id}
+
+/*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
+    </update>
 </mapper>

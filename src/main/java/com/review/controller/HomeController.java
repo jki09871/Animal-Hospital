@@ -5,9 +5,13 @@ import java.text.DateFormat;
 import java.util.*;
 
 import com.nhncorp.lucy.security.xss.XssPreventer;
+import com.review.dto.animal.AnimalMemberDTO;
+import com.review.service.animal.OwnerService;
+import lombok.Setter;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +30,19 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 	
+	@Setter(onMethod_ = @Autowired)
+	private OwnerService os;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpSession session) {
+	public String home(Locale locale, Model model, HttpSession session, HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
+
+		session = request.getSession();
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -60,6 +69,18 @@ public class HomeController {
 
 		model.addAttribute("bannerList", bannerList);
 
+		List<AnimalMemberDTO> dto = os.pwdExpires();
+		int size = dto.size();
+
+		for (int i = 0; i < size; i++) {
+			AnimalMemberDTO sessionAttribute = (AnimalMemberDTO) session.getAttribute("loginId");
+			if (sessionAttribute != null) {
+				String ownerId = sessionAttribute.getOwner_Id();
+				if (dto.get(i).getOwner_Id().equals(ownerId)) {
+					model.addAttribute("pwdExpires", "pwdExpires");
+				}
+			}
+		}
 		return "home";
 	}
 

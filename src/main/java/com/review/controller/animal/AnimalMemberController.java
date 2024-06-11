@@ -7,7 +7,6 @@ import com.review.util.Pbkdf2PasswordEncoderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -132,8 +131,6 @@ public class AnimalMemberController {
                 int amount = 60 * 60 * 24 * 7;
                 Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount)); //로그인 유지 기간 설정
                 os.keepLogin(animalDTO.getOwner_Id(), session.getId(), sessionLimit);
-
-
             }
             session.setAttribute("loginId", dbDto);
             log.info("로그인 성공");
@@ -288,7 +285,7 @@ public class AnimalMemberController {
             Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
             String randomPw = generateRandomString();
             String randomP2 = pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.encode(randomPw);
-            findId.put("randomPw", randomP2);
+            findId.put("pwChange", randomP2);
             os.pwUpdate(findId);
 
             try {
@@ -342,5 +339,32 @@ public class AnimalMemberController {
 
         // 생성된 랜덤 문자열 반환
         return randomString.toString();
+    }
+
+    @GetMapping("/animal/pwChange")
+    public String pwChange(){
+        return "animal/owner/pwChange";
+    }
+
+    @PostMapping("/animal/pwChange")
+    public String pwChange(AnimalMemberDTO animalDTO, @RequestParam String pwChange,
+                            @RequestParam String owner_Id, Model model) {
+        AnimalMemberDTO dbDto = os.userVerification(animalDTO);
+        Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
+        boolean loginResult = false;
+        if (dbDto != null) {
+            if (pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.matches(animalDTO.getPassword(), dbDto.getPassword())) {
+                loginResult = true;
+            }
+        }
+
+        Map<String, Object> pw = new HashMap<>();
+        if (loginResult) {
+            animalDTO.setPassword(pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.encode(pwChange));
+            os.pwChange(animalDTO);
+            System.out.println("animalDTO = " + animalDTO.getPassword());
+            return "redirect:/";
+        }
+        return "animal/owner/pwChange";
     }
 }

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manager">
+    <select id="memberList" resultType="com.review.dto.animal.AnimalMemberDTO">
+/**************************** 가입된 회원 목록 RecordMapper.xml - memberList *********************************/
+
+        SELECT
+            OWNER_ID,           /** 아이디 **/
+            EMAIL,              /** 이메일 **/
+            PHONENUMBER,        /** 핸드폰 번호 **/
+            GRADE,              /** 등급 **/
+            REGDATE             /** 등록일 **/
+        FROM
+            OWNER_TBL
+        ORDER BY
+            REGDATE DESC
+
+/**************************** 가입된 회원 목록 RecordMapper.xml - memberList *********************************/
+    </select>
+
+    <select id="memberData" resultType="com.review.dto.animal.AnimalMemberDTO">
+/**************************** 가입된 회원 데이터 RecordMapper.xml - memberData *********************************/
+
+        SELECT
+            OWNER_ID,           /** 아이디 **/
+            EMAIL,              /** 이메일 **/
+            PHONENUMBER,        /** 핸드폰 번호 **/
+            GRADE,              /** 등급 **/
+            REGDATE             /** 등록일 **/
+        FROM
+            OWNER_TBL
+        WHERE OWNER_ID = #{owner_Id}
+
+/**************************** 가입된 회원 데이터 RecordMapper.xml - memberData *********************************/
+    </select>
+
+    <select id="petList" resultType="com.review.dto.animal.PetDTO">
+/**************************** 등록된 동물 목록 RecordMapper.xml - petList *********************************/
+
+        SELECT
+            PET_ID,             /** 마이크로칩 번호 **/
+            PET_NAME,           /** 동물 이름 **/
+            SPECIES,            /** 종 **/
+            SIGNIFICANT,        /** 특이사항 **/
+            OWNER_ID,           /** 주인 아이디 **/
+            TIMESTAMPDIFF(YEAR,AGE,CURDATE()) + 1 AS AGE /** 계산된 나이 **/
+        FROM
+            PET_TBL
+            <if test="keyword != null">
+                <include refid="PagingCriteria"></include>
+            </if>
+
+/**************************** 등록된 동물 목록 RecordMapper.xml - petList *********************************/
+    </select>
+
+    <select id="petData" resultType="com.review.dto.animal.PetDTO">
+/**************************** 등록된 동물 데이터 RecordMapper.xml - petData *********************************/
+
+        SELECT
+            PET_ID,             /** 마이크로칩 번호 **/
+            PET_NAME,           /** 동물 이름 **/
+            SPECIES,            /** 종 **/
+            SIGNIFICANT,        /** 특이사항 **/
+            OWNER_ID,            /** 주인 아이디 **/
+            TIMESTAMPDIFF(YEAR, AGE, CURDATE()) AS AGE /** 계산된 나이 **/
+        FROM
+            PET_TBL
+        WHERE PET_ID = #{pet_Id}
+
+/**************************** 등록된 동물 데이터 RecordMapper.xml - petData *********************************/
+
+    </select>
+
+    <select id="postTotal" resultType="int">
+/************************** 모달에 검색조건을 위한 것 RecordMapper.xml - postTotal *****************************/
+
+        SELECT
+            COUNT(*)
+        FROM
+            PET_TBL
+        <if test="keyword != null">
+            <include refid="PagingCriteria"></include>
+        </if>
+
+/************************** 모달에 검색조건을 위한 것 RecordMapper.xml - postTotal *****************************/
+
+    </select>
+
+    <!-- 검색 조건문 -->
+    <sql id="PagingCriteria">
+        <trim prefix="where (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'N'.toString()">
+                            PET_NAME LIKE CONCAT('%',#{keyword},'%')
+                        </when>
+                        <when test="type == 'I'.toString()">
+                            PET_ID LIKE CONCAT('%',#{keyword},'%')
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+
+    </sql>
+</mapper>

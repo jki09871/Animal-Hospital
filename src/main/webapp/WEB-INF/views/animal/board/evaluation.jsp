@@ -29,7 +29,7 @@
                 </div>
                 <button class="fileAdd btn" type="button">파일추가</button>
                 <button type="submit" class="btn">등록</button>
-                <button type="reset" class="btn btn-cancel">취소</button>
+                <button type="reset" onclick="history.back()" class="btn btn-cancel">취소</button>
             </form>
         </div>
     </div>

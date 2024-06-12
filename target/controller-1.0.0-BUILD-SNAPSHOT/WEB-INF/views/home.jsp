@@ -1,4 +1,41 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<style>
+	.modal{
+		position:absolute;
+		display:none;
+
+		justify-content: center;
+		top:0;
+		left:0;
+
+		width:100%;
+		height:100%;
+
+
+
+		background-color: rgba(0,0,0,0.4);
+	}
+
+	.modal_body{
+		position:absolute;
+		top:50%;
+
+
+		width:460px;
+		height:200px;
+
+		padding:40px;
+
+		text-align: center;
+
+		background-color: rgb(255,255,255);
+		border-radius:10px;
+		box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);
+
+		transform:translateY(-50%);
+	}
+</style>
 
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
@@ -409,12 +446,48 @@
 		</div>
 	</div>
 </div>
-
+<div class="modal">
+	<div class="modal_body">
+		<h3>개인정보 보호를 위해 비밀번호를 변경 해주세요</h3>
+		<p>모달창 내용 </p>
+		<button type="button" class="pwChangeOk">비밀번호 변경</button>
+		<button type="button" class="pwChangeNo">나중에 변경</button>
+	</div>
+</div>
 <script>
 	$(document).ready(function (){
-	if (${pwdExpires != ""}){
+		let pwChangeTime = "${sessionScope.loginId.change_at}";
+		<c:if test="${not empty success}">
+		alert("${success}");
+		</c:if>
+		console.log("ddddddd"+ pwChangeTime);
+		if (pwChangeTime === "Y") {
+			const modal = $('.modal');
+			modal.css('display', 'flex');
+		}
 
-	}
+		$('.pwChangeOk').on('click', function (){
+			location.href = '/animal/pwChange';
+		});
+
+		$('.pwChangeNo').on('click', function (){
+			const modal = $('.modal');
+			modal.hide(500);
+			let owner_Id = "${sessionScope.loginId.owner_Id}";
+			$.ajax({
+				url : '/animal/pwChangeNo',
+				method : 'get',
+				data : {owner_Id : owner_Id},
+				success : function (success) {
+					console.log(success);
+				}, error: function (request, status, error) {
+
+					console.log("code:" + request.status + "\n"
+							+ "message:" + request.responseText + "\n" + "error:" + error);
+
+				}
+			});
+		});
 	});
 </script>
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

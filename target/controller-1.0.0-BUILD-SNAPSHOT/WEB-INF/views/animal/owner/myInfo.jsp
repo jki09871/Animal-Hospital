@@ -9,7 +9,7 @@
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        width: 520px;
+        width: 460px;
         text-align: center;
         margin: auto;
 
@@ -69,11 +69,10 @@
 </style>
 
 <div class="container-stories" >
-    <div class="basic animal">
-        <div class="container-about">
+    <div class="container">
+        <div class="basic animal">
             <div class="panel-body">
                 <table>
-                    <h2>My Info</h2>
                     <tr>
                         <th>아이디</th>
                         <td>${animal.owner_Id}</td>
@@ -117,7 +116,6 @@
                     <button type="button" class="btn" onclick="fnDynamic('E');">정보수정</button>
                     <button type="button" class="btn" onclick="fnDynamic('W');">애견등록</button>
                     <button type="button" class="btn" onclick="fnDynamic('I');">애견등록확인</button>
-                    <button type="button" class="btn" onclick="fnDynamic('P');">비밀변호 변경</button>
                 </div>
                 <form id="petForm" action="/animal/myInfo" method="get">
                     <input type="hidden" name="ownerId" id="ownerId" value="<c:out value='${animal.owner_Id}'/>">
@@ -125,7 +123,6 @@
             </div>
         </div>
     </div>
-</div>
 <script>
     let form = $('#petForm');
     let url = '';
@@ -142,7 +139,7 @@
                 url = '/pet/info/write';
                 break;
             case 'P' :
-                url = '/animal/pwChange';
+                url = '/animal/postIWrote';
                 break;
             default :
                 url = '/pet/info';

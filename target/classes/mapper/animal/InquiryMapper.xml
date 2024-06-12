@@ -88,7 +88,7 @@
             TITLE = #{title},                  /** 문의제목 **/
             CONTENT = #{content},              /** 문의내용 **/
             WRITER = #{writer},                /** 작성자 **/
-            UPDATE_DATE = CURRENT_TIMESTAMP    /** 문의 내용 수정 시간 **/
+            UPDATE_DATE = current_timestamp    /** 문의 내용 수정 시간 **/
         WHERE
             INQUIRY_NUM = #{inquiry_Num}       /** 문의고유번호 **/
 

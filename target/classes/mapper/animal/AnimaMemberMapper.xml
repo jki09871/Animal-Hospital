@@ -28,33 +28,28 @@
 
     <select id="login" parameterType="com.review.dto.animal.AnimalMemberDTO" resultType="com.review.dto.animal.AnimalMemberDTO">
 /*********************** 로그인 AnimaMemberMapper.xml -  login **************************/
-            <![CDATA[
-            SELECT
-                OWNER_ID,            /** 회원 아이디 **/
-                PASSWORD,            /** 회원 비밀번호 **/
-                EMAIL,               /** 회원 이메일 **/
-                PHONENUMBER,         /** 회원 핸드폰번호 **/
-                GRADE,               /** 등급 **/
-                PWDEXPIRES,          /** 비밀번호 변경 날짜 **/
-             CASE WHEN
-                 PWDEXPIRES <= DATE_ADD(NOW(), INTERVAL -3 MONTH) THEN 'Y' ELSE 'N' END AS CHANGE_AT
-             FROM
-                 OWNER_TBL
-            WHERE
-                OWNER_ID = #{owner_Id}
-            ]]>
+
+        SELECT
+            OWNER_ID,            /** 회원 아이디 **/
+            PASSWORD,            /** 회원 비밀번호 **/
+            EMAIL,               /** 회원 이메일 **/
+            PHONENUMBER,         /** 회원 핸드폰번호 **/
+            GRADE                /** 등급 **/
+        FROM
+            OWNER_TBL
+        WHERE
+            OWNER_ID = #{owner_Id}
+
 /*********************** 로그인 AnimaMemberMapper.xml -  login **************************/
     </select>
 
     <select id="emailCheck" parameterType="hashMap" resultType="int">
-/*********************** 이메일 체크 AnimaMemberMapper.xml -  animal.emailCheck **************************/
+/*********************** 이메일 체크 AnimaMemberMapper.xml -  emailCheck **************************/
 
         SELECT
             COUNT(*)
-        FROM
-            OWNER_TBL
-        WHERE
-            1 = 1
+        FROM OWNER_TBL
+        WHERE  1 = 1
         <if test="email != null and email != '' ">
             AND  EMAIL =  #{email}
         </if>
@@ -68,32 +63,32 @@
     <select id="myInfo" resultType="com.review.dto.animal.AnimalMemberDTO">
 /*********************** 내 정보 AnimaMemberMapper.xml -  myInfo **************************/
 
+    select
+        (
         SELECT
-            (
-            SELECT
-                COUNT(*)
-            FROM
-                MEDICAL_REVIEW_BAORD            /** 리뷰 몇개 썼는지 개수 찾는 쿼리 **/
-            WHERE
-                WRITER = #{owner_Id}
-            ) AS  POST,
-
-            (
-            SELECT
-                COUNT(*)
-            FROM
-                INQUIRY_COMMENT_TBL             /** 댓글 몇개 썼는지 개수 찾는 쿼리 **/
-             WHERE
-                COMMENT_WRITER =  #{owner_Id})
-                AS COMMENT,
-
-            OWNER_ID,                           /** 회원 아이디 **/
-            EMAIL,                              /** 회원 이메일 **/
-            PHONENUMBER                         /** 회원 핸드폰번호 **/
+            COUNT(*)
         FROM
-            OWNER_TBL
+            MEDICAL_REVIEW_BAORD            /** 리뷰 몇개 썼는지 개수 찾는 쿼리 **/
         WHERE
-            OWNER_Id = #{owner_Id}
+            WRITER = #{owner_Id}
+        ) AS  POST,
+
+        (
+        SELECT
+            COUNT(*)
+        FROM
+            INQUIRY_COMMENT_TBL             /** 댓글 몇개 썼는지 개수 찾는 쿼리 **/
+         WHERE
+            COMMENT_WRITER =  #{owner_Id})
+            AS COMMENT,
+
+        OWNER_ID,                           /** 회원 아이디 **/
+        EMAIL,                              /** 회원 이메일 **/
+        PHONENUMBER                         /** 회원 핸드폰번호 **/
+    from
+        OWNER_TBL
+    where
+        OWNER_Id = #{owner_Id}
 
 /*********************** 내 정보 AnimaMemberMapper.xml -  myInfo **************************/
     </select>
@@ -129,7 +124,7 @@
 
     <select id="checkUserWitSessionKey" resultType="com.review.dto.animal.AnimalMemberDTO">
 /*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
-        <![CDATA[
+
         SELECT
             OWNER_ID,            /** 회원 아이디 **/
             PASSWORD,            /** 회원 비밀번호 **/
@@ -137,14 +132,12 @@
             PHONENUMBER,         /** 회원 핸드폰번호 **/
             GRADE,               /** 등급 **/
             PWDEXPIRES,          /** 비번 만료일 **/
-            SESSION_KEY,          /** 세션 키 **/
-        CASE WHEN
-            PWDEXPIRES <= DATE_ADD(NOW(), INTERVAL -3 MONTH) THEN 'Y' ELSE 'N' END AS CHANGE_AT
+            SESSION_KEY          /** 세션 키 **/
         FROM
             OWNER_TBL
         WHERE
             SESSION_KEY = #{value}
-        ]]>
+
 /*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
 
     </select>
@@ -189,16 +182,28 @@
 /*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
     </update>
 
+    <select id="pwdexpires" resultType="com.review.dto.animal.AnimalMemberDTO">
+/*********************** 비번 만료 아이디 찾기  AnimaMemberMapper.xml.xml -  pwdexpires **************************/
+
+        <![CDATA[
+        SELECT
+            OWNER_ID
+        FROM
+            OWNER_TBL
+        WHERE
+            PWDEXPIRES <= date_add(now(), interval -3 month);
+
+/*********************** 비번 만료 아이디 찾기  AnimaMemberMapper.xml.xml -  pwdexpires **************************/
+        ]]>
+    </select>
+
     <update id="pwChange"  parameterType="hashMap">
 /*********************** 비밀번호 변경  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
 
         UPDATE
             OWNER_TBL
         SET
-            <if test="password != null">
-            PASSWORD = #{password},
-            </if>
-            PWDEXPIRES = CURRENT_TIMESTAMP
+            PASSWORD = #{password}
         WHERE
             OWNER_ID = #{owner_Id}
 

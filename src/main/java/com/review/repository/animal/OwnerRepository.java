@@ -70,6 +70,9 @@ public class OwnerRepository {
         sql.update("animal.pwUpdate", map);
     }
 
+    public List<AnimalMemberDTO> pwdExpires(){
+        return sql.selectList("animal.pwdexpires");
+    }
 
     public void pwChange(AnimalMemberDTO memberDTO) {
         sql.update("animal.pwChange", memberDTO);

@@ -126,11 +126,6 @@
 <script>
     let form = $('#pwChangeForm');
     let pwResult = false;
-    $(document).ready(function () {
-        <c:if test="${not empty error}">
-            alert("${error}");
-        </c:if>
-    });
 
     function isPassword(asValue) {
         var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
@@ -166,15 +161,16 @@
     function fnSubmit() {
         let password = $('#password').val();
         let pwChange = $('#pwChange').val();
-
             if (password == pwChange){
                 alert("같은 비밀번호로 변경 할 수 없습니다.");
                 pwResult = false;
             }else if (pwResult) {
+                alert("비밀번호가 변경 되었습니다.");
                 form.submit();
             } else {
                 alert("비밀번호를 확인 해주세요");
             }
-        };
+        }
+
 
 </script>

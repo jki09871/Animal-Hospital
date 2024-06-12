@@ -39,11 +39,10 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpSession session, HttpServletRequest request) {
+	public String home(Locale locale, Model model, HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		session = request.getSession();
-		
+		model.addAttribute("success", request.getParameter("success"));
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
@@ -69,18 +68,6 @@ public class HomeController {
 
 		model.addAttribute("bannerList", bannerList);
 
-		List<AnimalMemberDTO> dto = os.pwdExpires();
-		int size = dto.size();
-
-		for (int i = 0; i < size; i++) {
-			AnimalMemberDTO sessionAttribute = (AnimalMemberDTO) session.getAttribute("loginId");
-			if (sessionAttribute != null) {
-				String ownerId = sessionAttribute.getOwner_Id();
-				if (dto.get(i).getOwner_Id().equals(ownerId)) {
-					model.addAttribute("pwdExpires", "pwdExpires");
-				}
-			}
-		}
 		return "home";
 	}
 

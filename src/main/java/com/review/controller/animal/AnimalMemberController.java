@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import javax.mail.MessagingException;
@@ -102,8 +103,30 @@ public class AnimalMemberController {
             if (pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder
                     .matches(animalDTO.getPassword(), dbDto.getPassword())) {
                 loginResult = true;
+
+                // 실패 카운트 0 초기화
+
             }
-        }
+
+        }/*else{
+
+
+            //
+            *//* 로그인 실패 카운트 --
+            5보다 작은지 체크
+            * update
+            *  fail_cnt = fail_cnt + 1
+            *
+             5보다 크거가 같으면
+             비밀번호 5회 이상 틀려 아이디가 잠겼습니다. 관리자에게 문의해주시기 바랍니다.
+             관리자 - 회원 목록 - 비밀번호 초기화 -> 랜덤으로 메일로 발송 + 비밀번호 만료일 3개월 전으로 초기화
+
+             *//*
+
+        }*/
+
+        /* 로그인 실패 카운트 --  */
+
         if (rememberId) {
             // 1. 쿠키에 아이디 저장
             Cookie cookie = new Cookie("owner_Id", dbDto.getOwner_Id());
@@ -254,10 +277,9 @@ public class AnimalMemberController {
         findId.put("email", email);
         findId.put("phone", phoneNumber);
 
-        if (os.findId(findId) != null ) { // 문자열 "null"을 체크합니다.
-            String id = os.findId(findId);
-            String hideId = id.replaceAll("(?<=.{3}).(?=.{2})", "*"); /*정규식 마스킹 기법 */
-            return hideId;
+        String id = os.findId(findId);
+        if (id != null ) { // 문자열 "null"을 체크합니다.
+            return id.replaceAll("(?<=.{3}).(?=.{2})", "*");
         } else {
             return null;
         }
@@ -311,8 +333,6 @@ public class AnimalMemberController {
                 throw new RuntimeException(e);
             }
 
-
-
             return "success";
         } else {
             return null;
@@ -348,23 +368,39 @@ public class AnimalMemberController {
 
     @PostMapping("/animal/pwChange")
     public String pwChange(AnimalMemberDTO animalDTO, @RequestParam String pwChange,
-                            @RequestParam String owner_Id, Model model) {
+                           @RequestParam String owner_Id, Model model, RedirectAttributes rttr, HttpServletRequest request) {
         AnimalMemberDTO dbDto = os.userVerification(animalDTO);
         Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
         boolean loginResult = false;
         if (dbDto != null) {
             if (pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.matches(animalDTO.getPassword(), dbDto.getPassword())) {
                 loginResult = true;
+            } else {
+                model.addAttribute("error", "사용자를 찾을 수 없습니다. 다시 시도해 주세요.");
+                return "/animal/owner/pwChange";
             }
         }
 
         Map<String, Object> pw = new HashMap<>();
         if (loginResult) {
             animalDTO.setPassword(pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.encode(pwChange));
+            HttpSession session = request.getSession();
+
             os.pwChange(animalDTO);
-            System.out.println("animalDTO = " + animalDTO.getPassword());
+            AnimalMemberDTO animalMemberDTO = os.userVerification(animalDTO);
+            session.setAttribute("loginId", animalMemberDTO);
+            rttr.addAttribute("success", "비밀번호가 변경되었습니다.");
             return "redirect:/";
         }
-        return "animal/owner/pwChange";
+        return null;
+    }
+    @GetMapping("/animal/pwChangeNo")
+    @ResponseBody
+    public String pwChangeNo(AnimalMemberDTO memberDTO, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        os.pwChange(memberDTO);
+        AnimalMemberDTO animalMemberDTO = os.userVerification(memberDTO);
+        session.setAttribute("loginId", animalMemberDTO);
+        return "성공";
     }
 }

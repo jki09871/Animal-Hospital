@@ -83,9 +83,6 @@ public class OwnerService {
         or.pwUpdate(map);
     }
 
-    public List<AnimalMemberDTO> pwdExpires(){
-        return or.pwdExpires();
-    }
 
     public void pwChange(AnimalMemberDTO memberDTO) {
         or.pwChange(memberDTO);

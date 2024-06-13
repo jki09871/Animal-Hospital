@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="inquiry">
+
+    <select id="getList" resultType="java.util.HashMap">
+/************************ 문의 게시판 리스트 InquiryMapper.xml - getList *****************************/
+
+        SELECT
+            A.INQUIRY_NUM,                  /** 문의 게시판 번호 **/
+            A.TITLE,                        /** 제목 **/
+            A.CONTENT,                      /** 내용 **/
+            A.WRITER,                       /** 작성자 **/
+            A.REGDATE,                      /** 작성 시간 **/
+             (
+             SELECT
+                 COUNT(*)
+             FROM
+                 INQUIRY_COMMENT_TBL B
+             WHERE
+                 A.INQUIRY_NUM = B.INQUIRY_NUM
+             ) AS CNT
+        FROM
+            INQUIRY_TBL A
+        ORDER BY
+            INQUIRY_NUM DESC;
+
+/************************ 문의 게시판 리스트 InquiryMapper.xml - getList *****************************/
+    </select>
+    <insert id="insert">문의
+/************************ 문의 게시판 작성 InquiryMapper.xml - insert *****************************/
+
+        INSERT INTO INQUIRY_TBL
+            (
+             TITLE,                    /** 문의제목 **/
+             CONTENT,                  /** 문의내용 **/
+             WRITER                    /** 작성자 **/
+             )
+            VALUES
+            (
+             #{title},                  /** 문의제목 **/
+             #{content},                /** 문의내용 **/
+             #{writer}                  /** 작성자 **/
+             )
+
+/************************ 문의 게시판 작성 InquiryMapper.xml - insert *****************************/
+</insert>
+
+
+    <select id="read" resultType="com.review.dto.animal.InquiryBoardDTO">
+/************************ 문의 게시판 상세보기 InquiryMapper.xml - read *****************************/
+
+        SELECT
+            INQUIRY_NUM,              /** 문의고유번호 **/
+            TITLE,                    /** 문의제목 **/
+            CONTENT,                  /** 문의내용 **/
+            WRITER,                   /** 작성자 **/
+            REGDATE,                  /** 문의한 시간 **/
+            UPDATE_DATE               /** 문의 내용 수정 시간 **/
+        FROM
+            INQUIRY_TBL
+        WHERE
+            INQUIRY_NUM = #{inquiry_Num}        /** 문의고유번호 **/
+
+/************************ 문의 게시판 상세보기 InquiryMapper.xml - read *****************************/
+    </select>
+
+    <delete id="delete">
+/*********************** 문의 게시판 게시물 삭제 InquiryMapper.xml - delete *************************/
+
+        DELETE
+        FROM
+            INQUIRY_TBL
+       WHERE
+           INQUIRY_NUM=#{inquiry_Num}
+
+/*********************** 문의 게시판 게시물 삭제 InquiryMapper.xml - delete *************************/
+    </delete>
+
+    <update id="update">
+/*********************** 문의 게시판 게시물 수정 InquiryMapper.xml - update *************************/
+
+        UPDATE
+            INQUIRY_TBL
+        SET
+            TITLE = #{title},                  /** 문의제목 **/
+            CONTENT = #{content},              /** 문의내용 **/
+            WRITER = #{writer},                /** 작성자 **/
+            UPDATE_DATE = CURRENT_TIMESTAMP    /** 문의 내용 수정 시간 **/
+        WHERE
+            INQUIRY_NUM = #{inquiry_Num}       /** 문의고유번호 **/
+
+/*********************** 문의 게시판 게시물 수정 InquiryMapper.xml - update *************************/
+    </update>
+</mapper>

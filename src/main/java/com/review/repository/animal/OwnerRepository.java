@@ -62,16 +62,24 @@ public class OwnerRepository {
         return sql.selectOne("animal.findId", map);
     }
 
-    public int findPw(Map<String, Object> map) {
-        return sql.selectOne("animal.findPw", map);
+    public int findPw(AnimalMemberDTO animalMemberDTO) {
+        return sql.selectOne("animal.findPw", animalMemberDTO);
     }
 
-    public void pwUpdate(Map<String, Object> map){
-        sql.update("animal.pwUpdate", map);
+    public void pwUpdate(AnimalMemberDTO memberDTO){
+        sql.update("animal.pwUpdate", memberDTO);
     }
 
 
     public void pwChange(AnimalMemberDTO memberDTO) {
         sql.update("animal.pwChange", memberDTO);
+    }
+
+    public void pwFailCount(AnimalMemberDTO animalDTO) {
+        sql.update("animal.pwFailCount", animalDTO);
+    }
+
+    public void pwFailReset(AnimalMemberDTO animalDTO) {
+        sql.update("animal.pwFailReset", animalDTO);
     }
 }

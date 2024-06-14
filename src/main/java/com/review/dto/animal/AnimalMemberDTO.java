@@ -29,4 +29,5 @@ public class AnimalMemberDTO {
     private Date session_limit;
     private Date pwdExpires;
     private String change_at;
+    private int pwFailCount;
 }

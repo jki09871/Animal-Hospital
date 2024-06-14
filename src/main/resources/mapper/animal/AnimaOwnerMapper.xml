@@ -36,6 +36,7 @@
                 PHONENUMBER,         /** 회원 핸드폰번호 **/
                 GRADE,               /** 등급 **/
                 PWDEXPIRES,          /** 비밀번호 변경 날짜 **/
+                PWFAILCOUNT,         /** 비밀번호 실패 횟수 **/
              CASE WHEN
                  PWDEXPIRES <= DATE_ADD(NOW(), INTERVAL -3 MONTH) THEN 'Y' ELSE 'N' END AS CHANGE_AT
              FROM
@@ -162,7 +163,7 @@
 /*********************** 아이디 찾기 AnimaMemberMapper.xml.xml -  findId **************************/
     </select>
 
-    <select id="findPw" parameterType="hashMap" resultType="int">
+    <select id="findPw" resultType="int">
 /*********************** 비번 찾기 AnimaMemberMapper.xml.xml -  findPw **************************/
 
         SELECT
@@ -176,13 +177,13 @@
 
     </select>
 
-    <update id="pwUpdate"  parameterType="hashMap">
+    <update id="pwUpdate">
 /*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
 
         UPDATE
             OWNER_TBL
         SET
-            PASSWORD = #{pwChange}
+            PASSWORD = #{password}
         WHERE
             EMAIL = #{email} AND OWNER_ID = #{owner_Id}
 
@@ -203,5 +204,23 @@
             OWNER_ID = #{owner_Id}
 
 /*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
+    </update>
+
+    <update id="pwFailCount">
+        UPDATE
+            OWNER_TBL
+        SET
+            PWFAILCOUNT =  PWFAILCOUNT + 1
+        WHERE
+            OWNER_ID = #{owner_Id}
+    </update>
+
+    <update id="pwFailReset">
+        UPDATE
+            OWNER_TBL
+        SET
+            PWFAILCOUNT = 0
+        WHERE
+            OWNER_ID = #{owner_Id}
     </update>
 </mapper>

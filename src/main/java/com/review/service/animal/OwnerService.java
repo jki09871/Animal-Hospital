@@ -74,17 +74,25 @@ public class OwnerService {
         return or.findId(map);
     }
 
-    public int findPw(Map<String, Object> map){
-        return or.findPw(map);
+    public int findPw(AnimalMemberDTO animalMemberDTO){
+        return or.findPw(animalMemberDTO);
 
     }
 
-    public void pwUpdate(Map<String, Object> map){
-        or.pwUpdate(map);
+    public void pwUpdate(AnimalMemberDTO memberDTO){
+        or.pwUpdate(memberDTO);
     }
 
 
     public void pwChange(AnimalMemberDTO memberDTO) {
         or.pwChange(memberDTO);
+    }
+
+    public void pwFailCount(AnimalMemberDTO animalDTO) {
+        or.pwFailCount(animalDTO);
+    }
+
+    public void pwFailReset(AnimalMemberDTO animalDTO) {
+        or.pwFailReset(animalDTO);
     }
 }

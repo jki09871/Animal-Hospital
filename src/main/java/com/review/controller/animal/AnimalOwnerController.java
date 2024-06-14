@@ -3,6 +3,7 @@ package com.review.controller.animal;
 import com.review.dto.animal.AnimalMemberDTO;
 import com.review.service.animal.MedicalReviewService;
 import com.review.service.animal.OwnerService;
+import com.review.util.MailSenderUtils;
 import com.review.util.Pbkdf2PasswordEncoderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -30,7 +31,7 @@ import java.util.Map;
 @Log4j
 @Controller
 @RequiredArgsConstructor
-public class AnimalMemberController {
+public class AnimalOwnerController {
 
     @Setter(onMethod_ = @Autowired)
     private JavaMailSender mailSender;
@@ -38,7 +39,10 @@ public class AnimalMemberController {
     private OwnerService os;
 
     @Setter(onMethod_ = @Autowired)
-    MedicalReviewService mrs;
+    private MedicalReviewService mrs;
+
+    @Setter(onMethod_ = @Autowired)
+    private MailSenderUtils mailSenderUtils;
 
     /************************************************  회원 가입  ************************************************/
     @GetMapping("/animal/signup")
@@ -65,7 +69,6 @@ public class AnimalMemberController {
 
 //            FileSystemResource file = new FileSystemResource(new File("C:\\mp\\file\\03b3eedcc5aa4f15b87bf65121495816.png"));
 //            messageHelper.addInline("그냥 사진.png", file);
-
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
@@ -88,12 +91,14 @@ public class AnimalMemberController {
     @GetMapping("/animal/login")
     public String memberLogin() {
         log.info(" 로그인 화면 ");
+
         return "/animal/owner/login";
     }
 
     @PostMapping("/animal/login")
     public String memberLogin(AnimalMemberDTO animalDTO, HttpServletRequest request,
-                              HttpServletResponse response, String toURL, boolean rememberId) throws Exception {
+                              HttpServletResponse response, String toURL, boolean rememberId,
+                              Model model) throws Exception {
 
 
         AnimalMemberDTO dbDto = os.userVerification(animalDTO);
@@ -104,15 +109,23 @@ public class AnimalMemberController {
                     .matches(animalDTO.getPassword(), dbDto.getPassword())) {
                 loginResult = true;
 
+                os.pwFailReset(animalDTO);
                 // 실패 카운트 0 초기화
 
-            }
+            } else {
+                // 비밀번호 실패 횟수 저장
+                os.pwFailCount(animalDTO);
 
-        }/*else{
+                // 다시 DTO를 만드는 이유는 실패 횟수 저장이 되고 업데이트를한 컬럼을 가져와야 해서
+                AnimalMemberDTO animalMemberDTO = os.userVerification(animalDTO);
+                model.addAttribute("pwFailCnt", animalMemberDTO);
 
+                // 5번 실패시 이메일 발송과 동시에 아이디 잠금
+                if (animalMemberDTO.getPwFailCount() >= 5){
+                    mailSenderUtils.MailSenderUtils(animalMemberDTO);
+                }
 
-            //
-            *//* 로그인 실패 카운트 --
+           /* 로그인 실패 카운트 --
             5보다 작은지 체크
             * update
             *  fail_cnt = fail_cnt + 1
@@ -121,26 +134,30 @@ public class AnimalMemberController {
              비밀번호 5회 이상 틀려 아이디가 잠겼습니다. 관리자에게 문의해주시기 바랍니다.
              관리자 - 회원 목록 - 비밀번호 초기화 -> 랜덤으로 메일로 발송 + 비밀번호 만료일 3개월 전으로 초기화
 
-             *//*
+             */
 
-        }*/
+            }
 
-        /* 로그인 실패 카운트 --  */
 
-        if (rememberId) {
-            // 1. 쿠키에 아이디 저장
-            Cookie cookie = new Cookie("owner_Id", dbDto.getOwner_Id());
-            // 2. 응답에 저장
-            response.addCookie(cookie);
-        } else {
-            // 1. 쿠키 삭제
-            Cookie cookie = new Cookie("owner_Id", dbDto.getOwner_Id());
-            // 2. 쿠키 삭제
-            cookie.setMaxAge(0);
-            // 3. 응답에 저장
-            response.addCookie(cookie);
+            /* 로그인 실패 카운트 --  */
+
+            if (rememberId) {
+                // 1. 쿠키에 아이디 저장
+                Cookie cookie = new Cookie("owner_Id", dbDto.getOwner_Id());
+                // 2. 응답에 저장
+                response.addCookie(cookie);
+            } else {
+                // 1. 쿠키 삭제
+                Cookie cookie = new Cookie("owner_Id", dbDto.getOwner_Id());
+                // 2. 쿠키 삭제
+                cookie.setMaxAge(0);
+                // 3. 응답에 저장
+                response.addCookie(cookie);
+            }
+        }else {
+            model.addAttribute("fail", "아이디를 확인 해주세요");
+            return "/animal/owner/login";
         }
-
         HttpSession session = request.getSession();
         if (loginResult) {
 
@@ -284,7 +301,6 @@ public class AnimalMemberController {
             return null;
         }
 
-
     }
     /**********************************************************************************************************/
     /************************************  비밀번호 찾기  ********************************************/
@@ -297,18 +313,14 @@ public class AnimalMemberController {
     }
 
     @PostMapping("/animal/findPw")
-    public @ResponseBody String findPw(@RequestParam("email") String email, @RequestParam("owner_Id") String owner_Id) {
-        Map<String, Object> findId = new HashMap<>();
-        findId.put("email", email);
-        findId.put("owner_Id", owner_Id);
+    public @ResponseBody String findPw( AnimalMemberDTO memberDTO) {
 
-
-        if (os.findPw(findId) != 0) {
+        if (os.findPw(memberDTO) != 0) {
             Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
             String randomPw = generateRandomString();
             String randomP2 = pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.encode(randomPw);
-            findId.put("pwChange", randomP2);
-            os.pwUpdate(findId);
+            memberDTO.setPassword(randomP2);
+            os.pwUpdate(memberDTO);
 
             try {
                 MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -316,7 +328,7 @@ public class AnimalMemberController {
 
                 messageHelper.setFrom("ghdwjdrl1234@gmail.com");
 
-                messageHelper.setTo(email); /** 받을 이메일 */
+                messageHelper.setTo(memberDTO.getEmail()); /** 받을 이메일 */
                 messageHelper.setSubject("동물 입양센터입니다. 임시 비빌번호 발송되었습니다."); /** 이메일 제목 */
 
                 String emailContent = "<html><body>" +

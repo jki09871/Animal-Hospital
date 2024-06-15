@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.security.SecureRandom;
 
 @Component
 public class MailSenderUtils {
@@ -25,11 +26,10 @@ public class MailSenderUtils {
     public void MailSenderUtils(AnimalMemberDTO animalMemberDTO) throws Exception {
         System.out.println("animalDTO = " + animalMemberDTO);
 
-        if (os.findPw(animalMemberDTO) != 0) {
+        if (os.userVerification(animalMemberDTO) != null){
             Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
 
-            AnimalOwnerController controller = new AnimalOwnerController();
-            String randomPw = controller.generateRandomString();
+            String randomPw = generateRandomString();
 
             String randomP2 = pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.encode(randomPw);
             animalMemberDTO.setPassword(randomP2);
@@ -59,6 +59,27 @@ public class MailSenderUtils {
             }
 
         }
+    }
+
+    public String generateRandomString() {
+        // 랜덤 문자열을 생성할 문자열 범위 지정
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        // 랜덤 문자열을 저장할 StringBuilder 객체 생성
+        StringBuilder randomString = new StringBuilder();
+
+        // SecureRandom 객체를 사용하여 보안성 있는 난수 생성
+        SecureRandom secureRandom = new SecureRandom();
+
+        // 문자열 길이가 8글자가 될 때까지 랜덤 문자열 생성
+        for (int i = 0; i < 10; i++) {
+            // 문자열 범위에서 랜덤한 인덱스 선택
+            int randomIndex = secureRandom.nextInt(characters.length());
+            // 선택된 인덱스의 문자를 랜덤 문자열에 추가
+            randomString.append(characters.charAt(randomIndex));
+        }
+
+        // 생성된 랜덤 문자열 반환
+        return randomString.toString();
     }
 }
 

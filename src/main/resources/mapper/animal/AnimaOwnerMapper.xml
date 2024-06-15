@@ -28,22 +28,22 @@
 
     <select id="login" parameterType="com.review.dto.animal.AnimalMemberDTO" resultType="com.review.dto.animal.AnimalMemberDTO">
 /*********************** 로그인 AnimaMemberMapper.xml -  login **************************/
-            <![CDATA[
-            SELECT
-                OWNER_ID,            /** 회원 아이디 **/
-                PASSWORD,            /** 회원 비밀번호 **/
-                EMAIL,               /** 회원 이메일 **/
-                PHONENUMBER,         /** 회원 핸드폰번호 **/
-                GRADE,               /** 등급 **/
-                PWDEXPIRES,          /** 비밀번호 변경 날짜 **/
-                PWFAILCOUNT,         /** 비밀번호 실패 횟수 **/
-             CASE WHEN
-                 PWDEXPIRES <= DATE_ADD(NOW(), INTERVAL -3 MONTH) THEN 'Y' ELSE 'N' END AS CHANGE_AT
-             FROM
-                 OWNER_TBL
-            WHERE
-                OWNER_ID = #{owner_Id}
-            ]]>
+        <![CDATA[
+        SELECT
+            OWNER_ID,            /** 회원 아이디 **/
+            PASSWORD,            /** 회원 비밀번호 **/
+            EMAIL,               /** 회원 이메일 **/
+            PHONENUMBER,         /** 회원 핸드폰번호 **/
+            GRADE,               /** 등급 **/
+            PWDEXPIRES,          /** 비밀번호 변경 날짜 **/
+            PWFAILCOUNT,         /** 비밀번호 실패 횟수 **/
+         CASE WHEN
+             PWDEXPIRES <= DATE_ADD(NOW(), INTERVAL -3 MONTH) THEN 'Y' ELSE 'N' END AS CHANGE_AT
+         FROM
+             OWNER_TBL
+        WHERE
+            OWNER_ID = #{owner_Id}
+        ]]>
 /*********************** 로그인 AnimaMemberMapper.xml -  login **************************/
     </select>
 
@@ -163,7 +163,7 @@
 /*********************** 아이디 찾기 AnimaMemberMapper.xml.xml -  findId **************************/
     </select>
 
-    <select id="findPw" resultType="int">
+    <update id="findPw">
 /*********************** 비번 찾기 AnimaMemberMapper.xml.xml -  findPw **************************/
 
         SELECT
@@ -175,7 +175,7 @@
 
 /*********************** 비번 찾기 AnimaMemberMapper.xml.xml -  findPw **************************/
 
-    </select>
+    </update>
 
     <update id="pwUpdate">
 /*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
@@ -183,7 +183,8 @@
         UPDATE
             OWNER_TBL
         SET
-            PASSWORD = #{password}
+            PASSWORD = #{password},
+            PWDEXPIRES = DATE_ADD(NOW(), INTERVAL -3 MONTH)
         WHERE
             EMAIL = #{email} AND OWNER_ID = #{owner_Id}
 

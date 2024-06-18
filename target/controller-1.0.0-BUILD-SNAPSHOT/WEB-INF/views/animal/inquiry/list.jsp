@@ -37,7 +37,7 @@
                             <td><a href="/pet/inquiry/get?inquiry_Num=${board.INQUIRY_NUM}"><c:out value="${board.TITLE}"/></a></td>
                         </c:otherwise>
                     </c:choose>
-                    <td><c:out value="${board.WRITER}"/></td>
+                    <td><c:out value="${board.HIDDENWRITER}"/></td>
                     <td><fmt:formatDate value="${board.REGDATE}" pattern="yyyy-MM-dd"/></td>
                 </tr>
             </c:forEach>

@@ -13,22 +13,22 @@
             <div class="form-group">
                 <label for="inquiry_Num">게시물 번호</label>
                 <div class="btn-group">
-                    <a href="/pet/inquiry/modify?inquiry_Num=${board.inquiry_Num}" class="btn btn-warning">수정</a>
+                    <a href="/pet/inquiry/modify?inquiry_Num=${board.INQUIRY_NUM}" class="btn btn-warning">수정</a>
                     <a href="/pet/inquiry/list" class="btn btn-info">목록</a>
                 </div>
-                <input type="text" class="form-control" id="inquiry_Num" name="inquiry_Num" value="<c:out value='${board.inquiry_Num}'/>" readonly>
+                <input type="text" class="form-control" id="inquiry_Num" name="inquiry_Num" value="<c:out value='${board.INQUIRY_NUM}'/>" readonly>
             </div>
             <div class="form-group">
                 <label for="title">제목</label>
-                <input type="text" class="form-control" id="title" name="title" value="<c:out value='${board.title}'/>" readonly>
+                <input type="text" class="form-control" id="title" name="title" value="<c:out value='${board.TITLE}'/>" readonly>
             </div>
             <div class="form-group">
                 <label for="content">내용</label>
-                <textarea rows="3" class="form-control" id="content" name="content" readonly><c:out value='${board.content}'/></textarea>
+                <textarea rows="3" class="form-control" id="content" name="content" readonly><c:out value='${board.CONTENT}'/></textarea>
             </div>
             <div class="form-group">
                 <label for="writer">작성자</label>
-                <input type="text" class="form-control" id="writer" name="writer" value="<c:out value='${board.writer}'/>" readonly>
+                <input type="text" class="form-control" id="writer" name="writer" value="<c:out value='${board.HIDDENWRITER}'/>" readonly>
             </div>
 
             <div id="comment-list">

@@ -9,27 +9,32 @@
 /************************ 문의 게시판 리스트 InquiryMapper.xml - getList *****************************/
 
         SELECT
-            A.INQUIRY_NUM,                  /** 문의 게시판 번호 **/
-            A.TITLE,                        /** 제목 **/
-            A.CONTENT,                      /** 내용 **/
-            A.WRITER,                       /** 작성자 **/
-            A.REGDATE,                      /** 작성 시간 **/
-             (
-             SELECT
-                 COUNT(*)
-             FROM
-                 INQUIRY_COMMENT_TBL B
-             WHERE
-                 A.INQUIRY_NUM = B.INQUIRY_NUM
-             ) AS CNT
+            A.INQUIRY_NUM,          /** 문의 고유번호 **/
+            A.TITLE,                /** 문의 제목 **/
+            A.CONTENT,              /** 문의 내용 **/
+            A.REGDATE,              /** 문의 시간 **/
+            CASE
+                WHEN CHAR_LENGTH(A.WRITER) = 3  /** writer 글자 수가 3개인지 확인 **/
+                    THEN CONCAT( LEFT(A.WRITER, 1), '*', RIGHT(A.WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
+                    ELSE A.WRITER /** 아니라면 그냥 전체 보여주기 **/
+                    END AS HIDDENWRITER, /** 알리아스 **/
+            (
+                SELECT
+                    COUNT(*)
+                FROM
+                    INQUIRY_COMMENT_TBL B
+                WHERE
+                    A.INQUIRY_NUM = B.INQUIRY_NUM
+            ) AS CNT
         FROM
             INQUIRY_TBL A
         ORDER BY
-            INQUIRY_NUM DESC;
+            A.INQUIRY_NUM DESC
+
 
 /************************ 문의 게시판 리스트 InquiryMapper.xml - getList *****************************/
     </select>
-    <insert id="insert">문의
+    <insert id="insert">
 /************************ 문의 게시판 작성 InquiryMapper.xml - insert *****************************/
 
         INSERT INTO INQUIRY_TBL
@@ -49,7 +54,7 @@
 </insert>
 
 
-    <select id="read" resultType="com.review.dto.animal.InquiryBoardDTO">
+    <select id="read" resultType="Map">
 /************************ 문의 게시판 상세보기 InquiryMapper.xml - read *****************************/
 
         SELECT
@@ -58,7 +63,12 @@
             CONTENT,                  /** 문의내용 **/
             WRITER,                   /** 작성자 **/
             REGDATE,                  /** 문의한 시간 **/
-            UPDATE_DATE               /** 문의 내용 수정 시간 **/
+            UPDATE_DATE,              /** 문의 내용 수정 시간 **/
+            CASE
+                WHEN CHAR_LENGTH(WRITER) = 3 /** writer 글자 수가 3개인지 확인 **/
+                    THEN CONCAT( LEFT(WRITER, 1), '*', RIGHT(WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
+                    ELSE WRITER /** 아니라면 그냥 전체 보여주기 **/
+                    END AS HIDDENWRITER /** 알리아스 **/
         FROM
             INQUIRY_TBL
         WHERE

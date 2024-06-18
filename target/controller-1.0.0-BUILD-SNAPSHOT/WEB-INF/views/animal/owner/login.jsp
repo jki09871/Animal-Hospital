@@ -86,7 +86,7 @@
               <div>비밀번호 ${pwFailCnt.pwFailCount}/5 실패 하셨습니다.</div>
             </c:when>
             <c:when test="${pwFailCnt.pwFailCount >= 5}">
-              <div>비밀번호 5회 틀려서 아이디가 잠겼습니다.</div>
+              <div>비밀번호 5회 틀려서 아이디가 잠겼습니다. 관리자에게 문의 해주세요</div>
             </c:when>
           </c:choose>
           <input type="hidden" name="toURL" value="${param.toURL}">

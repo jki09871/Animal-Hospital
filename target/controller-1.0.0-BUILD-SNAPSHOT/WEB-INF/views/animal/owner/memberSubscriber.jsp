@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmf" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
@@ -11,7 +12,7 @@
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
         th {
             background-color: #f2f2f2;
@@ -76,6 +77,7 @@
                         <th>PHONENUMBER</th>
                         <th>EMAIL</th>
                         <th>REGDATE</th>
+                        <th>RESET</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,13 +86,13 @@
                         <td>${list.owner_Id}</td>
                         <td>${list.phoneNumber}</td>
                         <td><a class="move" href="${list.owner_Id}">${list.email}</a></td>
-                        <td><fmf:formatDate value="${list.regDate}" pattern="yyyy-MM-dd"/>  </td>
+                        <td><fmf:formatDate value="${list.regDate}" pattern="yyyy-MM-dd"/> </td>
+                        <td><button type="button" class="btn"><a class="ResetBtn" data="${list.owner_Id}">PwReset</a></button></td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
             <form id="memberList" method="get">
-
             </form>
 
     </div>
@@ -106,6 +108,26 @@
         listForm.append("<input type='hidden' id='owner_Id' name='owner_Id' value='" + $(this).attr("href") + "'>");
         listForm.attr('action', '/subscribers/look');
         listForm.submit();
-   })
+   });
+
+   $('.ResetBtn').on('click', function () {
+       let owner = $(this).attr("data");
+       console.log(owner)
+
+       $.ajax({
+           url : '/animal/pwReset',
+           method: 'GET',
+           data : {owner_Id : owner},
+           success : function (parameter) {
+               alert("임시 비밀번호가 발송 되었습니다.")
+               console.log(parameter);
+           }, error: function (request, status, error) {
+
+               console.log("code:" + request.status + "\n"
+                   + "message:" + request.responseText + "\n" + "error:" + error);
+
+           }
+       })
+   });
 </script>
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

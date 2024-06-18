@@ -24,7 +24,7 @@ public class MedicalInquiryService {
         mir.insert(board);
     }
 
-    public InquiryBoardDTO get(Long inquiry_Num) {
+    public Map<String, Object> get(Long inquiry_Num) {
         log.info("get....." + inquiry_Num);
         return mir.read(inquiry_Num);
     }

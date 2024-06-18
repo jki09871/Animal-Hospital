@@ -3,8 +3,10 @@ package com.review.repository.animal;
 import com.review.dto.animal.AnimalMemberDTO;
 import com.review.dto.animal.InquiryCommentDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -16,7 +18,7 @@ import java.util.Map;
 @Log4j
 @RequiredArgsConstructor
 public class OwnerRepository {
-
+    @Setter(onMethod_ = @Autowired)
     private final SqlSessionTemplate sql;
 
 

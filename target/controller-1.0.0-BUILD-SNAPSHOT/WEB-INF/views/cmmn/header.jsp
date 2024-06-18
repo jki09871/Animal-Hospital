@@ -58,7 +58,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a  href="/" " title="Animal Adoption Bootstrap Theme">
+      <a  href="/" title="Animal Adoption Bootstrap Theme">
         <img class="logo" src="/resources/animal-adoption/images/logo.png" alt="Animal Adoption Bootstrap Theme" style="margin-top:5px;" />
       </a>
     </div>
@@ -85,6 +85,7 @@
                 <option value='/pet/prescription/list'>Prescription List</option>
                 <option value='/subscribers/member'>Subscribers Member</option>
                 <option value='/registered/animal'>Registered Animal</option>
+                <option value='/animal/nonMembers/inquiryList'>nonMembers inquiryList</option>
               </select>
           </form>
         </c:if>

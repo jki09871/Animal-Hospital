@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script src="/resources/jquery-3.7.1.js"></script>
 
 <style>
 	.modal{
@@ -126,6 +127,46 @@
 	<a class="right carousel-control" href="#theme-carousel" role="button" data-slide="next">
 		<div class="carousel-control-arrow">&#8250;</div>
 	</a>
+</div>
+<div class="container-contact">
+	<div class="container">
+		<div class="page-header" id="contact">
+			<h2 class="text-center text-primary">비회원 문의</h2>
+			<br />
+			<div class="row">
+				<div class="col-md-6">
+					<div id="googlemap"></div>
+				</div>
+				<div class="col-md-6">
+					<form method="POST" name="nonMembersInquiry" class="nonMemberForm" action="/nonMembers/inquiry">
+						<div class="form-group">
+							<label for="Name">이름</label>
+							<input type="text" class="form-control" id="Name" name="name" placeholder="Name" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="Email">이메일</label>
+							<input type="email" class="form-control" id="Email" name="Email" placeholder="Email Address" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="poneNumber">전화번호</label>
+							<input type="text" class="form-control" id="poneNumber" name="poneNumber" placeholder="poneNumber" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="title">제목</label>
+							<input class="form-control" id="title" name="title" placeholder="title" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="content">문의 내용</label>
+							<textarea class="form-control" id="content" name="content" placeholder="content" autocomplete="off"></textarea>
+						</div>
+						<input type="hidden" name="writer" id="writer" value="">
+						<button class="button-more-primary btn btn-lg" id="nonMembers" type="button" style="margin:10px;">Register Now</button>
+						<br /><br />
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="container-about">
@@ -411,41 +452,7 @@
 	</div>
 </div>
 
-<div class="container-contact">
-	<div class="container">
-		<div class="page-header" id="contact">
-			<h2 class="text-center text-primary">Contact us using the form below</h2>
-			<br />
-			<div class="row">
-				<div class="col-md-6">
-					<div id="googlemap"></div>
-				</div>
-				<div class="col-md-6">
-					<form>
-						<div class="form-group">
-							<label for="form-name">Name</label>
-							<input type="email" class="form-control" id="form-name" placeholder="Name">
-						</div>
-						<div class="form-group">
-							<label for="form-email">Email Address</label>
-							<input type="email" class="form-control" id="form-email" placeholder="Email Address">
-						</div>
-						<div class="form-group">
-							<label for="form-subject">Telephone</label>
-							<input type="text" class="form-control" id="form-subject" placeholder="Subject">
-						</div>
-						<div class="form-group">
-							<label for="form-message">Email your Message</label>
-							<textarea class="form-control" id="form-message" placeholder="Message"></textarea>
-						</div>
-						<button class="button-more-primary btn btn-lg" type="ubmit" style="margin:10px;">Register Now</button>
-						<br /><br />
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+
 <div class="modal">
 	<div class="modal_body">
 		<h3>개인정보 보호를 위해 비밀번호를 변경 해주세요</h3>
@@ -459,7 +466,6 @@
 		<c:if test="${not empty success}">
 		alert("${success}");
 		</c:if>
-		console.log("ddddddd"+ pwChangeTime);
 		if (pwChangeTime === "Y") {
 			const modal = $('.modal');
 			modal.css('display', 'flex');
@@ -486,6 +492,23 @@
 
 				}
 			});
+		});
+		$('#nonMembers').on('click', function () {
+			let name = $('#Name').val();
+			let email = $('#Email').val();
+			let pone = $('#poneNumber').val();
+			let title = $('#title').val();
+			let content = $('#content').val();
+			let writer = $('#writer');
+
+			if (name != "" && email != "" && pone != "" && title != "" && content != "") {
+				writer.val(email);
+				console.log(writer);
+				$('.nonMemberForm').submit();
+			}else {
+				alert("빈칸을 작성해주세요");
+				return false;
+			}
 		});
 	});
 </script>

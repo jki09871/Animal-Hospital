@@ -29,7 +29,7 @@ public class MedicalInquiryRepository {
         
     }
 
-    public InquiryBoardDTO read(long inquiry_Num){
+    public Map<String, Object> read(long inquiry_Num){
         return sql.selectOne("inquiry.read", inquiry_Num);
         
     }

@@ -75,7 +75,7 @@
 <div class="container-stories">
     <div class="container">
         <div class="basic animal">
-            <h1 class="text-primary text-center" style="margin-top: 90px;">PET REVIEWS</h1>
+            <h1 class="text-primary text-center" style="margin-top: 90px    ">PET REVIEWS</h1>
             <c:if test="${sessionScope.loginId.owner_Id != null}">
                 <button id="regBtn">게시글 작성</button>
             </c:if>
@@ -129,7 +129,6 @@
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>
 <script>
     $(document).ready(function () {
-        console.log("${sessionScope.loginId}");
         $('#regBtn').on('click', function (e){
             self.location = "/animal/review";
         });

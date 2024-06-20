@@ -94,13 +94,13 @@
 </body>
 </html>
 
-<script src="/resources/animal-adoption/js/jquery.min.js"></script>
+<%--<script src="/resources/animal-adoption/js/jquery.min.js"></script>--%>
 <script src="/resources/animal-adoption/bootstrap/js/bootstrap.min.js"></script>
 <%--<script src="/resources/animal-adoption/js/googleMap.js"></script>--%>
 <%--<script src="https://maps.googleapis.com/maps/api/js"></script>--%>
 <script src="/resources/animal-adoption/js/theme.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> <%--데이피커 필요 --%>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <%--
 

@@ -54,7 +54,16 @@ public class InquiryBoardController {
     @PostMapping("/pet/inquiry/register")
     public String register(InquiryBoardDTO board, RedirectAttributes rttr){
 
-        log.info("register: " + board);
+
+//        if (board.getMemberCheck() != null){
+//            board.setMemberCheck("Y");
+//            board.setOpneOrPrivate("Y");
+//        }else {
+//            board.setMemberCheck("N");
+//            board.setOpneOrPrivate("N");
+//        }
+
+        System.out.println("board@@@@@@@@@@@@@ = " + board);
         is.register(board);
         rttr.addFlashAttribute("result", board.getInquiry_Num());
         // 리다이렉트 시키면서 1회용 값을 전달.
@@ -66,6 +75,7 @@ public class InquiryBoardController {
     @GetMapping("/pet/inquiry/get")
     public String get(@RequestParam("inquiry_Num") Long inquiry_Num, Model model){
         log.info("/get.....");
+        System.out.println("inquiry_Num = " + inquiry_Num);
         Map<String, Object> num = new HashMap<>();
         num.put("inquiry_num", inquiry_Num);
         model.addAttribute("board", is.get(inquiry_Num));
@@ -78,7 +88,9 @@ public class InquiryBoardController {
     @GetMapping("/pet/inquiry/modify")
     public String getModify(@RequestParam("inquiry_Num") Long inquiry_Num, Model model){
         log.info("/get.....");
-        model.addAttribute("board", is.get(inquiry_Num));
+        Map<String, Object> inquiryRead = is.get(inquiry_Num);
+        System.out.println("inquiryRead = " + inquiryRead);
+        model.addAttribute("board",inquiryRead );
         return "/animal/inquiry/modify";
     }
 

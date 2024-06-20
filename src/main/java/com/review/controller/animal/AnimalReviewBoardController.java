@@ -57,6 +57,7 @@ public class AnimalReviewBoardController {
     @PostMapping("/animal/review")
     public String medicalReview(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest, Model model,
                                 HttpServletRequest request) throws IOException {
+        System.out.println("mpRequest = " + mpRequest);
         HttpSession session = request.getSession();
         model.addAttribute("animal", session.getAttribute("loginId"));
         service.reviewWrite(reviewDTO, mpRequest);

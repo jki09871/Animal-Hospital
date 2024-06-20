@@ -30,5 +30,7 @@
             NONMEMBERS_TBL
         WHERE
             EMAIL = #{email}
+/*********************** 비회원 중복 등록 방지 NonMembersMapper.xml - registeredMemberCount *************************/
+
     </select>
 </mapper>

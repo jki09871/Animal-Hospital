@@ -27,7 +27,7 @@
         }
         .btn-container {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 120px;
         }
         .btn {
             padding: 10px 20px;
@@ -88,8 +88,8 @@
 <body>
 <h2>Medical Records</h2>
 <div class="btn-container">
-    <a href="/" class="btn">Go back to Home</a>
-    <a href="/pet/prescription/record" class="btn">RecordWrite</a>
+    <a href="/" class="btn">홈으로</a>
+    <a href="/pet/prescription/record" class="btn">처방전 작성</a>
 </div>
 <table>
     <tr>

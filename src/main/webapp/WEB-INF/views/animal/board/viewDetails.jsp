@@ -83,7 +83,6 @@
                         <button onclick="fnDynamic('U')">수정</button>
                         <button onclick="fnDynamic('D')">삭제</button>
                     </c:if>
-                    <button onclick="history.back()">이전</button>
                 </div>
         </div>
     </div>

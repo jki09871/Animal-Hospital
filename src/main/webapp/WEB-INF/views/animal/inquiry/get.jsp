@@ -1,8 +1,41 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 <link rel="stylesheet" href="/resources/inquiry.css">
+<style>
+    .modal{
+        position:absolute;
+        display:none;
+
+        justify-content: center;
+        top:0;
+        left:0;
+
+        width:100%;
+        height:100%;
+
+
+
+        /*background-color: rgba(0,0,0,0.4);*/
+    }
+
+    .modal_body{
+        position:absolute;
+        top:80%;
+
+
+
+
+        text-align: center;
+
+        /*background-color: rgb(255,255,255);*/
+        /*border-radius:10px;*/
+        /*box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);*/
+
+        transform:translateY(-50%);
+    }
+</style>
 
 
 <div class="container-stories">
@@ -57,32 +90,6 @@
                     </c:forEach>
                     </tbody>
                 </table>
-                <div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="editCommentModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editCommentModalLabel">댓글 수정</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="editCommentForm">
-                                    <div class="form-group">
-                                        <label for="editCommentContent">댓글 내용</label>
-                                        <textarea class="form-control" id="editCommentContent" rows="3"></textarea>
-                                    </div>
-                                    <input type="hidden" id="editCommentId">
-                                </form>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                                <button type="button" class="btn btn-primary">저장</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
             <c:if test="${sessionScope.loginId.grade == 99}">
@@ -97,7 +104,33 @@
 </div>
 </div>
 </div>
+<div class="modal">
+    <div class="modal_body">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCommentModalLabel">댓글 수정</h5>
+            </div>
+            <div class="modal-body">
+                <form id="editCommentForm">
+                    <div class="form-group">
+                        <label for="editCommentContent">댓글 내용</label>
+                        <textarea class="form-control" id="editCommentContent" rows="3"></textarea>
+                    </div>
+                    <input type="hidden" id="editCommentId">
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
+    $('.btn-secondary').click(function () {
+        $('.modal').css('display', 'none');
+    });
 
     $('.btn-warning').on('click', function (){
         let writer = $('#writer').val();
@@ -116,7 +149,7 @@
         $('#editCommentId').val(commentId);
 
         // 모달 열기
-        $('#editCommentModal').modal('show');
+        $('.modal').css('display','flex' );
 
         // 수정 버튼 클릭 이벤트 핸들러 등록
         $('.btn-primary').off('click').on('click', function (){
@@ -137,7 +170,7 @@
                 success : function (success) {
                     console.log(success);
                     row.find('td:nth-child(2)').text(newContent);
-                    $('#editCommentModal').modal('hide');
+                    $('.modal').css('display','none');
                 },
                 error: function (request, status, error) {
                     console.error("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
@@ -169,7 +202,7 @@
     function commentWrite() {
         const writer = $('#comment_Writer').val();
         const content = $('#comment_Content').val();
-        const inquiry_num = '${board.inquiry_Num}';
+        const inquiry_num = '${board.INQUIRY_NUM}';
 
         $.ajax({
             type: "post",

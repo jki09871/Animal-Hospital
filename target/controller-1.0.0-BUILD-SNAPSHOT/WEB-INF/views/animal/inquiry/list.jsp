@@ -6,11 +6,11 @@
 
 
 <div class="container-stories">
-    <div class="container">
+    <div class="container" style=" margin-top: 150px;">
 
 
         <div class="basic animal">
-    <h1 class="text-center">Inquiry Board</h1>
+    <h1 class="text-center">문의 게시판</h1>
     <div class="mb-3 text-right">
         <button id="regBtn" onclick="multiple_btn('R');" class="btn btn-success">글쓰기</button>
         <button id="homBtn" onclick="multiple_btn('H');" class="btn btn-success">홈</button>

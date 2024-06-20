@@ -37,6 +37,7 @@
             GRADE,               /** 등급 **/
             PWDEXPIRES,          /** 비밀번호 변경 날짜 **/
             PWFAILCOUNT,         /** 비밀번호 실패 횟수 **/
+            NAME,
          CASE WHEN
              PWDEXPIRES <= DATE_ADD(NOW(), INTERVAL -3 MONTH) THEN 'Y' ELSE 'N' END AS CHANGE_AT
          FROM

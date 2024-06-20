@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 
-    <title>Title</title>
+
+<!--한국어  달력 쓰려면 추가 로드-->
+<%--<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>--%>
+<title>Title</title>
     <style>
         /* 폼을 가운데로 정렬하고, 스타일링 */
         form {
@@ -95,7 +98,7 @@
                 <input type="text" id="doctor" name="doctor" required autocomplete="off" value="<c:out value="${sessionScope.loginId.owner_Id}"/>" readonly ><br><br>
 
                 <label for="date_Of_Visit">진료 날짜:</label><br>
-                <input type="text" id="date_Of_Visit" name="date_Of_Visit" required autocomplete="off" value="클릭 후 날짜를 선택 해주세요" readonly><br><br>
+                <input type="text" id="date_Of_Visit" name="date_Of_Visit" required autocomplete="off" placeholder="클릭 후 날짜를 선택 해주세요" readonly><br><br>
 
                 <label for="pet_Id">마이크로칩 번호:</label><br>
                 <input type="text" id="pet_Id" name="pet_Id" required autocomplete="off" style="width: 550px">
@@ -138,17 +141,17 @@
     function openChild() {
 
         // window.open("open할 window", "자식창 이름", "팝업창 옵션");
-         window.open("/registered/petNumberSearch", "childForm", "width=780, height=350, resizable = no, scrollbars = no");
+         window.open("/registered/petNumberSearch", "childForm", "width=780, height=800, resizable = no, scrollbars = no");
     }
 
     $(function() {
         let currentDate = new Date();
 
         $("#date_Of_Visit").datepicker({
-           maxDate: currentDate // 오늘 날짜까지만 선택 가능
         });
     });
-
+    $(function() {
+        let currentDate = new Date();
     $.datepicker.setDefaults({
         dateFormat: 'yy-mm-dd',	//날짜 포맷이다. 보통 yy-mm-dd 를 많이 사용하는것 같다.
         prevText: '이전 달',	// 마우스 오버시 이전달 텍스트
@@ -163,10 +166,11 @@
         showMonthAfterYear: true,	// true : 년 월  false : 월 년 순으로 보여줌
         yearSuffix: '년',	//
         showButtonPanel: true,	// 오늘로 가는 버튼과 달력 닫기 버튼 보기 옵션
+        maxDate: currentDate
 //        buttonImageOnly: true,	// input 옆에 조그만한 아이콘으로 캘린더 선택가능하게 하기
 //        buttonImage: "images/calendar.gif",	// 조그만한 아이콘 이미지
 //        buttonText: "Select date"	// 조그만한 아이콘 툴팁
     });
-
+    });
 </script>
 <%@include file="/WEB-INF/views/cmmn/footer.jsp"%>

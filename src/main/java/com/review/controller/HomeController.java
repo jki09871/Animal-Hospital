@@ -65,7 +65,7 @@ public class HomeController {
 
 	final private String fileRoot = "C:\\img\\hong\\";
 	@PostMapping("/ajaxUpload")
-	public @ResponseBody Map<String, Object> SummerNoteImageFile(@RequestParam("file") MultipartFile file){
+		public @ResponseBody Map<String, Object> SummerNoteImageFile(@RequestParam("file") MultipartFile file){
 
 		Map<String, Object> jsonObject = new HashMap<>();
 

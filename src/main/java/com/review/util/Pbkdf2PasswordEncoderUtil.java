@@ -19,7 +19,7 @@ public class Pbkdf2PasswordEncoderUtil {
     }
 
     public static void main(String[] args) {
-        String rawPassword = "pass0rd2213@";
+        String rawPassword = "1234";
         String encPassword = pbkdf2PasswordEncoder.encode(rawPassword);
         String encPassword2 = pbkdf2PasswordEncoder.encode(rawPassword);
         System.out.println(encPassword);

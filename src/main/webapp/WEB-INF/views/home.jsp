@@ -456,8 +456,8 @@
 <div class="modal">
 	<div class="modal_body">
 		<h3>개인정보 보호를 위해 비밀번호를 변경 해주세요</h3>
-		<button type="button" class="pwChangeOk">비밀번호 변경</button>
-		<button type="button" class="pwChangeNo">나중에 변경</button>
+		<button type="button" class="pwChangeOk btn btn-danger">비밀번호 변경</button>
+		<button type="button" class="pwChangeNo btn btn-primary">나중에 변경</button>
 	</div>
 </div>
 <script>

@@ -15,6 +15,10 @@ public class InquiryBoardDTO {
      *   `writer` varchar(50) DEFAULT NULL,						    -- 작성자
      *   `regdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,		-- 작성시간
      *   `updatedate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,	    -- 수정시간
+     *   `OWNER_ID` varchar(20) DEFAULT NULL,                       -- 회원 비회원 확인
+     *   `MEMBERCHECK` varchar(1) DEFAULT NULL,                     -- owner_id 컬럼이 null인지 확인
+     *   `OPNEORPRIVATE` varchar(1) DEFAULT NULL,                   -- 공개 / 비공개
+     *   `PASSWORD` varchar(250) DEFAULT NULL,                      -- 비공개이면 비밀번호
      *   PRIMARY KEY (`inquiryNum`)
      * );
     * **/
@@ -22,6 +26,10 @@ public class InquiryBoardDTO {
     private String title;
     private String content;
     private String writer;
+    private String owner_Id;
+    private String memberCheck;
+    private String opneOrPrivate;
+    private String password;
     private Date regdate;
     private Date update_Date;
 }

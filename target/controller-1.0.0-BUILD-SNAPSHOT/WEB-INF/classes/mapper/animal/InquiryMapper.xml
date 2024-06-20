@@ -6,7 +6,7 @@
 <mapper namespace="inquiry">
 
     <select id="getList" resultType="java.util.HashMap">
-/************************ 문의 게시판 리스트 InquiryMapper.xml - getList *****************************/
+/************************ 문의 게시판 리스트 InquiryMapper.xml - inquiry.getList *****************************/
 
         SELECT
             A.INQUIRY_NUM,          /** 문의 고유번호 **/
@@ -14,10 +14,14 @@
             A.CONTENT,              /** 문의 내용 **/
             A.REGDATE,              /** 문의 시간 **/
             CASE
-                WHEN CHAR_LENGTH(A.WRITER) = 3 THEN /** writer 글자 수가 3개인지 확인 **/
+                WHEN
+                    CHAR_LENGTH(A.WRITER) = 3  /** writer 글자 수가 3개인지 확인 **/
+                THEN
                     CONCAT( LEFT(A.WRITER, 1), '*', RIGHT(A.WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
-                    ELSE A.WRITER /** 아니라면 그냥 전체 보여주기 **/
-                    END AS HIDDENWRITER, /** 알리아스 **/
+                ELSE
+                    A.WRITER /** 아니라면 그냥 전체 보여주기 **/
+                END AS
+                    HIDDENWRITER, /** 알리아스 **/
             (
                 SELECT
                     COUNT(*)
@@ -38,17 +42,38 @@
 /************************ 문의 게시판 작성 InquiryMapper.xml - insert *****************************/
 
         INSERT INTO INQUIRY_TBL
+        (
+            TITLE,                   /** 문의제목 **/
+            CONTENT,                 /** 문의내용 **/
+            WRITER,                  /** 작성자 **/
+            OWNER_ID,                /** 소유자 ID **/
+            PASSWORD,                /** 비밀번호 **/
+            MEMBERCHECK,             /** 회원체크 **/
+            OPNEORPRIVATE            /** 공개여부 **/
+        )
+        VALUES
             (
-             TITLE,                    /** 문의제목 **/
-             CONTENT,                  /** 문의내용 **/
-             WRITER                    /** 작성자 **/
-             )
-            VALUES
-            (
-             #{title},                  /** 문의제목 **/
-             #{content},                /** 문의내용 **/
-             #{writer}                  /** 작성자 **/
-             )
+            #{title},                /** 문의제목 **/
+            #{content},              /** 문의내용 **/
+            #{writer},               /** 작성자 **/
+            CASE
+                WHEN #{owner_Id} IS NOT NULL THEN #{owner_Id}
+                ELSE NULL
+                END,                     /** 소유자 ID **/
+            CASE
+                WHEN #{password} != '' THEN #{password}
+                ELSE NULL
+                END,                     /** 비밀번호 **/
+            CASE
+                WHEN #{owner_Id} IS NOT NULL THEN 'Y'
+                ELSE 'N'
+                END,                     /** 회원체크 **/
+            CASE
+                WHEN #{password} != '' THEN 'Y'
+                ELSE 'N'
+                END                      /** 공개여부 **/
+            );
+
 
 /************************ 문의 게시판 작성 InquiryMapper.xml - insert *****************************/
 </insert>
@@ -58,15 +83,19 @@
 /************************ 문의 게시판 상세보기 InquiryMapper.xml - read *****************************/
 
         SELECT
-            INQUIRY_NUM,              /** 문의고유번호 **/
-            TITLE,                    /** 문의제목 **/
-            CONTENT,                  /** 문의내용 **/
-            WRITER,                   /** 작성자 **/
-            REGDATE,                  /** 문의한 시간 **/
-            UPDATE_DATE,              /** 문의 내용 수정 시간 **/
+            TITLE,                   /** 문의제목 **/
+            CONTENT,                 /** 문의내용 **/
+            WRITER,                  /** 작성자 **/
+            OWNER_ID,                /** 소유자 ID **/
+            PASSWORD,                /** 비밀번호 **/
+            MEMBERCHECK,             /** 회원체크 **/
+            OPNEORPRIVATE,            /** 공개여부 **/
+            REGDATE,
+            UPDATE_DATE,
+            INQUIRY_NUM,
             CASE
-                WHEN CHAR_LENGTH(WRITER) = 3 THEN /** writer 글자 수가 3개인지 확인 **/
-                    CONCAT( LEFT(WRITER, 1), '*', RIGHT(WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
+                WHEN CHAR_LENGTH(WRITER) = 3 /** writer 글자 수가 3개인지 확인 **/
+                    THEN CONCAT( LEFT(WRITER, 1), '*', RIGHT(WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
                     ELSE WRITER /** 아니라면 그냥 전체 보여주기 **/
                     END AS HIDDENWRITER /** 알리아스 **/
         FROM

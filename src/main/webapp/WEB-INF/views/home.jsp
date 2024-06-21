@@ -140,7 +140,7 @@
 				<div class="col-md-6">
 					<form method="POST" name="nonMembersInquiry" class="nonMemberForm" action="/nonMembers/inquiry">
 						<div class="form-group">
-							<label for="Name">이름</label>
+							<label for="Name">이름</label><a style="margin-left: 84%">비밀글<input type="checkbox" class="pw_check"></a>
 							<input type="text" class="form-control" id="Name" name="name" placeholder="Name" autocomplete="off">
 						</div>
 						<div class="form-group">
@@ -159,9 +159,13 @@
 							<label for="content">문의 내용</label>
 							<textarea class="form-control" id="content" name="content" placeholder="content" autocomplete="off"></textarea>
 						</div>
+						<div>
+							<input type="text" name="password" id="password" placeholder="비밀번호를 입력해주세요" style="display: none">
+						</div>
+						<div>
+							<button class="button-more-primary btn btn-lg" id="nonMembers" type="button" style="margin:10px;">Register Now</button>
+						</div>
 						<input type="hidden" name="writer" id="writer" value="">
-						<button class="button-more-primary btn btn-lg" id="nonMembers" type="button" style="margin:10px;">Register Now</button>
-						<br /><br />
 					</form>
 				</div>
 			</div>
@@ -493,6 +497,15 @@
 				}
 			});
 		});
+
+		$('.pw_check').on('change', function () {
+			if ($(this).is(':checked')) {
+				$('#password').css('display', 'flex'); /* 체크되면 암호창 보이기 */
+			} else {
+				$('#password').css('display', 'none'); /* 체크 해제 시 암호창 숨기기 */
+			}
+		})
+
 		$('#nonMembers').on('click', function () {
 			let name = $('#Name').val();
 			let email = $('#Email').val();
@@ -500,6 +513,13 @@
 			let title = $('#title').val();
 			let content = $('#content').val();
 			let writer = $('#writer');
+
+			let isMemberCheckChecked = $('.pw_check').is(':checked');
+			let passwordField = $('#password').val().trim();
+			if (isMemberCheckChecked && (passwordField === '' || passwordField === null)){
+				alert("비밀번호를 입력해주세여");
+				return false;
+			}
 
 			if (name != "" && email != "" && pone != "" && title != "" && content != "") {
 				writer.val(email);

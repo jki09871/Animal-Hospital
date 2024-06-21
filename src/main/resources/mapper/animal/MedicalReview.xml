@@ -5,7 +5,7 @@
 <mapper namespace="review">
 
     <insert id="reviewScreen" parameterType="com.review.dto.animal.AnimalReviewDTO" useGeneratedKeys="true" keyProperty="reviewNum">
-/*********************** 리뷰 게시글 작성 MedicalReview.xml - reviewScreen *************************/
+/*********************** 리뷰 게시글 작성 MedicalReview.xml - review.reviewScreen *************************/
 
         INSERT INTO MEDICAL_REVIEW_BAORD
         (
@@ -24,11 +24,10 @@
             </if>
         )
 
-/*********************** 리뷰 게시글 작성 MedicalReview.xml - reviewScreen *************************/
     </insert>
 
     <select id="findAll" resultType="com.review.dto.animal.AnimalReviewDTO">
-/**************************** 리뷰 전체 게시글 보기 MedicalReview.xml - findAll *********************************/
+/**************************** 리뷰 전체 게시글 보기 MedicalReview.xml - review.findAll *********************************/
 
         SELECT
             REVIEWNUM,                          /** 등록 번호 **/
@@ -42,11 +41,10 @@
         ORDER BY
             REVIEWNUM DESC
 
-/*************************** 리뷰 전체 게시글 보기 MedicalReview.xml - findAll ******************************/
     </select>
 
     <select id="read" parameterType="int" resultType="com.review.dto.animal.AnimalReviewDTO">
-/**************************** 리뷰 게시글 상세보기 MedicalReview.xml - read *********************************/
+/**************************** 리뷰 게시글 상세보기 MedicalReview.xml - review.read *********************************/
 
         SELECT
             REVIEWNUM,                          /** 등록 번호 **/
@@ -59,11 +57,10 @@
         WHERE
             REVIEWNUM = #{reviewNum}            /** 등록 번호 **/
 
-/**************************** 리뷰 게시글 상세보기 MedicalReview.xml - read *********************************/
     </select>
 
     <update id="update" parameterType="com.review.dto.animal.AnimalReviewDTO">
-/**************************** 리뷰 게시글 수정 MedicalReview.xml - update *********************************/
+/**************************** 리뷰 게시글 수정 MedicalReview.xml - review.update *********************************/
 
         UPDATE
             MEDICAL_REVIEW_BAORD
@@ -78,12 +75,11 @@
         WHERE
             REVIEWNUM = #{reviewNum}                        /** 수정된 게시글 번호 **/
 
-/**************************** 리뷰 게시글 수정 MedicalReview.xml - update *********************************/
 
     </update>
 
     <delete id="delete" parameterType="int">
-/**************************** 리뷰 게시글 삭제 MedicalReview.xml - delete  *********************************/
+/**************************** 리뷰 게시글 삭제 MedicalReview.xml - review.delete  *********************************/
 
         DELETE
         FROM
@@ -91,11 +87,10 @@
         where
             REVIEWNUM = #{reviewNum}    /** 등록 번호 **/
 
-/**************************** 리뷰 게시글 삭제 MedicalReview.xml - delete  *********************************/
 </delete>
 
     <select id="paging" resultType="com.review.dto.animal.AnimalReviewDTO">
-/**************************** 리뷰 게시글 페이징 MedicalReview.xml - paging *********************************/
+/**************************** 리뷰 게시글 페이징 MedicalReview.xml - review.paging *********************************/
 
         select * from (
             SELECT
@@ -112,22 +107,20 @@
                           ) as T1
             LIMIT #{skip}, #{amount}            /** 생략 된 게시물 값 과 보여줄 게시물 값 **/
 
-/**************************** 리뷰 게시글 페이징 MedicalReview.xml - paging *********************************/
     </select>
 
     <select id="postTotal" resultType="int">
-/**************************** 리뷰 총 게시물 수 MedicalReview.xml - postTotal *********************************/
+/**************************** 리뷰 총 게시물 수 MedicalReview.xml - review.postTotal *********************************/
 
         SELECT
             COUNT(*)
         FROM
             MEDICAL_REVIEW_BAORD
 
-/**************************** 리뷰 총 게시물 수 MedicalReview.xml - postTotal *********************************/
     </select>
 
     <select id="myWriting" resultType="com.review.dto.animal.AnimalReviewDTO">
-/**************************** 내가 쓴 리뷰 게시물 MedicalReview.xml - myWriting *********************************/
+/**************************** 내가 쓴 리뷰 게시물 MedicalReview.xml - review.myWriting *********************************/
 
         SELECT
             REVIEWNUM,                          /** 등록 번호 **/
@@ -141,12 +134,11 @@
         ORDER BY
             REVIEWNUM DESC
 
-/**************************** 내가 쓴 리뷰 게시물 MedicalReview.xml - myWriting *********************************/
     </select>
 
 
     <insert id="insertFile" parameterType="hashMap">
-/**************************** 리뷰 게시물 파일 추가 *********************************/
+/**************************** 리뷰 게시물 파일 추가 MedicalReview.xml - review.insertFile *********************************/
         insert into mp_file
         (
             FILE_NO,               /* 파일 번호*/
@@ -166,11 +158,10 @@
             SYSDATE(),             /* 파일 올린 시간 */
             'N'                    /* 파일 삭제 시간 */
         )
-/**************************** 리뷰 게시물 파일 추가 *********************************/
     </insert>
 
     <select id="selectFileList" parameterType="int" resultType="hashMap">
-/**************************** 리뷰 게시물 파일 목록  *********************************/
+/**************************** 리뷰 게시물 파일 목록  MedicalReview.xml - review.selectFileList *********************************/
 
         SELECT
             FILE_NO,                                /* 파일 번호 */
@@ -187,11 +178,10 @@
         ORDER BY
             FILE_NO ASC
 
-/**************************** 리뷰 게시물 파일 목록  *********************************/
     </select>
 
     <select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
-/**************************** 리뷰 게시물 파일 정보  *********************************/
+/**************************** 리뷰 게시물 파일 정보 MedicalReview.xml - review.selectFileInfo *********************************/
 
         SELECT
             STORED_FILE_NAME,
@@ -201,11 +191,10 @@
         WHERE
             FILE_NO = #{FILE_NO}
 
-/**************************** 리뷰 게시물 파일 정보  *********************************/
     </select>
 
     <delete id="fileRemove">
-/**************************** 리뷰 게시물 파일 삭제  *********************************/
+/**************************** 리뷰 게시물 파일 삭제 - review.fileRemove *********************************/
 
         DELETE
         FROM
@@ -213,11 +202,10 @@
         WHERE
             FILE_NO = #{FILE_NO}        /** 파일 번호 **/
 
-/**************************** 리뷰 게시물 파일 삭제  *********************************/
     </delete>
 
     <update id="updateFile" parameterType="hashMap">
-/**************************** 리뷰 게시물 파일 수정  *********************************/
+/**************************** 리뷰 게시물 파일 수정 - review.updateFile *********************************/
 
         UPDATE
             MP_FILE
@@ -226,6 +214,5 @@
         WHERE
             FILE_NO = #{FILE_NO}        /** 파일 번호 **/
 
-/**************************** 리뷰 게시물 파일 수정  *********************************/
     </update>
 </mapper>

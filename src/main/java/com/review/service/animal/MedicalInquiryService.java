@@ -24,9 +24,9 @@ public class MedicalInquiryService {
         mir.insert(board);
     }
 
-    public Map<String, Object> get(Long inquiry_Num) {
-        log.info("get....." + inquiry_Num);
-        return mir.read(inquiry_Num);
+    public Map<String, Object> get(Map<String, Object> num) {
+
+        return mir.read(num);
     }
 
 
@@ -43,5 +43,9 @@ public class MedicalInquiryService {
     public List<Map<String,Object>> getList() {
         log.info("getList.....0");
         return mir.getList();
+    }
+
+    public Map<String, Object> privateInquiryRead(Map<String, Object> paramMap) {
+        return mir.privateInquiryRead(paramMap);
     }
 }

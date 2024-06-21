@@ -5,7 +5,7 @@
 <mapper namespace="nonMembers">
 
     <insert id="register" parameterType="com.review.dto.animal.NonMembersDTO">
-/*********************** 비회원 등록 NonMembersMapper.xml - nonMembersRegister *************************/
+/*********************** 비회원 등록 NonMembersMapper.xml - nonMembers.register *************************/
         INSERT INTO NONMEMBERS_TBL
         (
          NAME,
@@ -18,11 +18,10 @@
          #{email},
          #{poneNumber}
         )
-/*********************** 비회원 등록 NonMembersMapper.xml - nonMembersRegister *************************/
     </insert>
 
     <select id="registeredMemberCount" resultType="int" parameterType="com.review.dto.animal.NonMembersDTO">
-/*********************** 비회원 중복 등록 방지 NonMembersMapper.xml - registeredMemberCount *************************/
+/*********************** 비회원 중복 등록 방지 NonMembersMapper.xml - nonMembers.registeredMemberCount *************************/
 
         SELECT
             COUNT(*)
@@ -30,7 +29,6 @@
             NONMEMBERS_TBL
         WHERE
             EMAIL = #{email}
-/*********************** 비회원 중복 등록 방지 NonMembersMapper.xml - registeredMemberCount *************************/
 
     </select>
 </mapper>

@@ -29,8 +29,8 @@ public class MedicalInquiryRepository {
         
     }
 
-    public Map<String, Object> read(long inquiry_Num){
-        return sql.selectOne("inquiry.read", inquiry_Num);
+    public Map<String, Object> read(Map<String, Object> num){
+        return sql.selectOne("inquiry.read", num);
         
     }
 
@@ -40,5 +40,9 @@ public class MedicalInquiryRepository {
 
     public int update(InquiryBoardDTO board){
         return sql.update("inquiry.update", board);
+    }
+
+    public Map<String, Object> privateInquiryRead(Map<String, Object> paramMap) {
+        return sql.selectOne("inquiry.read", paramMap);
     }
 }

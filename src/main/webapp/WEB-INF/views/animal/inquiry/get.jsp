@@ -134,7 +134,9 @@
 
     $('.btn-warning').on('click', function (){
         let writer = $('#writer').val();
-        let owner = "${sessionScope.loginId.owner_Id}";
+        let owner = "${sessionScope.loginId.email}";
+        console.log(owner);
+        console.log(writer);
         if (writer != owner){
             alert("작성자가 아닙니다.")
             return false;

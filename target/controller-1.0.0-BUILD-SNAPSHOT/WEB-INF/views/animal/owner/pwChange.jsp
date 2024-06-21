@@ -104,12 +104,12 @@
                         </div>
                         <div class="form-group">
                             <label for="pwChange">변경할 비밀번호</label>
-                            <input type="text" id="pwChange" name="pwChange" placeholder="변경할 비밀번호" autocomplete="off" required  >
+                            <input type="password" id="pwChange" name="pwChange" placeholder="변경할 비밀번호" autocomplete="off" required  >
                             <div id="pwCheckResult"></div>
                         </div>
                         <div class="form-group">
                             <label for="pwChange">비밀번호 확인</label>
-                            <input type="text" id="pwChange2" name="pwChange2" placeholder="변경할 비밀번호" autocomplete="off"  required >
+                            <input type="password" id="pwChange2" name="pwChange2" placeholder="변경할 비밀번호" autocomplete="off"  required >
                             <div id="pwCheckResult2"></div>
                         </div>
                         <button type="button" onclick="fnSubmit()" class="btn btn-outline-primary">비밀번호 변경</button>

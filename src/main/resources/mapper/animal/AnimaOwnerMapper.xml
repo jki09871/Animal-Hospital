@@ -5,7 +5,7 @@
 <mapper namespace="animal">
 
     <insert id="signup" parameterType="com.review.dto.animal.AnimalMemberDTO">
-/*********************** 회원 가입 AnimaMemberMapper.xml -  signup **************************/
+/*********************** 회원 가입 AnimaMemberMapper.xml -  animal.signup **************************/
 
         INSERT INTO OWNER_TBL
         (
@@ -22,12 +22,10 @@
         #{phoneNumber}
         )
 
-/*********************** 회원 가입 AnimaMemberMapper.xml -  signup **************************/
-
     </insert>
 
     <select id="login" parameterType="com.review.dto.animal.AnimalMemberDTO" resultType="com.review.dto.animal.AnimalMemberDTO">
-/*********************** 로그인 AnimaMemberMapper.xml -  login **************************/
+/*********************** 로그인 AnimaMemberMapper.xml -  animal.login **************************/
         <![CDATA[
         SELECT
             OWNER_ID,            /** 회원 아이디 **/
@@ -45,7 +43,6 @@
         WHERE
             OWNER_ID = #{owner_Id}
         ]]>
-/*********************** 로그인 AnimaMemberMapper.xml -  login **************************/
     </select>
 
     <select id="emailCheck" parameterType="hashMap" resultType="int">
@@ -64,11 +61,10 @@
             AND  OWNER_ID =  #{ownerId}
         </if>
 
-/*********************** 이메일 체크 AnimaMemberMapper.xml -  emailCheck **************************/
     </select>
 
     <select id="myInfo" resultType="com.review.dto.animal.AnimalMemberDTO">
-/*********************** 내 정보 AnimaMemberMapper.xml -  myInfo **************************/
+/*********************** 내 정보 AnimaMemberMapper.xml -  animal.myInfo **************************/
 
         SELECT
             (
@@ -97,11 +93,10 @@
         WHERE
             OWNER_Id = #{owner_Id}
 
-/*********************** 내 정보 AnimaMemberMapper.xml -  myInfo **************************/
     </select>
 
     <update id="editInfo" parameterType="com.review.dto.animal.AnimalMemberDTO">
-/*********************** 내 정보 수정 AnimaMemberMapper.xml.xml -  editInfo **************************/
+/*********************** 내 정보 수정 AnimaMemberMapper.xml -  animal.editInfo **************************/
 
         UPDATE
             OWNER_TBL
@@ -110,12 +105,11 @@
         WHERE
             OWNER_ID = #{owner_Id}
 
-/*********************** 내 정보 수정 AnimaMemberMapper.xml -  editInfo **************************/
 
     </update>
 
     <update id="keepLogin">
-/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
+/*********************** 자동로그인 AnimaMemberMapper.xml -  animal.keepLogin **************************/
 
         UPDATE
             OWNER_TBL
@@ -125,12 +119,11 @@
         WHERE
             OWNER_ID = #{owner_Id}
 
-/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
 
     </update>
 
     <select id="checkUserWitSessionKey" resultType="com.review.dto.animal.AnimalMemberDTO">
-/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
+/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  animal.keepLogin **************************/
         <![CDATA[
         SELECT
             OWNER_ID,            /** 회원 아이디 **/
@@ -147,12 +140,11 @@
         WHERE
             SESSION_KEY = #{value}
         ]]>
-/*********************** 자동로그인 AnimaMemberMapper.xml.xml -  keepLogin **************************/
 
     </select>
 
     <select id="findId" parameterType="hashMap" resultType="String">
-/*********************** 아이디 찾기 AnimaMemberMapper.xml.xml -  findId **************************/
+/*********************** 아이디 찾기 AnimaMemberMapper.xml -  animal.findId **************************/
 
         SELECT
             OWNER_ID
@@ -161,11 +153,10 @@
         WHERE
             EMAIL = #{email} AND PHONENUMBER = #{phone}
 
-/*********************** 아이디 찾기 AnimaMemberMapper.xml.xml -  findId **************************/
     </select>
 
     <update id="findPw">
-/*********************** 비번 찾기 AnimaMemberMapper.xml.xml -  findPw **************************/
+/*********************** 비번 찾기 AnimaMemberMapper.xml -  animal.findPw **************************/
 
         SELECT
             COUNT(*)
@@ -174,12 +165,11 @@
         WHERE
             EMAIL = #{email} AND OWNER_ID = #{owner_Id}
 
-/*********************** 비번 찾기 AnimaMemberMapper.xml.xml -  findPw **************************/
 
     </update>
 
     <update id="pwUpdate">
-/*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
+/*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml -  animal.pwUpdate **************************/
 
         UPDATE
             OWNER_TBL
@@ -189,11 +179,10 @@
         WHERE
             EMAIL = #{email} AND OWNER_ID = #{owner_Id}
 
-/*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
     </update>
 
     <update id="pwChange"  parameterType="hashMap">
-/*********************** 비밀번호 변경  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
+/*********************** 비밀번호 변경  AnimaMemberMapper.xml -  animal.pwUpdate **************************/
 
         UPDATE
             OWNER_TBL
@@ -205,10 +194,11 @@
         WHERE
             OWNER_ID = #{owner_Id}
 
-/*********************** 랜덤으로 비번저장  AnimaMemberMapper.xml.xml -  pwUpdate **************************/
     </update>
 
     <update id="pwFailCount">
+/*********************** 비밀번호 틀린 횟수 증가  AnimaMemberMapper.xml -  animal.pwFailCount **************************/
+
         UPDATE
             OWNER_TBL
         SET
@@ -218,6 +208,8 @@
     </update>
 
     <update id="pwFailReset">
+/*********************** 비밀번호 틀린 횟수 초기화  AnimaMemberMapper.xml -  animal.pwFailReset **************************/
+
         UPDATE
             OWNER_TBL
         SET

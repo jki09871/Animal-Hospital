@@ -159,9 +159,14 @@
 							<label for="content">문의 내용</label>
 							<textarea class="form-control" id="content" name="content" placeholder="content" autocomplete="off"></textarea>
 						</div>
+						<div class="form-group">
+							<label for="password">암호</label>
+							<input class="form-control" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+						</div>
+						<div>
+							<button class="button-more-primary btn btn-lg" id="nonMembers" type="button" style="margin:10px;">Register Now</button>
+						</div>
 						<input type="hidden" name="writer" id="writer" value="">
-						<button class="button-more-primary btn btn-lg" id="nonMembers" type="button" style="margin:10px;">Register Now</button>
-						<br /><br />
 					</form>
 				</div>
 			</div>
@@ -493,6 +498,7 @@
 				}
 			});
 		});
+
 		$('#nonMembers').on('click', function () {
 			let name = $('#Name').val();
 			let email = $('#Email').val();
@@ -501,8 +507,15 @@
 			let content = $('#content').val();
 			let writer = $('#writer');
 
+			let isMemberCheckChecked = $('.pw_check').is(':checked');
+			let passwordField = $('#password').val().trim();
+			if (isMemberCheckChecked && (passwordField === '' || passwordField === null)){
+				alert("비밀번호를 입력해주세여");
+				return false;
+			}
+
 			if (name != "" && email != "" && pone != "" && title != "" && content != "") {
-				writer.val(email);
+				writer.val(name);
 				console.log(writer);
 				$('.nonMemberForm').submit();
 			}else {

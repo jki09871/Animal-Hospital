@@ -17,7 +17,7 @@
     }
 </style>
 
-    <div class="container" style="margin-top: 150px;">
+    <div class="container" >
         <div class="basic animal">
             <h1 class="text-center">문의 게시판</h1>
             <div class="mb-3 text-right">
@@ -38,7 +38,7 @@
                     <c:forEach var="board" items="${list}">
                         <tr>
                             <td><c:out value="${board.INQUIRY_NUM}"/></td>
-                            <td class="${board.PASSWORD_CH}">
+                            <td class="${board.PASSWORD_CH}" id="${board.OWNER_ID}">
                                 <a id="${board.INQUIRY_NUM}" class="privateInquiry <c:if test="${board.PASSWORD_CH eq 'Y'}">locked</c:if>"
                                    href="/pet/inquiry/get?inquiry_Num=${board.INQUIRY_NUM}">
                                     <c:out value="${board.TITLE}"/>
@@ -64,16 +64,22 @@
 <script>
     $(document).ready(function () {
         $('.privateInquiry').on('click', function (event) {
-            let privateInquiry_ch = $(this).parent('td').attr('class'); // 클릭한 요소중 가장 가까운 부모태그(td)의 class 값을 가져옴
-            if (privateInquiry_ch === 'Y') {
-                $(this).siblings('div').css('display', 'flex');
-                return false;
+            let owner_id = $(this).parent().attr('id');
+            let session_id = "${sessionScope.loginId.owner_Id}";
+            if (owner_id != session_id || owner_id == '' || session_id == '') {
+                let privateInquiry_ch = $(this).parent('td').attr('class'); // 클릭한 요소중 가장 가까운 부모태그(td)의 class 값을 가져옴
+                if (privateInquiry_ch === 'Y') {
+                    $(this).siblings('div').css('display', 'flex');
+                    return false;
+                }
+                return true;
             }
         });
 
         $('.password_relay').on('click', function () {
             var pw = $(this).siblings('input[type=text]').val(); // 클릭한 요소에 형제 중에 type=text인 것에 value 값을 가져옴
             let inquiry_num = $(this).parent().siblings('a').attr('id'); // 클릭한 요소에 부모에 형제중 a태그의 id 값을 가져옴
+
 
             if (pw != '' && pw != null) {
                 $.ajax({

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="record">
     <insert id="write" parameterType="com.review.dto.animal.PetMedicalRecordDTO">
-/**************************** 처방전 작성 RecordMapper.xml - write *********************************/
+/**************************** 처방전 작성 RecordMapper.xml - record.write *********************************/
 
         INSERT INTO PET_MEDICAL_RECORD
         (
@@ -31,11 +31,10 @@
             #{date_Of_Visit}    /** 방문 날짜 **/
          );
 
-/**************************** 처방전 작성 RecordMapper.xml - write *********************************/
     </insert>
 
     <select id="recordList" resultType="com.review.dto.animal.PetDTO">
-/**************************** 처방전 목록 RecordMapper.xml - recordList *********************************/
+/**************************** 처방전 목록 RecordMapper.xml - record.recordList *********************************/
 
         SELECT * FROM (
             SELECT
@@ -52,11 +51,10 @@
                 ) AS T1
             LIMIT #{skip}, #{amount}
 
-/**************************** 처방전 목록 RecordMapper.xml - recordList *********************************/
     </select>
 
     <select id="read" resultType="java.util.HashMap" >
-/**************************** 특정 동물 처방전 리스트 RecordMapper.xml - read *********************************/
+/**************************** 특정 동물 처방전 리스트 RecordMapper.xml - record.read *********************************/
 
 
         SELECT
@@ -77,12 +75,11 @@
         ORDER BY
             RECORD_ID DESC
 
-/**************************** 특정 동물 처방전 리스트 RecordMapper.xml - read *********************************/
 
     </select>
 
     <select id="edit" resultType="com.review.dto.animal.PetMedicalRecordDTO">
-/**************************** 특정 동물 처방전 상세 보기 RecordMapper.xml - edit *********************************/
+/**************************** 특정 동물 처방전 상세 보기 RecordMapper.xml - record.edit *********************************/
 
         SELECT
             RECORD_ID,         /** 처방전 고유 번호**/
@@ -100,11 +97,10 @@
         WHERE
             RECORD_ID = #{record_Id}    /** 처방전 고유 번호**/
 
-/**************************** 특정 동물 처방전 상세 보기 RecordMapper.xml - edit *********************************/
     </select>
 
     <update id="editSend" parameterType="java.util.HashMap">
-/**************************** 처방전 수정 RecordMapper.xml - editSend *********************************/
+/**************************** 처방전 수정 RecordMapper.xml - record.editSend *********************************/
 
         UPDATE PET_MEDICAL_RECORD
         SET
@@ -117,11 +113,10 @@
         WHERE
             RECORD_ID = #{record_Id}
 
-/**************************** 처방전 수정 RecordMapper.xml - editSend *********************************/
     </update>
 
     <select id="postTotal" resultType="int">
-/**************************** 처방전 총 개수 RecordMapper.xml - postTotal *********************************/
+/**************************** 처방전 총 개수 RecordMapper.xml - record.postTotal *********************************/
 
         SELECT
             COUNT(*)
@@ -131,7 +126,6 @@
             <include refid="PagingCriteria"></include>
         </if>
 
-/**************************** 처방전 총 개수 RecordMapper.xml - postTotal *********************************/
     </select>
 
     <!-- 검색 조건문 -->

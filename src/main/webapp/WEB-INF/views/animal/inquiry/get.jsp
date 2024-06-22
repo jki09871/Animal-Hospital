@@ -15,16 +15,12 @@
         width:100%;
         height:100%;
 
-
-
         /*background-color: rgba(0,0,0,0.4);*/
     }
 
     .modal_body{
         position:absolute;
-        top:80%;
-
-
+        top:0%;
 
 
         text-align: center;
@@ -34,6 +30,24 @@
         /*box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);*/
 
         transform:translateY(-50%);
+    }
+    .modal2{
+        position:absolute;
+        display:none;
+
+        justify-content: center;
+        top:0;
+        left:0;
+
+        width:100%;
+        height:100%;
+    }
+    .modal2_body{
+        position:absolute;
+        top:37%;
+
+
+        text-align: center;
     }
 </style>
 
@@ -46,7 +60,7 @@
             <div class="form-group">
                 <label for="inquiry_Num">게시물 번호</label>
                 <div class="btn-group">
-                    <a href="/pet/inquiry/modify?inquiry_Num=${board.INQUIRY_NUM}" class="btn btn-warning">수정</a>
+                    <a <%--href="/pet/inquiry/modify?inquiry_Num=${board.INQUIRY_NUM}"--%> id="${board.OWNER_ID}" class="btn btn-warning">수정</a>
                     <a href="/pet/inquiry/list" class="btn btn-info">목록</a>
                 </div>
                 <input type="text" class="form-control" id="inquiry_Num" name="inquiry_Num" value="<c:out value='${board.INQUIRY_NUM}'/>" readonly>
@@ -127,21 +141,62 @@
         </div>
     </div>
 </div>
+<div class="modal2">
+    <div class="modal2_body">
+        <label for="password">암호를 입력해주세요</label>
+        <input  class="form-control" id="password" name="password" placeholder="password" autocomplete="off">
+        <button type="button" class="pwCheck btn btn-danger">확인</button>
+        <button type="button" class="pwCancel btn btn-primary">취소</button>
+    </div>
+</div>
 <script>
     $('.btn-secondary').click(function () {
         $('.modal').css('display', 'none');
     });
 
-    $('.btn-warning').on('click', function (){
-        let writer = $('#writer').val();
-        let owner = "${sessionScope.loginId.email}";
-        console.log(owner);
-        console.log(writer);
-        if (writer != owner){
-            alert("작성자가 아닙니다.")
-            return false;
+    $('.btn-warning').on('click', function (e){
+        let writer = $(this).attr('id');
+        let owner = "${sessionScope.loginId.owner_Id}";
+        if (writer != '' && owner != ''){
+            if (writer != owner){
+                alert("작성자가 아닙니다.")
+                return false;
+            } else {
+                self.location = "/pet/inquiry/modify?inquiry_Num=" + ${board.INQUIRY_NUM};
+            }
+        } else {
+            $('.modal2').css('display','flex');
         }
-    })
+
+    });
+    $('.pwCheck').on('click', function () {
+        let pwCheck = $('#password').val();
+        let inquiry_num = "${board.INQUIRY_NUM}";
+
+        if (pwCheck != '' && pwCheck != null) {
+            $.ajax({
+                url: '/inquiry/password/send',
+                type: 'GET',
+                data: {pw: pwCheck, inquiry_num: inquiry_num},
+                success: function (data) {
+                    console.log(data);
+                    if (data === '성공') {
+                        self.location = "/pet/inquiry/modify?inquiry_Num=" + inquiry_num;
+                    } else {
+                        alert(data);
+                    }
+                }
+            });
+        } else {
+            alert("비밀번호를 입력해주세요");
+        }
+
+    });
+    $('.pwCancel').on('click', function (e){
+
+        $('.modal2').css('display','none');
+
+    });
     function openEditModal(commentId, buttonElement) {
         // 현재 댓글 내용을 가져와서 모달에 채우기
         var row = $(buttonElement).closest('tr');
@@ -156,8 +211,8 @@
         // 수정 버튼 클릭 이벤트 핸들러 등록
         $('.btn-primary').off('click').on('click', function (){
             /** $('.btn-primary2').off('click').on('click', function (){...});
-            부분에서 off() 함수를 사용하여 이벤트 핸들러를 제거한 후 on() 함수로 새로운 이벤트 핸들러를 등록합니다.
-            이렇게 하면 모달이 열릴 때마다 핸들러가 중복 등록되는 것을 방지할 수 있습니다. **/
+             부분에서 off() 함수를 사용하여 이벤트 핸들러를 제거한 후 on() 함수로 새로운 이벤트 핸들러를 등록합니다.
+             이렇게 하면 모달이 열릴 때마다 핸들러가 중복 등록되는 것을 방지할 수 있습니다. **/
 
             let newContent = $('#editCommentContent').val();
             let commentId =  $('#editCommentId').val();

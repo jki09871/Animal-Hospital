@@ -5,7 +5,7 @@
 <mapper namespace="Pet">
 
     <insert id="infoSave" parameterType="com.review.dto.animal.PetDTO">
-/**************************** 동물 등록 PetMapper.xml - infoSave *********************************/
+/**************************** 동물 등록 PetMapper.xml - Pet.infoSave *********************************/
 
         INSERT INTO Pet_Tbl
             (
@@ -26,11 +26,10 @@
               #{species}                /* 종 */
               )
 
-/**************************** 동물 등록 PetMapper.xml - infoSave *********************************/
     </insert>
 
     <select id="PetInfo" parameterType="String" resultType="com.review.dto.animal.PetDTO">
-/**************************** 동물 정보 PetMapper.xml - PetInfo *********************************/
+/**************************** 동물 정보 PetMapper.xml - Pet.PetInfo *********************************/
 
         SELECT
             OWNER_ID,                  /* 동물 주인 */
@@ -44,12 +43,11 @@
         WHERE
             OWNER_Id =  #{owner_Id}     /* 주인 아이디 */
 
-/**************************** 동물 정보 PetMapper.xml - PetInfo *********************************/
 
     </select>
 
     <select id="InfoSelect" parameterType="String" resultType="com.review.dto.animal.PetDTO">
-/**************************** 동물 정보 상세보기 PetMapper.xml - InfoSelect *********************************/
+/**************************** 동물 정보 상세보기 PetMapper.xml - Pet.InfoSelect *********************************/
 
         SELECT
             OWNER_ID,                  /* 동물 주인 */
@@ -63,11 +61,10 @@
         WHERE
             PET_ID =  #{pet_Id}
 
-/**************************** 동물 정보 상세보기 PetMapper.xml - InfoSelect *********************************/
     </select>
 
     <update id="InfoUpdate" parameterType="com.review.dto.animal.PetDTO">
-/**************************** 동물 정보 상세보기 PetMapper.xml - InfoUpdate *********************************/
+/**************************** 동물 정보 상세보기 PetMapper.xml - Pet.InfoUpdate *********************************/
 
         UPDATE
             PET_TBL
@@ -79,18 +76,15 @@
 
         WHERE PET_ID = #{pet_Id};
 
-/**************************** 동물 정보 상세보기 PetMapper.xml - InfoUpdate *********************************/
     </update>
 
     <delete id="InfoDelete">
-/**************************** 동물 정보 삭제 PetMapper.xml - InfoDelete *********************************/
+/**************************** 동물 정보 삭제 PetMapper.xml - Pet.InfoDelete *********************************/
 
         DELETE FROM
                    PET_TBL
                WHERE
                    PET_ID = #{pet_Id}
-
-/**************************** 동물 정보 삭제 PetMapper.xml - InfoDelete *********************************/
 
     </delete>
 </mapper>

@@ -13,6 +13,8 @@
             A.TITLE,                /** 문의 제목 **/
             A.CONTENT,              /** 문의 내용 **/
             A.REGDATE,              /** 문의 시간 **/
+            A.OWNER_ID,
+            A.PASSWORD,
             CASE
                 WHEN
                     CHAR_LENGTH(A.WRITER) = 3  /** writer 글자 수가 3개인지 확인 **/
@@ -20,8 +22,13 @@
                     CONCAT( LEFT(A.WRITER, 1), '*', RIGHT(A.WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
                 ELSE
                     A.WRITER /** 아니라면 그냥 전체 보여주기 **/
-                END AS
-                    HIDDENWRITER, /** 알리아스 **/
+                END AS HIDDENWRITER, /** 알리아스 **/
+            CASE
+                WHEN A.OWNER_ID is not null
+                    THEN 'Y' ELSE 'N' END OWNER_CH,
+            CASE
+                WHEN A.PASSWORD != ''
+                    THEN 'Y' ELSE 'N' END PASSWORD_CH,
             (
                 SELECT
                     COUNT(*)
@@ -33,13 +40,13 @@
         FROM
             INQUIRY_TBL A
         ORDER BY
-            A.INQUIRY_NUM DESC
+            A.INQUIRY_NUM DESC;
 
 
-/************************ 문의 게시판 리스트 InquiryMapper.xml - getList *****************************/
+
     </select>
     <insert id="insert">
-/************************ 문의 게시판 작성 InquiryMapper.xml - insert *****************************/
+/************************ 문의 게시판 작성 InquiryMapper.xml - inquiry.insert *****************************/
 
         INSERT INTO INQUIRY_TBL
         (
@@ -47,40 +54,23 @@
             CONTENT,                 /** 문의내용 **/
             WRITER,                  /** 작성자 **/
             OWNER_ID,                /** 소유자 ID **/
-            PASSWORD,                /** 비밀번호 **/
-            MEMBERCHECK,             /** 회원체크 **/
-            OPNEORPRIVATE            /** 공개여부 **/
+            PASSWORD                /** 비밀번호 **/
         )
         VALUES
-            (
+        (
             #{title},                /** 문의제목 **/
             #{content},              /** 문의내용 **/
             #{writer},               /** 작성자 **/
-            CASE
-                WHEN #{owner_Id} IS NOT NULL THEN #{owner_Id}
-                ELSE NULL
-                END,                     /** 소유자 ID **/
-            CASE
-                WHEN #{password} != '' THEN #{password}
-                ELSE NULL
-                END,                     /** 비밀번호 **/
-            CASE
-                WHEN #{owner_Id} IS NOT NULL THEN 'Y'
-                ELSE 'N'
-                END,                     /** 회원체크 **/
-            CASE
-                WHEN #{password} != '' THEN 'Y'
-                ELSE 'N'
-                END                      /** 공개여부 **/
-            );
+            #{owner_Id},             /** 소유자 ID **/
+            #{password}              /** 비밀번호 **/
+        )
 
 
-/************************ 문의 게시판 작성 InquiryMapper.xml - insert *****************************/
 </insert>
 
 
-    <select id="read" resultType="Map">
-/************************ 문의 게시판 상세보기 InquiryMapper.xml - read *****************************/
+    <select id="read" resultType="Map" parameterType="Map">
+/************************ 문의 게시판 상세보기 inquiry.read - inquiry.read *****************************/
 
         SELECT
             TITLE,                   /** 문의제목 **/
@@ -88,26 +78,30 @@
             WRITER,                  /** 작성자 **/
             OWNER_ID,                /** 소유자 ID **/
             PASSWORD,                /** 비밀번호 **/
-            MEMBERCHECK,             /** 회원체크 **/
-            OPNEORPRIVATE,            /** 공개여부 **/
             REGDATE,
             UPDATE_DATE,
             INQUIRY_NUM,
-            CASE
-                WHEN CHAR_LENGTH(WRITER) = 3 /** writer 글자 수가 3개인지 확인 **/
-                    THEN CONCAT( LEFT(WRITER, 1), '*', RIGHT(WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
-                    ELSE WRITER /** 아니라면 그냥 전체 보여주기 **/
-                    END AS HIDDENWRITER /** 알리아스 **/
+            OWNER_ID,
+        CASE
+            WHEN
+                CHAR_LENGTH(WRITER) = 3  /** writer 글자 수가 3개인지 확인 **/
+            THEN
+                CONCAT( LEFT(WRITER, 1), '*', RIGHT(WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
+            ELSE
+                WRITER /** 아니라면 그냥 전체 보여주기 **/
+        END AS HIDDENWRITER /** 알리아스 **/
         FROM
             INQUIRY_TBL
         WHERE
-            INQUIRY_NUM = #{inquiry_Num}        /** 문의고유번호 **/
+            INQUIRY_NUM = #{inquiry_num} /** 문의고유번호 **/
+            <if test="pw != '' and pw != null">
+                AND PASSWORD = #{pw}
+            </if>
 
-/************************ 문의 게시판 상세보기 InquiryMapper.xml - read *****************************/
     </select>
 
     <delete id="delete">
-/*********************** 문의 게시판 게시물 삭제 InquiryMapper.xml - delete *************************/
+/*********************** 문의 게시판 게시물 삭제 InquiryMapper.xml - inquiry.delete *************************/
 
         DELETE
         FROM
@@ -115,11 +109,10 @@
        WHERE
            INQUIRY_NUM=#{inquiry_Num}
 
-/*********************** 문의 게시판 게시물 삭제 InquiryMapper.xml - delete *************************/
     </delete>
 
     <update id="update">
-/*********************** 문의 게시판 게시물 수정 InquiryMapper.xml - update *************************/
+/*********************** 문의 게시판 게시물 수정 InquiryMapper.xml - inquiry.update *************************/
 
         UPDATE
             INQUIRY_TBL
@@ -131,6 +124,5 @@
         WHERE
             INQUIRY_NUM = #{inquiry_Num}       /** 문의고유번호 **/
 
-/*********************** 문의 게시판 게시물 수정 InquiryMapper.xml - update *************************/
     </update>
 </mapper>

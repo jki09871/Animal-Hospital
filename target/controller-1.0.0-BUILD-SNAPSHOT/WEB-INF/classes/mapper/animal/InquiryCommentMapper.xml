@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comment">
     <insert id="save" parameterType="com.review.dto.animal.InquiryCommentDTO">
-/************************ 문의 게시판 댓글 작성 InquiryCommentMapper.xml - save *****************************/
+/************************ 문의 게시판 댓글 작성 InquiryCommentMapper.xml - comment.save *****************************/
 
         INSERT INTO INQUIRY_COMMENT_TBL
             (
@@ -19,11 +19,10 @@
                 #{inquiry_num}
             )
 
-/************************ 문의 게시판 댓글 작성 InquiryCommentMapper.xml - save *****************************/
     </insert>
 
     <select id="findAll" parameterType="hashMap" resultType="com.review.dto.animal.InquiryCommentDTO">
-/************************ 문의 게시판 댓글 보기 InquiryCommentMapper.xml - findAll *****************************/
+/************************ 문의 게시판 댓글 보기 InquiryCommentMapper.xml - comment.findAll *****************************/
 
         SELECT
             ID,                       /** 댓글 고유번호 **/
@@ -38,11 +37,10 @@
         ORDER BY
             ID DESC
 
-/************************ 문의 게시판 댓글 보기 InquiryCommentMapper.xml - findAll *****************************/
     </select>
 
     <select id="commentIWrote" resultType="map" parameterType="hashMap">
-/************************ 내가 쓴 댓글 보기 InquiryCommentMapper.xml - commentIWrote *****************************/
+/************************ 내가 쓴 댓글 보기 InquiryCommentMapper.xml - comment.commentIWrote *****************************/
 
         SELECT
             B.TITLE AS title,                           /** 문의 제목 **/
@@ -58,11 +56,10 @@
         WHERE
             A.COMMENT_WRITER = #{ownerId}               /** 작성자 **/
 
-/************************ 내가 쓴 댓글 보기 InquiryCommentMapper.xml - commentIWrote *****************************/
     </select>
 
     <delete id="delete" parameterType="int">
-/************************ 문의 게시판 댓글 삭제 InquiryCommentMapper.xml - delete **************************/
+/************************ 문의 게시판 댓글 삭제 InquiryCommentMapper.xml - comment.delete **************************/
 
         DELETE
         FROM
@@ -70,11 +67,10 @@
         WHERE
             ID = #{id}             /** 댓글 고유번호 **/
 
-/************************ 문의 게시판 댓글 삭제 InquiryCommentMapper.xml - delete **************************/
     </delete>
 
     <update id="update">
-/************************ 문의 게시판 댓글 수정 InquiryCommentMapper.xml - update **************************/
+/************************ 문의 게시판 댓글 수정 InquiryCommentMapper.xml - comment.update **************************/
 
         UPDATE
             INQUIRY_COMMENT_TBL
@@ -83,6 +79,5 @@
         WHERE
             ID = #{id}
 
-/************************ 문의 게시판 댓글 수정 InquiryCommentMapper.xml - update **************************/
     </update>
 </mapper>

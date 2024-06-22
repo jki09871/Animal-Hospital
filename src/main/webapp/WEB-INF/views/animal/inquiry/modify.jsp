@@ -45,7 +45,12 @@
                 url = "/pet/inquiry/modify";
                 break;
             case 'R':
-                url = "/pet/inquiry/remove";
+                if (confirm("삭제하시겠습니까?")){
+                    alert("삭제되었습니다.")
+                    url = "/pet/inquiry/remove";
+                } else {
+                    return false;
+                }
                 break;
             default:
                 url = "/pet/inquiry/list";

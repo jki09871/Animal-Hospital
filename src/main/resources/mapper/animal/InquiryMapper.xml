@@ -15,12 +15,14 @@
             A.REGDATE,              /** 문의 시간 **/
             A.OWNER_ID,
             A.PASSWORD,
-            CONCAT
-            (
-                LEFT(A.WRITER, 4),
-                    REPEAT('*', LENGTH(A.WRITER) - 9),
-                RIGHT(A.WRITER, 4)
-            ) AS HIDDENWRITER,
+            CASE
+                WHEN
+                    CHAR_LENGTH(A.WRITER) = 3  /** writer 글자 수가 3개인지 확인 **/
+                THEN
+                    CONCAT( LEFT(A.WRITER, 1), '*', RIGHT(A.WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
+                ELSE
+                    A.WRITER /** 아니라면 그냥 전체 보여주기 **/
+                END AS HIDDENWRITER, /** 알리아스 **/
             CASE
                 WHEN A.OWNER_ID is not null
                     THEN 'Y' ELSE 'N' END OWNER_CH,
@@ -79,12 +81,15 @@
             REGDATE,
             UPDATE_DATE,
             INQUIRY_NUM,
-            CONCAT
-             (
-                LEFT(WRITER, 4),
-                REPEAT('*', LENGTH(WRITER) - 9),
-                RIGHT(WRITER, 4)
-            ) AS HIDDENWRITER
+            OWNER_ID,
+        CASE
+            WHEN
+                CHAR_LENGTH(WRITER) = 3  /** writer 글자 수가 3개인지 확인 **/
+            THEN
+                CONCAT( LEFT(WRITER, 1), '*', RIGHT(WRITER, 1) ) /** 3개라면 가운대 글자 * 처리 **/
+            ELSE
+                WRITER /** 아니라면 그냥 전체 보여주기 **/
+        END AS HIDDENWRITER /** 알리아스 **/
         FROM
             INQUIRY_TBL
         WHERE

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="manager">
     <select id="memberList" resultType="com.review.dto.animal.AnimalMemberDTO">
-/**************************** 가입된 회원 목록 RecordMapper.xml - memberList *********************************/
+/**************************** 가입된 회원 목록 RecordMapper.xml - manager.memberList *********************************/
 
         SELECT
             OWNER_ID,           /** 아이디 **/
@@ -17,11 +17,10 @@
         ORDER BY
             REGDATE DESC
 
-/**************************** 가입된 회원 목록 RecordMapper.xml - memberList *********************************/
     </select>
 
     <select id="memberData" resultType="com.review.dto.animal.AnimalMemberDTO">
-/**************************** 가입된 회원 데이터 RecordMapper.xml - memberData *********************************/
+/**************************** 가입된 회원 데이터 RecordMapper.xml - manager.memberData *********************************/
 
         SELECT
             OWNER_ID,           /** 아이디 **/
@@ -33,11 +32,10 @@
             OWNER_TBL
         WHERE OWNER_ID = #{owner_Id}
 
-/**************************** 가입된 회원 데이터 RecordMapper.xml - memberData *********************************/
     </select>
 
     <select id="petList" resultType="com.review.dto.animal.PetDTO">
-/**************************** 등록된 동물 목록 RecordMapper.xml - petList *********************************/
+/**************************** 등록된 동물 목록 RecordMapper.xml - manager.petList *********************************/
 
         SELECT
             PET_ID,             /** 마이크로칩 번호 **/
@@ -52,11 +50,10 @@
                 <include refid="PagingCriteria"></include>
             </if>
 
-/**************************** 등록된 동물 목록 RecordMapper.xml - petList *********************************/
     </select>
 
     <select id="petData" resultType="com.review.dto.animal.PetDTO">
-/**************************** 등록된 동물 데이터 RecordMapper.xml - petData *********************************/
+/**************************** 등록된 동물 데이터 RecordMapper.xml - manager.petData *********************************/
 
         SELECT
             PET_ID,             /** 마이크로칩 번호 **/
@@ -69,12 +66,11 @@
             PET_TBL
         WHERE PET_ID = #{pet_Id}
 
-/**************************** 등록된 동물 데이터 RecordMapper.xml - petData *********************************/
 
     </select>
 
     <select id="postTotal" resultType="int">
-/************************** 모달에 검색조건을 위한 것 RecordMapper.xml - postTotal *****************************/
+/************************** 모달에 검색조건을 위한 것 RecordMapper.xml - manager.postTotal *****************************/
 
         SELECT
             COUNT(*)
@@ -84,7 +80,6 @@
             <include refid="PagingCriteria"></include>
         </if>
 
-/************************** 모달에 검색조건을 위한 것 RecordMapper.xml - postTotal *****************************/
 
     </select>
 

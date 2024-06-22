@@ -140,7 +140,7 @@
 				<div class="col-md-6">
 					<form method="POST" name="nonMembersInquiry" class="nonMemberForm" action="/nonMembers/inquiry">
 						<div class="form-group">
-							<label for="Name">이름</label><a style="margin-left: 84%">비밀글<input type="checkbox" class="pw_check"></a>
+							<label for="Name">이름</label>
 							<input type="text" class="form-control" id="Name" name="name" placeholder="Name" autocomplete="off">
 						</div>
 						<div class="form-group">
@@ -159,8 +159,9 @@
 							<label for="content">문의 내용</label>
 							<textarea class="form-control" id="content" name="content" placeholder="content" autocomplete="off"></textarea>
 						</div>
-						<div>
-							<input type="text" name="password" id="password" placeholder="비밀번호를 입력해주세요" style="display: none">
+						<div class="form-group">
+							<label for="password">암호</label>
+							<input class="form-control" name="password" id="password" placeholder="비밀번호를 입력해주세요">
 						</div>
 						<div>
 							<button class="button-more-primary btn btn-lg" id="nonMembers" type="button" style="margin:10px;">Register Now</button>
@@ -498,14 +499,6 @@
 			});
 		});
 
-		$('.pw_check').on('change', function () {
-			if ($(this).is(':checked')) {
-				$('#password').css('display', 'flex'); /* 체크되면 암호창 보이기 */
-			} else {
-				$('#password').css('display', 'none'); /* 체크 해제 시 암호창 숨기기 */
-			}
-		})
-
 		$('#nonMembers').on('click', function () {
 			let name = $('#Name').val();
 			let email = $('#Email').val();
@@ -522,7 +515,7 @@
 			}
 
 			if (name != "" && email != "" && pone != "" && title != "" && content != "") {
-				writer.val(email);
+				writer.val(name);
 				console.log(writer);
 				$('.nonMemberForm').submit();
 			}else {

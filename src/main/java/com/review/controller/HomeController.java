@@ -5,9 +5,13 @@ import java.text.DateFormat;
 import java.util.*;
 
 
+import com.review.service.animal.PopUPService;
+import lombok.Setter;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Handddddddddddddles requests for the application home page.
@@ -24,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class HomeController {
 
+	@Setter(onMethod_ = @Autowired)
+	private PopUPService popUPService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -31,22 +39,15 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping("/")
-	public String home(Locale locale, Model model, HttpServletRequest request) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String home(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
+
+
 
 		model.addAttribute("success", request.getParameter("success"));
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
 
-		// db 에서 메인 배너 조회.
-/*		 ..
-		 model.addAttribute("bannerList", service.selectBannerList());
 
-		**/
+
+
 		List<String> bannerList = new ArrayList<>();
 		bannerList.add("gallery1.jpg");
 		bannerList.add("gallery2.jpg");
@@ -60,10 +61,15 @@ public class HomeController {
 
 		model.addAttribute("bannerList", bannerList);
 
+
 		return "home";
 	}
 
-	final private String fileRoot = "C:\\img\\hong\\";
+
+	@Value("${file.upload.path}")
+	private String fileRoot;
+
+	//final private String fileRoot = "C:\\img\\hong\\";
 	@PostMapping("/ajaxUpload")
 		public @ResponseBody Map<String, Object> SummerNoteImageFile(@RequestParam("file") MultipartFile file){
 
@@ -79,14 +85,15 @@ public class HomeController {
 		String saveFileName = UUID.randomUUID()+extension;
 		System.out.println("saveFileName(랜덤 이름을 부여 하고 확장자 붙힘) = " + saveFileName);
 
-		File targetFile = new File(fileRoot+saveFileName);
+		String folder = "bbs";
+		File targetFile = new File(fileRoot+"\\"+folder+"\\"+saveFileName);
 		System.out.println("targetFile(경로 + 랜덤이름) = " + targetFile);
 
 		try {
 			InputStream fileStream = file.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);
 			//jsonObject.put("url", "/hong/"+saveFileName);
-			jsonObject.put("url", "/common/img/thumNail.do?fName="+saveFileName);
+			jsonObject.put("url", "/common/img?fName="+saveFileName+"&folder="+folder);
 			jsonObject.put("responseCode", "success");
 
 
@@ -107,7 +114,7 @@ public class HomeController {
 	 * @throws Exception
 	 */
 	// TODO: MICHAEL 2022-06-21 공통 썸네일
-	@GetMapping("/common/img/thumNail.do")
+	@GetMapping("/common/img")
 	public String thumNail(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 
@@ -115,14 +122,16 @@ public class HomeController {
 		// http://localhost:8090/common/img/thumNail.do?fName=bac4fa26-ccf7-4834-a498-a7dcaf4ab16b.png
 
 		String fName = req.getParameter("fName");
+		String folder = req.getParameter("folder");
 
 		System.out.println("fName = " + fName);
+		System.out.println("folder = " + folder);
 
 
 		try {
 
 
-			String pullFath = fileRoot + "/" + fName;
+			String pullFath = fileRoot +"\\"+ folder + "\\" + fName;
 			System.out.println("pullFath = " + pullFath);
 
 			int idx = pullFath.lastIndexOf("/");
@@ -174,5 +183,7 @@ public class HomeController {
 		return "file";
 
 	}
+
+
 
 }

@@ -5,13 +5,13 @@
   Time: 오후 7:06
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
@@ -49,7 +49,7 @@
 
 <!-- Navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container" style=" width: 1230px;">
+  <div class="container" <%--style=" width: 1800px;"--%>>
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -65,10 +65,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#home" class="smooth-scroll">ABOUT</a></li>
-        <li><a href="#pets" class="smooth-scroll">OUR PETS</a></li>
-        <li><a href="#stories" class="smooth-scroll">STORIES</a></li>
+<%--        <li><a href="#home" class="smooth-scroll">ABOUT</a></li>--%>
         <li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
+<%--        <li><a href="#contact" class="smooth-scroll">NONMEMBER INQUIRY</a></li>--%>
         <li><a href="/animal/reviewList" class="smooth-scroll">REVIEW</a></li>
         <li><a href="/pet/inquiry/list" class="smooth-scroll">INQUIRY</a></li>
         <c:if test="${sessionScope.loginId == null}">
@@ -79,14 +78,18 @@
           <li><a href="/animal/logout" class="smooth-scroll">LOGOUT</a></li>
         </c:if>
         <c:if test="${sessionScope.loginId.grade == 99}">
-          <form class="navbar-form navbar-right">
-              <select class="form-control" onchange='location.href = this.value;'>
-                <option value=''>------</option>
-                <option value='/pet/prescription/list'>처방전</option>
-                <option value='/subscribers/member'>회원가입자 목록</option>
-                <option value='/registered/animal'>등록된 동물</option>
-              </select>
-          </form>
+          <li><a href="/pet/prescription/list" class="smooth-scroll">PRESCRIPTION</a></li>
+          <li><a href="/subscribers/member" class="smooth-scroll">MEMBER LIST</a></li>
+          <li><a href="/registered/animal" class="smooth-scroll">ANIMAL LIST</a></li>
+
+          <%--          <form class="navbar-form navbar-right">--%>
+<%--              <select class="form-control" onchange='location.href = this.value;'>--%>
+<%--                <option value=''>------</option>--%>
+<%--                <option value='/pet/prescription/list'>처방전</option>--%>
+<%--                <option value='/subscribers/member'>회원가입자 목록</option>--%>
+<%--                <option value='/registered/animal'>등록된 동물</option>--%>
+<%--              </select>--%>
+<%--          </form>--%>
         </c:if>
         <c:if test="${sessionScope.loginId.owner_Id != null}">
           <li>

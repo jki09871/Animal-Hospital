@@ -67,6 +67,7 @@
                     </tr>
                 </table>
                 <form method="get" action="/animal/correction/" id="readForm">
+                    <input type="hidden" name="folder_nm" id="folder_nm" value="file" />
                     <input type="hidden" name="reviewNum" value="<c:out value='${animal.reviewNum}'/>">
                     <input type="hidden" name="pageNum" value="<c:out value='${criteria.pageNum}'/>">
                     <input type="hidden" name="amount" value="<c:out value='${criteria.amount}'/>">
@@ -123,6 +124,8 @@
         form.attr('action', url);
         form.submit();
     }
+
+
 
     function fn_fileDown(fileNo){
         var formObj = $("#readForm");

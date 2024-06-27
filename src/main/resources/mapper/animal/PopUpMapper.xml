@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="popUp">
+
+    <select id="popUpList" resultType="com.review.dto.animal.PopUpDTO">
+/**************************** 팝업 리스트 PopUpMapper.xml - popUp.popUpList *********************************/
+        SELECT
+            ID,
+            TITLE,
+            CONTENT,
+            LINK_URL,
+            IMAGE_FULL_URL,
+            START_DATE,
+            END_DATE,
+            STATUS,
+            FOLDER_NM,
+            STORED_FILE_NAME
+        FROM
+            POPUP
+    </select>
+
+    <select id="read" resultType="com.review.dto.animal.PopUpDTO">
+        /**************************** 팝업 리스트 PopUpMapper.xml - popUp.popUpList *********************************/
+        SELECT
+            ID,
+            TITLE,
+            CONTENT,
+            IMAGE_FULL_URL,
+            LINK_URL,
+            START_DATE,
+            END_DATE,
+            STATUS,
+            FOLDER_NM,
+            STORED_FILE_NAME
+        FROM
+            POPUP
+        WHERE
+            ID = #{id}
+    </select>
+
+    <insert id="popUpRegister" parameterType="com.review.dto.animal.PopUpDTO" useGeneratedKeys="true" keyProperty="id">
+/**************************** 팝업 작성 PopUpMapper.xml - popUp.popUpRegister *********************************/
+
+        INSERT INTO popup
+        (
+            TITLE,
+            CONTENT,
+            IMAGE_FULL_URL ,
+            LINK_URL,
+            START_DATE,
+            END_DATE,
+            STATUS,
+            FOLDER_NM,
+            STORED_FILE_NAME
+        )
+        values
+        (
+            #{title},
+            #{content},
+            #{image_full_url},
+            #{link_url},
+            #{start_date},
+            #{end_date},
+            #{status},
+            #{folder_nm},
+            #{stored_file_name}
+        )
+    </insert>
+
+    <update id="modify" parameterType="com.review.dto.animal.PopUpDTO">
+/**************************** 팝업 수정 PopUpMapper.xml - popUp.modify *********************************/
+
+        UPDATE
+            POPUP
+        SET
+            TITLE = #{title},
+            CONTENT = #{content},
+            LINK_URL = #{link_url},
+            START_DATE =#{start_date},
+            END_DATE = #{end_date},
+            STATUS = #{status},
+            STORED_FILE_NAME = #{stored_file_name},
+            IMAGE_FULL_URL = #{image_full_url}
+        WHERE
+            ID = #{id}
+    </update>
+
+    <select id="maxNumber" resultType="int">
+/**************************** 팝업 작성시 id + 1 PopUpMapper.xml - popUp.maxNumber *********************************/
+
+        SELECT (MAX(ID)) +1  FROM POPUP
+    </select>
+
+</mapper>

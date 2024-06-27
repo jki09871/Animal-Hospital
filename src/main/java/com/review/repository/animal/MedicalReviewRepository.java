@@ -51,20 +51,20 @@ public class MedicalReviewRepository {
     }
 
     public void insertFile(Map<String, Object> map) {
-        sql.insert("review.insertFile", map);
+        sql.insert("file.insertFile", map);
     }
 
     public List<Map<String, Object>> selectFileList(int reviewNum){
-        return sql.selectList("review.selectFileList", reviewNum);
+        return sql.selectList("file.selectFileList", reviewNum);
     }
 
     public Map<String, Object> selectFileInfo(Map<String, Object> map){
-        return sql.selectOne("review.selectFileInfo", map);
+        return sql.selectOne("file.selectFileInfo", map);
     }
 
 
     public void removeFile(int fileNo) {
-        sql.delete("review.fileRemove", fileNo);
+        sql.delete("file.fileRemove", fileNo);
     }
 
     public List<AnimalReviewDTO> myWriting(String ownerId){

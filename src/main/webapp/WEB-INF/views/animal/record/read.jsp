@@ -1,8 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> <%--데이피커 필요 --%>
 
 <style>
     table {

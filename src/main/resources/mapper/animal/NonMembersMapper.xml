@@ -8,9 +8,9 @@
 /*********************** 비회원 등록 NonMembersMapper.xml - nonMembers.register *************************/
         INSERT INTO NONMEMBERS_TBL
         (
-         NAME,
-         EMAIL,
-         PHONENUMBER
+         NAME,                  /* 이름 */
+         EMAIL,                 /* 이메일 */
+         PHONENUMBER            /* 핸드폰 번호 */
         )
         VALUES
         (

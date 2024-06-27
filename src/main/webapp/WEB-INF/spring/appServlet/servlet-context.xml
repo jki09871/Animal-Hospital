@@ -10,6 +10,14 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
+
+	<!-- 프로퍼티스 로드 -->
+	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="location" value="classpath:/globals.properties"/>
+		<beans:property name="fileEncoding" value="UTF-8" />
+	</beans:bean>
+
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 

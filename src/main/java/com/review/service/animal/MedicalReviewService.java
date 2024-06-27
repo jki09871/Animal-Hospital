@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -23,8 +24,9 @@ import java.util.Map;
 @Log4j
 public class MedicalReviewService {
 
-    static final String filePath = "c:\\mp\\file\\";
-
+//    static final String filePath = "c:\\mp\\file\\";
+    @Value("${file.upload.path}")
+    private String filePath;
     @Setter(onMethod_ = @Autowired)
     private MedicalReviewRepository repository;
 
@@ -85,7 +87,10 @@ public class MedicalReviewService {
         return repository.selectFileInfo(map);
     }
 
-    public void deleteFile(int fileNo, int reviewNum){
+    public void deleteFile(int fileNo, int reviewNum, String folder_nm){
+
+        System.out.println("#########@@@@@@ folder_nm = " + folder_nm);
+
 
         Map<String, Object> fileNum = new HashMap<>();
         fileNum.put("FILE_NO", fileNo);
@@ -94,7 +99,7 @@ public class MedicalReviewService {
         Map<String, Object> fileNum2 = repository.selectFileInfo(fileNum);
 
         if (fileNum2.get("STORED_FILE_NAME") != null){
-            File file = new File(filePath + fileNum2.get("STORED_FILE_NAME"));
+            File file = new File(filePath + "\\" + folder_nm + "\\" + fileNum2.get("STORED_FILE_NAME"));
 
             if (file.delete()){
                 System.out.println(fileNo);

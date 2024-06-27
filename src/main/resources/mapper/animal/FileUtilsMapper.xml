@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+
+    <insert id="insertFile" parameterType="hashMap">
+        /**************************** 리뷰 게시물 파일 추가 FileUtilsMapper.xml - file.insertFile *********************************/
+        insert into mp_file
+        (
+            FILE_NO,               /* 파일 번호*/
+            BNO,                   /* 게시물 번호*/
+            ORG_FILE_NAME,         /* 진짜 파일 이름*/
+            STORED_FILE_NAME,      /* 랜덤 파일 이름*/
+            FILE_SIZE,             /* 파일 사이즈*/
+            REGDATE,               /* 파일 올린 시간*/
+            DEL_GB,                /* 파일 삭제 시간*/
+            FOLDER_NM              /* 폴더 이름 */
+        )VALUES
+            (
+                #{FILE_NO},            /* 파일 번호 */
+                #{reviewNum},          /* 보드 BNO */
+                #{ORG_FILE_NAME},      /* 진짜 파일 이름 */
+                #{STORED_FILE_NAME},   /* 랜덤 파일 이름 */
+                #{FILE_SIZE},          /* 파일 사이즈 */
+                SYSDATE(),             /* 파일 올린 시간 */
+                'N',                   /* 파일 삭제 시간 */
+                #{FOLDER_NM}           /* 폴더 이름 */
+            )
+    </insert>
+
+    <select id="selectFileList" parameterType="int" resultType="hashMap">
+        /**************************** 리뷰 게시물 파일 정보  FileUtilsMapper.xml - file.selectFileList *********************************/
+
+        SELECT
+            FILE_NO,                                /* 파일 번호 */
+            ORG_FILE_NAME,                          /* 진짜 파일 이름 */
+            ROUND(FILE_SIZE/1024,1) AS FILE_SIZE,   /* 파일 사이즈 */
+            STORED_FILE_NAME,                       /* 랜덤 파일 이름 */
+            BNO,                                     /* 게시물 번호 */
+            FOLDER_NM
+        FROM
+            MP_FILE
+        WHERE
+            BNO = #{reviewNum}
+          AND
+            DEL_GB = 'N'
+        ORDER BY
+            FILE_NO ASC
+
+    </select>
+
+    <select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
+        /**************************** 리뷰 게시물 파일 정보 FileUtisMapper.xml - file.selectFileInfo *********************************/
+
+        SELECT
+            STORED_FILE_NAME,
+            ORG_FILE_NAME,
+            FOLDER_NM
+        FROM
+            MP_FILE
+        WHERE
+            FILE_NO = #{FILE_NO}
+
+    </select>
+
+    <delete id="fileRemove">
+        /**************************** 리뷰 게시물 파일 삭제 - file.fileRemove *********************************/
+
+        DELETE
+        FROM
+            MP_FILE
+        WHERE
+            FILE_NO = #{FILE_NO}        /** 파일 번호 **/
+
+    </delete>
+
+    <update id="updateFile" parameterType="hashMap">
+        /**************************** 리뷰 게시물 파일 수정 - file.updateFile *********************************/
+
+        UPDATE
+            MP_FILE
+        SET
+            DEL_GB = 'Y'
+        WHERE
+            FILE_NO = #{FILE_NO}        /** 파일 번호 **/
+
+    </update>
+
+</mapper>

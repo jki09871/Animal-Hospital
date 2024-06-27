@@ -38,6 +38,7 @@
 
 <script>
 
+
     $('#summernote').summernote({
         height: 300,
         width: 1000,

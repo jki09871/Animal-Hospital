@@ -94,6 +94,10 @@
                             alert(data);
                         }
                     }
+                    ,
+                    error : function(request, status, error) {
+                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    }
                 });
             } else {
                 alert("비밀번호를 입력해주세요");

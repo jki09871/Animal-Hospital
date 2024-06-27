@@ -3,7 +3,8 @@
 
 
 <!--한국어  달력 쓰려면 추가 로드-->
-<%--<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>--%>
+<script src="resources/js/plugin/datepicker/bootstrap-datepicker.ko.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> <%--데이피커 필요 --%>
 <title>Title</title>
     <style>
         /* 폼을 가운데로 정렬하고, 스타일링 */

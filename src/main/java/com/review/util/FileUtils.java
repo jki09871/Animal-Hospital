@@ -1,11 +1,16 @@
 package com.review.util;
 
+import com.review.controller.HomeController;
 import com.review.dto.animal.AnimalReviewDTO;
 import com.review.repository.BoardRepository;
 import com.review.repository.animal.MedicalReviewRepository;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -16,15 +21,27 @@ import java.util.*;
 
 @Log4j
 @Component
+@PropertySource("classpath:globals.properties")
 public class FileUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
+
 
     @Setter(onMethod_ = @Autowired)
     private MedicalReviewRepository repository;
-    private static final String filePath = "C:\\mp\\file\\"; //파일이 저장될 위치
+
+
+    @Value("${file.upload.path}")
+    private String filePath;
+    // private static final String filePath = "C:\\mp\\file\\"; //파일이 저장될 위치
 
     public List<Map<String, Object>> parseInsertFileInfo(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest) throws IOException {
 
         Iterator<String> iterator = mpRequest.getFileNames();
+
+        String folderNm = (mpRequest.getParameter("folder_nm") == null || "".equals(mpRequest.getParameter("folder_nm")))
+                ?  "file" : mpRequest.getParameter("folder_nm");
+        System.out.println("folderNm = " + folderNm);
 
         MultipartFile multipartFile = null;
         String originalFileName = null;
@@ -36,7 +53,7 @@ public class FileUtils {
 
         int reviewNum = reviewDTO.getReviewNum();
 
-        File file = new File(filePath);
+        File file = new File(filePath+"\\"+folderNm );
 
         if (file.exists() == false){
             file.mkdirs();
@@ -55,12 +72,16 @@ public class FileUtils {
                 storedFileName = getRandomString() + originalFileExtension;
                 System.out.println("## 3랜덤으로 아이디 부여(고유 해야됨) = " + storedFileName);
 
-                file = new File(filePath + storedFileName);
+                file = new File(filePath+"\\"+folderNm +"\\"+ storedFileName);
                 System.out.println("## 4저장 경로에 고유에 이름으로 저장 = " + file);
+
+                String fullUrl = filePath +"\\" + folderNm +"\\"+ storedFileName;
 
                 multipartFile.transferTo(file);
                 listMap = new HashMap<>();
                 listMap.put("reviewNum", reviewNum);
+                listMap.put("FOLDER_NM", folderNm);
+                listMap.put("FULL_URL", fullUrl); /* 팝업 저장용으로 그냥 만들어 놓음*/
                 listMap.put("ORG_FILE_NAME", originalFileName);
                 listMap.put("STORED_FILE_NAME", storedFileName);
                 listMap.put("FILE_SIZE", multipartFile.getSize());

@@ -13,8 +13,8 @@
             A.TITLE,                /** 문의 제목 **/
             A.CONTENT,              /** 문의 내용 **/
             A.REGDATE,              /** 문의 시간 **/
-            A.OWNER_ID,
-            A.PASSWORD,
+            A.OWNER_ID,             /** 주인 아이디 */
+            A.PASSWORD,             /** 비밀번호 **/
             CASE
                 WHEN
                     CHAR_LENGTH(A.WRITER) = 3  /** writer 글자 수가 3개인지 확인 **/
@@ -54,7 +54,7 @@
             CONTENT,                 /** 문의내용 **/
             WRITER,                  /** 작성자 **/
             OWNER_ID,                /** 소유자 ID **/
-            PASSWORD                /** 비밀번호 **/
+            PASSWORD                 /** 비밀번호 **/
         )
         VALUES
         (
@@ -78,10 +78,10 @@
             WRITER,                  /** 작성자 **/
             OWNER_ID,                /** 소유자 ID **/
             PASSWORD,                /** 비밀번호 **/
-            REGDATE,
-            UPDATE_DATE,
-            INQUIRY_NUM,
-            OWNER_ID,
+            REGDATE,                 /** 등록일 **/
+            UPDATE_DATE,             /** 업데이트 날짜 **/
+            INQUIRY_NUM,             /** 문의 번호 **/
+            OWNER_ID,                /** 주인 아이디 **/
         CASE
             WHEN
                 CHAR_LENGTH(WRITER) = 3  /** writer 글자 수가 3개인지 확인 **/

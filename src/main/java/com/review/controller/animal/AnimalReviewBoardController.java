@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,8 @@ public class AnimalReviewBoardController {
     @Setter(onMethod_ = @Autowired)
     private MedicalReviewService service;
 
+    @Value("${file.upload.path}")
+    private String filePath;
 
     /************************************************  게시물 리스트  ************************************************/
     @RequestMapping("/animal/reviewList")
@@ -132,13 +135,17 @@ public class AnimalReviewBoardController {
 
     /************************************************  파일 다운  ************************************************/
     @RequestMapping("/animal/fileDown")
+    @ResponseBody
     public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws IOException {
         Map<String, Object> resultMap = service.selectFileInfo(map);
         String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
         String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
 
+        String folderNm =  resultMap.get("folder_nm") == null || "".equals(resultMap.get("folder_nm")) ? (String) map.get("folder_nm")
+                : (String) resultMap.get("folder_nm");
+
         // 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
-        byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C:\\mp\\file\\"+storedFileName));
+        byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File(filePath+"\\"+folderNm+"\\"+storedFileName));
 
         response.setContentType("application/octet-stream");
         response.setContentLength(fileByte.length);
@@ -153,9 +160,17 @@ public class AnimalReviewBoardController {
     /************************************************  파일 삭제  ************************************************/
     @RequestMapping("/animal/fileRemove")
     @ResponseBody
-    public void deleteFile(@RequestParam("fileNo") int fileNo, @RequestParam("reviewNum") int reviewNum){
+    public void deleteFile(@RequestParam("fileNo") int fileNo,
+                           @RequestParam("reviewNum") int reviewNum,
+                           HttpServletRequest request){
+
+        String folder_nm = (request.getParameter("folder_nm") == null || "".equals(request.getParameter("folder_nm")))
+                ?  "file" : request.getParameter("folder_nm");
+
+        System.out.println("######### folder_nm = " + folder_nm);
+
         System.out.println("삭제한 FILE_NO은 " + reviewNum + "번 입니다.");
-        service.deleteFile(fileNo, reviewNum);
+        service.deleteFile(fileNo, reviewNum, folder_nm);
     }
     /**********************************************************************************************************/
 }

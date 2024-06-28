@@ -3,22 +3,53 @@
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=AjZmS5FC4Sn4r9ZDKaeZ"></script>
 
 <style>
-	.close-btn  {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		font-size: 20px;
-		cursor: pointer;
-		color: #aaa;
+
+	.modal-header{
+		text-align: center;
+		height: 70px;
 	}
-	.stopWatching {
-		position: absolute;
-		bottom: 10px;
-		right: 10px;
-		font-size: 15px;
-		cursor: pointer;
-		color: #aaa;
+
+	.image-container {
+		position: relative;
+		text-align: center;
 	}
+
+	.image-container img {
+		display: block;
+		width: 550px;
+		height: 500px;
+		margin: auto;
+	}
+
+	.overlay-text {
+		position: absolute;
+		top: -10px; /* 조정 필요 */
+		left: 50px; /* 조정 필요 */
+		right: 50px; /* 조정 필요 */
+		background-color: rgba(0, 0, 0, 0.0);
+		color: black;
+		padding: 20px;
+		text-align: center;
+		font-size: 18px; /* 텍스트의 크기를 원하는 크기로 조정합니다 */
+		line-height: 1.5; /* 텍스트 줄 간격을 조정할 수도 있습니다 */
+	}
+
+	/*.close-btn  {*/
+	/*	position: absolute;*/
+	/*	top: 10px;*/
+	/*	right: 10px;*/
+	/*	font-size: 20px;*/
+	/*	cursor: pointer;*/
+	/*	color: #aaa;*/
+	/*}*/
+	/*.stopWatching {*/
+	/*	position: absolute;*/
+	/*	bottom: 10px;*/
+	/*	right: 10px;*/
+	/*	font-size: 15px;*/
+	/*	cursor: pointer;*/
+	/*	color: #aaa;*/
+	/*}*/
 	.modal{
 		position:absolute;
 		display:none;
@@ -55,34 +86,6 @@
 		padding-left: 550px;
 	}
 
-	.modal2 {
-		position:absolute;
-		display:flex;
-
-		justify-content: center;
-		top:0;
-		left:0;
-
-		width:100%;
-		height:100%;
-
-	}
-
-	.modal_body2 {
-		position:absolute;
-		top:50%;
-
-
-		padding:30px;
-
-		text-align: center;
-
-		background-color: rgb(255,255,255);
-		border-radius:10px;
-		box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);
-
-		transform:translateY(-50%);
-	}
 
 </style>
 
@@ -509,44 +512,39 @@
 		<button type="button" class="pwChangeNo btn btn-primary">나중에 변경</button>
 	</div>
 </div>
-
-
-<div class="modal" id="myModal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">공지</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true" id="close">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<h2>건강검진 소개</h2>
-				<p><strong>기본 검진:</strong> 50,000원</p>
-				<p>- 신체 검사</p>
-				<p>- 혈액 검사</p>
-				<p><strong>종합 검진:</strong> 100,000원</p>
-				<p>- 기본 검진 포함</p>
-				<p>- 초음파 검사</p>
-				<p>- X-ray 검사</p>
-				<p><strong>프리미엄 검진:</strong> 150,000원</p>
-				<p>- 종합 검진 포함</p>
-				<p>- MRI 검사</p>
-				<p>- 종합 건강 상담</p>
-				<br>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id = "modal-today-close">오늘하루 안 보기</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<c:forEach var="imgFile" items="${list}">
+	<c:if test="${imgFile.valid_time == 'Y'}">
+		<c:if test="${imgFile.status == 'ACTIVE'}">
+		<div class="modal" id="myModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true" id="close">&times;</span>
+						</button>
+						<h2 class="modal-title">이벤트 안내</h2>
+					</div>
+					<div class="modal-body">
+						<div class="image-container">
+							<img src="/common/img?fName=${imgFile.stored_file_name}&folder=${imgFile.folder_nm}">
+							<div class="overlay-text">
+								${imgFile.content}
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="modal-today-close">오늘하루 안 보기</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
+		</c:if>
+	</c:if>
+</c:forEach>
+
 <script>
 	$(document).ready(function (){
-
-/*
-		$("#myModal").css('display', 'flex');
 
 		function setCookie(name, value, expiredays){
 			var today = new Date();
@@ -587,7 +585,6 @@
 		} else {
 			$('#myModal').css('display', 'flex');
 		}
-*/
 
 		let pwChangeTime = "${sessionScope.loginId.change_at}";
 		<c:if test="${not empty success}">

@@ -66,7 +66,7 @@
           </div>
           <div>
             <label>내용</label>
-            <input type="text" id="content" name="content" value="${popUp.content}" autocomplete="off" required>
+            <textarea type="text" id="summernote" name="content" value="${popUp.content}" autocomplete="off" required>${popUp.content}</textarea>
           </div>
           <div>
             <label>링크URL</label>
@@ -94,18 +94,18 @@
           </div>
           <div class="form-group">
             <div>
+              <input type="file" name="file" class="file">
               <div id="fileIndex">
                 <c:forEach var="file" items="${file}" varStatus="var">
                   <div>
                     <a href="#" id="fileName" onclick="fn_fileDown('${file.FILE_NO}', '${file.FOLDER_NM}'); return false;" class="${file.FILE_NO}">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
-                    <button type="button" class="fileRemove" onclick="fnDel('${file.BNO}', '${file.FILE_NO}', this)">삭제</button>
+                    <button type="button" class="fileDel_btn" onclick="fnDel('${file.BNO}', '${file.FILE_NO}', this)">삭제</button>
                   </div>
                 </c:forEach>
               </div>
             </div>
           </div>
         </form>
-        <button class="fileAdd btn-danger" type="button">파일추가</button>
         <button type="button" class="btn-danger popUpRegister">수정</button>
         <button type="button" class="btn-danger cancel">취소</button>
       </div>
@@ -114,6 +114,20 @@
 </div>
 
 <script>
+
+  function toggleFileAddButton() {
+    if ($("#fileIndex").children().length > 0) {
+      $(".file").css('display', 'none');
+    } else {
+      $(".file").css('display', 'flex');
+
+    }
+  }
+
+  $(document).ready(function() {
+    toggleFileAddButton();
+  });
+
   $('.popUpRegister').on('click', function() {
     $('.form').submit();
   });
@@ -148,11 +162,14 @@
   $('.fileAdd').on('click', function () {
     $("#fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
             + "<button type='button' class='fileDel_btn'>삭제</button></div>");
+    $(".file").css('display', 'none');
 
   });
 
   $(document).on("click",".fileDel_btn", function(){
     $(this).parent().remove();
+    $(".file").css('display', 'flex');
+
 
   });
 
@@ -163,6 +180,42 @@
     $("#FOLDER_NM").attr("value", folder);
     formObj.attr("action", "/animal/fileDown");
     formObj.submit();
+  }
+
+  $('#summernote').summernote({
+    height: 300,
+    width: 1000,
+    minHeight: null,
+    maxHeight: null,
+    focus: true,
+    lang: "ko-KR",
+    callbacks: {
+      onImageUpload : function(files) {
+        for (var i = files.length -1; i>=0; i--){
+          sendFile(files[i],this);
+        }
+      }
+    }
+  });
+
+
+
+  function sendFile(file, editor){
+    let formData = new FormData();
+    formData.append("file", file);
+    console.log(file);
+    $.ajax({
+      data : formData,
+      type : "POST",
+      url : "/ajaxUpload",
+      contentType : false,
+      processData : false,
+
+      success : function (data){
+        console.log(data);
+        $(editor).summernote("insertImage", data.url);
+      }
+    });
   }
 </script>
 

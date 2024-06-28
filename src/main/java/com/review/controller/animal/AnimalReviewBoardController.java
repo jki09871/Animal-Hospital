@@ -3,7 +3,7 @@ package com.review.controller.animal;
 import com.review.dto.animal.AnimalReviewDTO;
 import com.review.paging.PageMakerDTO;
 import com.review.paging.PagingCriteria;
-import com.review.service.animal.MedicalReviewService;
+import com.review.service.animal.AnimalMedicalReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class AnimalReviewBoardController {
 
     @Setter(onMethod_ = @Autowired)
-    private MedicalReviewService service;
+    private AnimalMedicalReviewService service;
 
     @Value("${file.upload.path}")
     private String filePath;

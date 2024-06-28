@@ -1,9 +1,7 @@
 package com.review.util;
 
-import com.review.controller.HomeController;
 import com.review.dto.animal.AnimalReviewDTO;
-import com.review.repository.BoardRepository;
-import com.review.repository.animal.MedicalReviewRepository;
+import com.review.repository.animal.AnimalMedicalReviewRepository;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.slf4j.Logger;
@@ -28,7 +26,7 @@ public class FileUtils {
 
 
     @Setter(onMethod_ = @Autowired)
-    private MedicalReviewRepository repository;
+    private AnimalMedicalReviewRepository repository;
 
 
     @Value("${file.upload.path}")

@@ -1,9 +1,7 @@
 package com.review.util;
 
-import com.review.controller.animal.AnimalController;
-import com.review.controller.animal.AnimalOwnerController;
 import com.review.dto.animal.AnimalMemberDTO;
-import com.review.service.animal.OwnerService;
+import com.review.service.animal.AnimalOwnerService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,7 +16,7 @@ import java.security.SecureRandom;
 public class MailSenderUtils {
 
     @Setter(onMethod_ = @Autowired)
-    private OwnerService os;
+    private AnimalOwnerService os;
     @Setter(onMethod_ = @Autowired)
     private JavaMailSender mailSender;
 

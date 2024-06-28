@@ -89,7 +89,7 @@
               <div>비밀번호 5회 틀려서 아이디가 잠겼습니다. 관리자에게 문의 해주세요</div>
             </c:when>
           </c:choose>
-          <input type="hidden" name="toURL" value="${param.toURL}">
+          <input type="hidden" id="toURL" name="toURL" value="${param.toURL}">
           <label><input type="checkbox" name="rememberId"${empty cookie.owner_Id.value ? "":"checked" }> 아이디 기억</label>
           <label><input type="checkbox" name="useCookie"> 로그인유지</label>
           <input type="submit" value="로그인">
@@ -106,6 +106,12 @@
 
 
 <script>
+  $(document).ready(function (){
+    if ($('#toURL').val() != ''){
+      alert("로그인 후 이용해주세요");
+    }
+
+  })
   let idFail = "${fail}";
   if (idFail != ""){
     alert(idFail);

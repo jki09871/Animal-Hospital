@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adoption">
+    
+    <insert id="register" parameterType="com.review.dto.animal.AnimalAdoptionDTO">
+/**************************** 입양 등록 AnimalAdoptionMapper.xml - adoption.register *********************************/
+
+        INSERT INTO ADOPTION_TBL
+        (
+            ANIAML_NAME,
+            AGE,
+            SPECIES,
+            GENDR,
+            INOCULATION,
+            ILIKE,
+            DISLIKE,
+            NEUTERING,
+            SIGNIFICANT
+        )
+        VALUES
+        (
+            #{aniaml_name},
+            #{age},
+            #{species},
+            #{gendr},
+            #{inoculation},
+            #{ilike},
+            #{dislike},
+            #{neutering},
+            #{significant},
+        )
+    </insert>
+</mapper>

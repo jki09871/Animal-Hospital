@@ -1,7 +1,7 @@
 package com.review.interceptor;
 
 import com.review.dto.animal.AnimalMemberDTO;
-import com.review.service.animal.OwnerService;
+import com.review.service.animal.AnimalOwnerService;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 public class RememberMeInterceptor extends HandlerInterceptorAdapter {
 
     @Setter(onMethod_ = @Autowired)
-    private OwnerService ownerService;
+    private AnimalOwnerService ownerService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)throws Exception{

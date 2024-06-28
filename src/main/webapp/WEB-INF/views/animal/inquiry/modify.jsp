@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label for="writer">작성자</label>
-                        <input type="text" class="form-control" id="writer" name="writer" value="<c:out value='${board.HIDDENWRITER}'/>">
+                        <input type="text" class="form-control" id="writer" name="writer" value="<c:out value='${board.HIDDENWRITER}'/>" readonly>
                     </div>
                     <div class="btn-toolbar">
                         <button type="button" data-oper="modify" onclick="fnInquiry('M');" class="btn btn-success mr-2">등록</button>
@@ -37,6 +37,7 @@
     </div>
 </div>
 <script>
+
     function fnInquiry(se) {
         let from = $('#modifyForm');
         let url = '';

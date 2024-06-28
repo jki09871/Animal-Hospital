@@ -1,11 +1,11 @@
 package com.review.controller;
 
 import java.io.*;
-import java.text.DateFormat;
 import java.util.*;
 
 
-import com.review.service.animal.PopUPService;
+import com.review.dto.animal.AnimalPopUpDTO;
+import com.review.service.animal.AnimalPopUpService;
 import lombok.Setter;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -19,10 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Handddddddddddddles requests for the application home page.
@@ -31,7 +29,7 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
 
 	@Setter(onMethod_ = @Autowired)
-	private PopUPService popUPService;
+	private AnimalPopUpService popUPService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -41,6 +39,9 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
 
+		List<AnimalPopUpDTO> list = popUPService.popUpList();
+		System.out.println("list = " + list);
+		model.addAttribute("list", list);
 
 
 		model.addAttribute("success", request.getParameter("success"));

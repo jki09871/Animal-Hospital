@@ -1,7 +1,7 @@
 package com.review.controller.animal;
 
-import com.review.dto.animal.PetDTO;
-import com.review.service.animal.PetService;
+import com.review.dto.animal.AnimalDTO;
+import com.review.service.animal.AnimalPetService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -23,7 +23,7 @@ import java.util.List;
 public class AnimalController {
 
     @Setter(onMethod_ = @Autowired)
-    private PetService ps;
+    private AnimalPetService ps;
 
     @RequestMapping("/msg")
     public String msgForward(HttpServletRequest request){
@@ -46,7 +46,7 @@ public class AnimalController {
     }
 
     @PostMapping("/pet/info/write")
-    public String petInfoWrite(PetDTO petDTO, RedirectAttributes rttr){
+    public String petInfoWrite(AnimalDTO petDTO, RedirectAttributes rttr){
 
         log.info(petDTO);
         ps.petInfoSave(petDTO);
@@ -59,7 +59,7 @@ public class AnimalController {
 
     @GetMapping("/pet/info")
     public String petInfo(@RequestParam ("ownerId") String ownerId , Model model, HttpServletRequest request){
-        List<PetDTO> petInfo = ps.getPetInfo(ownerId);
+        List<AnimalDTO> petInfo = ps.getPetInfo(ownerId);
         System.out.println("petInfo = " + petInfo);
 
         if (!petInfo.isEmpty()) {
@@ -87,7 +87,7 @@ public class AnimalController {
     }
 
     @PostMapping("/pet/info/modify")
-    public String petInfoUpdate(PetDTO petDTO, RedirectAttributes rttr, @RequestParam("owner_Id") String owner_Id){
+    public String petInfoUpdate(AnimalDTO petDTO, RedirectAttributes rttr, @RequestParam("owner_Id") String owner_Id){
         System.out.println("petDTO = " + petDTO);
             ps.petInfoUpdate(petDTO);
 

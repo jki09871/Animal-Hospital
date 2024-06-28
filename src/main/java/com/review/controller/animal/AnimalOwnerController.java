@@ -1,8 +1,8 @@
 package com.review.controller.animal;
 
 import com.review.dto.animal.AnimalMemberDTO;
-import com.review.service.animal.MedicalReviewService;
-import com.review.service.animal.OwnerService;
+import com.review.service.animal.AnimalMedicalReviewService;
+import com.review.service.animal.AnimalOwnerService;
 import com.review.util.MailSenderUtils;
 import com.review.util.Pbkdf2PasswordEncoderUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,10 +35,10 @@ public class AnimalOwnerController {
     @Setter(onMethod_ = @Autowired)
     private JavaMailSender mailSender;
     @Setter(onMethod_ = @Autowired)
-    private OwnerService os;
+    private AnimalOwnerService os;
 
     @Setter(onMethod_ = @Autowired)
-    private MedicalReviewService mrs;
+    private AnimalMedicalReviewService mrs;
 
     @Setter(onMethod_ = @Autowired)
     private MailSenderUtils mailSenderUtils;
@@ -172,6 +171,7 @@ public class AnimalOwnerController {
             log.info("로그인 성공");
             toURL = toURL == null || toURL.equals("") ? "/" : toURL;
             return "redirect:" + toURL;
+
         } else {
             log.info("로그인 실패");
             return "/animal/owner/login";

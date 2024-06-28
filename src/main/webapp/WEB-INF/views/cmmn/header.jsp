@@ -78,18 +78,19 @@
           <li><a href="/animal/logout" class="smooth-scroll">LOGOUT</a></li>
         </c:if>
         <c:if test="${sessionScope.loginId.grade == 99}">
-          <li><a href="/pet/prescription/list" class="smooth-scroll">PRESCRIPTION</a></li>
-          <li><a href="/subscribers/member" class="smooth-scroll">MEMBER LIST</a></li>
-          <li><a href="/registered/animal" class="smooth-scroll">ANIMAL LIST</a></li>
+<%--          <li><a href="/pet/prescription/list" class="smooth-scroll">PRESCRIPTION</a></li>--%>
+<%--          <li><a href="/subscribers/member" class="smooth-scroll">MEMBER LIST</a></li>--%>
+<%--          <li><a href="/registered/animal" class="smooth-scroll">ANIMAL LIST</a></li>--%>
 
-          <%--          <form class="navbar-form navbar-right">--%>
-<%--              <select class="form-control" onchange='location.href = this.value;'>--%>
-<%--                <option value=''>------</option>--%>
-<%--                <option value='/pet/prescription/list'>처방전</option>--%>
-<%--                <option value='/subscribers/member'>회원가입자 목록</option>--%>
-<%--                <option value='/registered/animal'>등록된 동물</option>--%>
-<%--              </select>--%>
-<%--          </form>--%>
+                   <li> <form class="navbar-form navbar-right">
+              <select class="form-control" onchange='location.href = this.value;'>
+                <option value=''>------</option>
+                <option value='/pet/prescription/list'>처방전</option>
+                <option value='/subscribers/member'>회원가입자 목록</option>
+                <option value='/registered/animal'>등록된 동물</option>
+                <option value='/popUp/list'>팝업 등록</option>
+              </select>
+          </form></li>
         </c:if>
         <c:if test="${sessionScope.loginId.owner_Id != null}">
           <li>

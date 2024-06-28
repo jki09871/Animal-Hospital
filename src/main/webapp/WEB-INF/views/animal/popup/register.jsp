@@ -64,7 +64,7 @@
                     </div>
                     <div>
                         <label>내용</label>
-                        <input type="text" id="content" name="content" autocomplete="off" required>
+                        <textarea type="text" id="summernote" name="content" autocomplete="off" required></textarea>
                     </div>
                     <div>
                         <label>링크URL</label>
@@ -92,7 +92,7 @@
                         </div></br>
                     </div>
                 </form>
-                <button class="fileAdd btn-danger" type="button">파일추가</button>
+<%--                <button class="fileAdd btn-danger" type="button">파일추가</button>--%>
                 <button type="button" class="btn-danger popUpRegister">작성</button>
                 <button type="button" class="btn-danger cancel">취소</button>
             </div>
@@ -101,6 +101,8 @@
 </div>
 
 <script>
+
+
     $('.popUpRegister').on('click', function() {
         $('.form').submit();
     });
@@ -108,16 +110,52 @@
         self.location.href = '/popUp/list';
     });
 
-    var fileIndex = 1;
-    $('.fileAdd').on('click', function () {
-        $(".fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
-            + "<button type='button' class='fileDel_btn'>삭제</button></div>");
-
+    $('#summernote').summernote({
+        height: 300,
+        width: 1000,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        lang: "ko-KR",
+        callbacks: {
+            onImageUpload : function(files) {
+                for (var i = files.length -1; i>=0; i--){
+                    sendFile(files[i],this);
+                }
+            }
+        }
     });
-    $(document).on("click",".fileDel_btn", function(){
-        $(this).parent().remove();
 
-    });
+
+
+    function sendFile(file, editor){
+        let formData = new FormData();
+        formData.append("file", file);
+        console.log(file);
+        $.ajax({
+            data : formData,
+            type : "POST",
+            url : "/ajaxUpload",
+            contentType : false,
+            processData : false,
+
+            success : function (data){
+                console.log(data);
+                $(editor).summernote("insertImage", data.url);
+            }
+        });
+    }
+
+    // var fileIndex = 1;
+    // $('.fileAdd').on('click', function () { 다중 파일
+    //     $(".fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
+    //         + "<button type='button' class='fileDel_btn'>삭제</button></div>");
+    //
+    // });
+    // $(document).on("click",".fileDel_btn", function(){
+    //     $(this).parent().remove();
+    //
+    // });
 </script>
 
 

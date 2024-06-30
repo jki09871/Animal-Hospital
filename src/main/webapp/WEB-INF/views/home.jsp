@@ -1,8 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="/resources/jquery-3.7.1.js"></script>
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=AjZmS5FC4Sn4r9ZDKaeZ"></script>
+<%--<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=AjZmS5FC4Sn4r9ZDKaeZ"></script>--%>
 
 <style>
+	.img {
+		width: 100%; /* 부모 요소의 너비에 맞춰서 이미지를 조정 */
+		height: 250px; /* 고정된 높이 */
+		object-fit: cover; /* 이미지의 비율을 유지하면서 크기 조정, 잘라내기 */
+	}
 
 	.modal-header{
 		text-align: center;
@@ -177,7 +181,7 @@
 <div class="container-contact">
 	<div class="container">
 		<div class="page-header" id="contact">
-			<h2 class="nonMember">NonMember Inquiry</h2>
+			<h2 class="nonMember">비회원 문의</h2>
 			<br/>
 			<div class="row">
 				<div class="col-md-6">
@@ -376,22 +380,25 @@
 <div class="container-gallery">
 	<div class="container">
 		<div class="page-header" id="gallery">
-			<h1 class="text-center text-primary">ADOPT A PET</h1>
+			<h1 class="text-center text-primary">반려동물 입양하기</h1>
 		</div>
 
 
 		<c:set var="cnt" value="1" />
 
-		<c:forEach var="result" items="${bannerList}" varStatus="st">
+		<c:forEach var="list" items="${adoptionList}" varStatus="st">
 
 			<c:if test="${cnt == 1}">
 				<div class="row">
 			</c:if>
-				<div class="col-md-4">
-					<div class="well">
-						<img class="img-responsive" src="/resources/animal-adoption/images/gallery/${result}" />
-					</div>
+			<div class="col-md-4">
+				<div class="well">
+					<a href="/adoption/animal/read?adoption_id=${list.adoption_id}">
+						<img class="img"  src="/common/img?fName=${list.stored_file_name}&folder=${list.folder_nm}"/>
+						<p style="text-align: center; font-size: large" >${list.species} 분양</p>
+					</a>
 				</div>
+			</div>
 
 			<c:set var="cnt" value="${cnt + 1}" />
 
@@ -643,15 +650,15 @@
 			}
 		});
 
-		var mapOptions = {
-			center: new naver.maps.LatLng(37.3595704, 127.105399),
-			zoom: 10
-		}
-
-		var map = new naver.maps.Map('map', {
-			center: new naver.maps.LatLng(37.3595704, 127.105399),
-			zoom: 10
-		});
+		// var mapOptions = {
+		// 	center: new naver.maps.LatLng(37.3595704, 127.105399),
+		// 	zoom: 10
+		// }
+		//
+		// var map = new naver.maps.Map('map', {
+		// 	center: new naver.maps.LatLng(37.3595704, 127.105399),
+		// 	zoom: 10
+		// });
 
 	});
 

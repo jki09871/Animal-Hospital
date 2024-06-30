@@ -18,7 +18,7 @@ public class AnimalMemberDTO {
  **/
 
     private String owner_Id;
-    private String name;
+    private String owner_nm;
     private String password;
     private String email;
     private String phoneNumber;

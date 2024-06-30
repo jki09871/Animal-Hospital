@@ -1,5 +1,7 @@
 package com.review.util;
 
+import com.review.dto.animal.AnimalAdoptionDTO;
+import com.review.dto.animal.AnimalPopUpDTO;
 import com.review.dto.animal.AnimalReviewDTO;
 import com.review.repository.animal.AnimalMedicalReviewRepository;
 import lombok.Setter;
@@ -33,7 +35,7 @@ public class FileUtils {
     private String filePath;
     // private static final String filePath = "C:\\mp\\file\\"; //파일이 저장될 위치
 
-    public List<Map<String, Object>> parseInsertFileInfo(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest) throws IOException {
+    public List<Map<String, Object>> parseInsertFileInfo(Object object, MultipartHttpServletRequest mpRequest) throws IOException {
 
         Iterator<String> iterator = mpRequest.getFileNames();
 
@@ -49,7 +51,27 @@ public class FileUtils {
         List<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> listMap = null;
 
-        int reviewNum = reviewDTO.getReviewNum();
+        int all_number; // reviewNum 변수를 선언만 하고 초기화하지 않음
+
+        if (object instanceof AnimalReviewDTO) {
+
+            AnimalReviewDTO reviewDTO = (AnimalReviewDTO) object;
+            all_number = reviewDTO.getReviewNum();
+
+        } else if (object instanceof AnimalPopUpDTO) {
+
+            AnimalPopUpDTO animalPopUpDTO = (AnimalPopUpDTO) object;
+            all_number = animalPopUpDTO.getId();
+
+        }else if (object instanceof AnimalAdoptionDTO) {
+
+            AnimalAdoptionDTO adoptionDTO = (AnimalAdoptionDTO) object;
+            all_number = adoptionDTO.getAdoption_id();
+
+        } else {
+            throw new IllegalArgumentException("Unsupported DTO type");
+        }
+
 
         File file = new File(filePath+"\\"+folderNm );
 
@@ -77,7 +99,7 @@ public class FileUtils {
 
                 multipartFile.transferTo(file);
                 listMap = new HashMap<>();
-                listMap.put("reviewNum", reviewNum);
+                listMap.put("ALL_NUMBER", all_number);
                 listMap.put("FOLDER_NM", folderNm);
                 listMap.put("FULL_URL", fullUrl); /* 팝업 저장용으로 그냥 만들어 놓음*/
                 listMap.put("ORG_FILE_NAME", originalFileName);

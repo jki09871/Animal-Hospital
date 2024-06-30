@@ -8,6 +8,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
 @Component
 @RequiredArgsConstructor
 public class AnimalAdoptionRepository {
@@ -17,5 +20,26 @@ public class AnimalAdoptionRepository {
 
     public void adoptionAnimalRegister(AnimalAdoptionDTO adoptionDTO) {
         sql.insert("adoption.register", adoptionDTO);
+    }
+
+    public List<AnimalAdoptionDTO> adoptionAnimalList(){
+        return sql.selectList("adoption.animalList");
+    }
+
+    public AnimalAdoptionDTO adoptionAnimalRead(AnimalAdoptionDTO adoptionDTO) {
+        return sql.selectOne("adoption.animalRead", adoptionDTO);
+    }
+
+    public void adoptionAnimalInformationModify(AnimalAdoptionDTO adoptionDTO) {
+        sql.update("adoption.informationModify", adoptionDTO);
+
+    }
+
+    public int adoptionIdMaxCount(){
+        return sql.selectOne("adoption.idMaxCount");
+    }
+
+    public void insertFile(Map<String, Object> map) {
+        sql.insert("file.insertFile", map);
     }
 }

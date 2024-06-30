@@ -40,23 +40,24 @@
         /** BoardMapper - insertFile */
         insert into mp_file
         (
-            file_no               /* 파일 번호*/
+        file_no               /* 파일 번호*/
         , bno                   /* 보드 bno*/
         , org_file_name         /* 진짜 파일 이름*/
         , stored_file_name      /* 랜덤 파일 이름*/
         , file_size             /* 파일 사이즈*/
         , regdate               /* 파일 올린 시간*/
         , del_gb                /* 파일 삭제 시간*/
-        )VALUES
-            (
-                #{FILE_NO}            /* 파일 번호*/
-            , #{reviewNum}                /* 보드 BNO*/
-            , #{ORG_FILE_NAME}      /* 진짜 파일 이름*/
-            , #{STORED_FILE_NAME}   /* 랜덤 파일 이름*/
-            , #{FILE_SIZE}          /* 파일 사이즈*/
-            , SYSDATE()             /* 파일 올린 시간*/
-            , 'N'                   /* 파일 삭제 시간*/
-            )
+        )
+        VALUES
+        (
+          #{FILE_NO}            /* 파일 번호*/
+        , #{reviewNum}                /* 보드 BNO*/
+        , #{ORG_FILE_NAME}      /* 진짜 파일 이름*/
+        , #{STORED_FILE_NAME}   /* 랜덤 파일 이름*/
+        , #{FILE_SIZE}          /* 파일 사이즈*/
+        , SYSDATE()             /* 파일 올린 시간*/
+        , 'N'                   /* 파일 삭제 시간*/
+        )
     </insert>
 
     <select id="selectFileList" parameterType="int" resultType="hashMap">

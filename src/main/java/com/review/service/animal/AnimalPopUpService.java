@@ -28,8 +28,8 @@ public class AnimalPopUpService {
     @Setter(onMethod_ = @Autowired)
     private FileUtils fileUtils;
 
-    @Setter(onMethod_ = @Autowired)
-    private AnimalMedicalReviewRepository repository;
+//    @Setter(onMethod_ = @Autowired)
+//    private AnimalMedicalReviewRepository repository;
 
     public List<AnimalPopUpDTO> popUpList(){
         return popUp.popUpList();
@@ -62,19 +62,13 @@ public class AnimalPopUpService {
     }
 
     private void handleFileUpload(AnimalPopUpDTO popUpDTO, MultipartHttpServletRequest fileRequest) throws IOException {
-        AnimalReviewDTO reviewDTO = new AnimalReviewDTO();
-        if (popUpDTO.getId() > 0) {
 
-            reviewDTO.setReviewNum(popUpDTO.getId());
 
-        } else if (popUpDTO.getId() == 0){
+        int maxValue = popUp.idMaxCount();
+        popUpDTO.setId(maxValue);
 
-            int i = popUp.idMaxCount();
-            popUpDTO.setId(i);
-            reviewDTO.setReviewNum(popUpDTO.getId());
-        }
         if (fileRequest != null && !fileRequest.equals("")) {
-            List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(reviewDTO, fileRequest);
+            List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(popUpDTO, fileRequest);
             int size = list.size();
             for (int i = 0; i < size; i++) {
                 Object stored_file_name = list.get(i).get("STORED_FILE_NAME");

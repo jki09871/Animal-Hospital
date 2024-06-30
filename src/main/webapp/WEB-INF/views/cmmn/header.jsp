@@ -14,32 +14,31 @@
 
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
+<%--    <script src="/resources/jquery-3.7.1.js"></script>--%>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
   <title> Animal Adoption - Bootstrap Theme</title>
 
-  <!-- CSS includes -->
+    <%--  CSS includes --%>
 
-  <link href="/resources/animal-adoption/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet" type="text/css">
-  <link href="/resources/animal-adoption/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="/resources/animal-adoption/css/theme.css" rel="stylesheet">
- <%-- <link rel="stylesheet" type="text/css" href="/resources/animal-adoption/css/all.min.css" />
+   <link href="/resources/animal-adoption/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet" type="text/css">
+   <link href="/resources/animal-adoption/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+   <link href="/resources/animal-adoption/css/theme.css" rel="stylesheet">
+  <%-- <link rel="stylesheet" type="text/css" href="/resources/animal-adoption/css/all.min.css" />
 
-  <link id="themecss" rel="stylesheet" type="text/css" href="/resources/animal-adoption/css/light-bootstrap-all.min" />--%>
+   <link id="themecss" rel="stylesheet" type="text/css" href="/resources/animal-adoption/css/light-bootstrap-all.min" />--%>
 
 
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
+<%-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+ WARNING: Respond.js doesn't work if you view the page via file://
+[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <script src="/resources/jquery-3.7.1.js"></script>
+  <![endif]--%>
   <%-- 썸원 --%>
   <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
@@ -47,10 +46,10 @@
 <body>
 
 
-<!-- Navbar -->
+<%--Navbar --%>
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container" <%--style=" width: 1800px;"--%>>
-    <!-- Brand and toggle get grouped for better mobile display -->
+<%--Brand and toggle get grouped for better mobile display --%>
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
@@ -62,12 +61,9 @@
         <img class="logo" src="/resources/animal-adoption/images/logo.png" alt="Animal Adoption Bootstrap Theme" style="margin-top:5px;" />
       </a>
     </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-<%--        <li><a href="#home" class="smooth-scroll">ABOUT</a></li>--%>
         <li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
-<%--        <li><a href="#contact" class="smooth-scroll">NONMEMBER INQUIRY</a></li>--%>
         <li><a href="/animal/reviewList" class="smooth-scroll">REVIEW</a></li>
         <li><a href="/pet/inquiry/list" class="smooth-scroll">INQUIRY</a></li>
         <c:if test="${sessionScope.loginId == null}">
@@ -78,19 +74,19 @@
           <li><a href="/animal/logout" class="smooth-scroll">LOGOUT</a></li>
         </c:if>
         <c:if test="${sessionScope.loginId.grade == 99}">
-<%--          <li><a href="/pet/prescription/list" class="smooth-scroll">PRESCRIPTION</a></li>--%>
-<%--          <li><a href="/subscribers/member" class="smooth-scroll">MEMBER LIST</a></li>--%>
-<%--          <li><a href="/registered/animal" class="smooth-scroll">ANIMAL LIST</a></li>--%>
+          <li><a href="/pet/prescription/list" class="smooth-scroll">PRESCRIPTION</a></li>
+          <li><a href="/subscribers/member" class="smooth-scroll">MEMBER LIST</a></li>
+          <li><a href="/registered/animal" class="smooth-scroll">ANIMAL LIST</a></li>
 
-                   <li> <form class="navbar-form navbar-right">
-              <select class="form-control" onchange='location.href = this.value;'>
-                <option value=''>------</option>
-                <option value='/pet/prescription/list'>처방전</option>
-                <option value='/subscribers/member'>회원가입자 목록</option>
-                <option value='/registered/animal'>등록된 동물</option>
-                <option value='/popUp/list'>팝업 등록</option>
-              </select>
-          </form></li>
+<%--                   <li> <form class="navbar-form navbar-right">--%>
+<%--              <select class="form-control" onchange='location.href = this.value;'>--%>
+<%--                <option value=''>------</option>--%>
+<%--                <option value='/pet/prescription/list'>처방전</option>--%>
+<%--                <option value='/subscribers/member'>회원가입자 목록</option>--%>
+<%--                <option value='/registered/animal'>등록된 동물</option>--%>
+<%--                <option value='/popUp/list'>팝업 등록</option>--%>
+<%--              </select>--%>
+<%--          </form></li>--%>
         </c:if>
         <c:if test="${sessionScope.loginId.owner_Id != null}">
           <li>
@@ -98,7 +94,7 @@
           </li>
         </c:if>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div><%-- /.navbar-collapse --%>
+  </div><%-- /.container-fluid --%>
 </nav>
 

@@ -4,7 +4,10 @@ import java.io.*;
 import java.util.*;
 
 
+import com.review.controller.animal.AnimalAdoptionController;
+import com.review.dto.animal.AnimalAdoptionDTO;
 import com.review.dto.animal.AnimalPopUpDTO;
+import com.review.service.animal.AnimalAdoptionService;
 import com.review.service.animal.AnimalPopUpService;
 import lombok.Setter;
 import org.apache.commons.io.FileUtils;
@@ -30,6 +33,9 @@ public class HomeController {
 
 	@Setter(onMethod_ = @Autowired)
 	private AnimalPopUpService popUPService;
+
+	@Setter(onMethod_ = @Autowired)
+	AnimalAdoptionService adoptionService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -48,19 +54,8 @@ public class HomeController {
 
 
 
-
-		List<String> bannerList = new ArrayList<>();
-		bannerList.add("gallery1.jpg");
-		bannerList.add("gallery2.jpg");
-		bannerList.add("gallery3.jpg");
-		bannerList.add("gallery4.jpg");
-		bannerList.add("gallery5.jpg");
-		bannerList.add("gallery6.jpg");
-		bannerList.add("gallery7.jpg");
-		bannerList.add("gallery8.jpg");
-		bannerList.add("gallery9.jpg");
-
-		model.addAttribute("bannerList", bannerList);
+		List<AnimalAdoptionDTO> adoptionAnimalList = adoptionService.adoptionAnimalList();
+		model.addAttribute("adoptionList", adoptionAnimalList);
 
 
 		return "home";
@@ -117,6 +112,7 @@ public class HomeController {
 	// TODO: MICHAEL 2022-06-21 공통 썸네일
 	@GetMapping("/common/img")
 	public String thumNail(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
 
 
 		FileInputStream in = null;

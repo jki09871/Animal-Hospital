@@ -12,4 +12,5 @@ public class AnimalDTO {
     private String age;
     private String significant;
     private String phoneNumber;
+
 }

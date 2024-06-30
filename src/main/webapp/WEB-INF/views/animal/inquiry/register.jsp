@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <label for="writer">작성자</label>
-                            <input type="text" class="form-control" id="writer" name="writer" value="${sessionScope.loginId.name}" readonly>
+                            <input type="text" class="form-control" id="writer" name="writer" value="${sessionScope.loginId.owner_nm}" readonly>
                         </div>
                         <div class="btn-group">
                             <button type="button" class="btn btn-success submit">등록</button>

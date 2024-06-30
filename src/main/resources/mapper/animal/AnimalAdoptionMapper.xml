@@ -9,27 +9,106 @@
 
         INSERT INTO ADOPTION_TBL
         (
-            ANIAML_NAME,
-            AGE,
-            SPECIES,
-            GENDR,
-            INOCULATION,
-            ILIKE,
-            DISLIKE,
-            NEUTERING,
-            SIGNIFICANT
+            ANIMAL_NAME,                /** 입양동물 이름 **/
+            AGE,                        /** 입양동물 나이 **/
+            SPECIES,                    /** 입양동물 종 **/
+            GENDER,                     /** 입양동물 성별 **/
+            INOCULATION,                /** 입양동물 접종현황 **/
+            ILIKE,                      /** 입양동물 좋아하는 것 **/
+            DISLIKE,                    /** 입양동물 싫어하는 것 **/
+            NEUTERING,                  /** 입양동물 중성화 **/
+            STORED_FILE_NAME,           /** 저장된 이미지 이름 **/
+            FOLDER_NM,                  /** 이미지가 저장된 폴더 이름 **/
+            CONTENT,                    /** 입양동물 내용 **/
+            ADOPTIONSTATUS              /** 입양 가능 여부 **/
+
         )
         VALUES
         (
-            #{aniaml_name},
+            #{animal_name},
             #{age},
             #{species},
-            #{gendr},
+            #{gender},
             #{inoculation},
-            #{ilike},
-            #{dislike},
+            #{iLike},
+            #{disLike},
             #{neutering},
-            #{significant},
+            #{stored_file_name},
+            #{folder_nm},
+            #{content},
+            #{adoptionStatus}
         )
     </insert>
+
+    <select id="animalList" resultType="com.review.dto.animal.AnimalAdoptionDTO">
+/**************************** 입양 동물 목록 AnimalAdoptionMapper.xml - adoption.animalList *********************************/
+
+        SELECT
+            ADOPTION_ID,                /** 입동물 게시판 번호 **/
+            ANIMAL_NAME,                /** 입양동물 이름 **/
+            AGE,                        /** 입양동물 나이 **/
+            SPECIES,                    /** 입양동물 종 **/
+            GENDER,                     /** 입양동물 성별 **/
+            INOCULATION,                /** 입양동물 접종현황 **/
+            ILIKE,                      /** 입양동물 좋아하는 것 **/
+            DISLIKE,                    /** 입양동물 싫어하는 것 **/
+            NEUTERING,                  /** 입양동물 중성화 **/
+            STORED_FILE_NAME,           /** 저장된 이미지 이름 **/
+            FOLDER_NM,                  /** 이미지가 저장된 폴더 이름 **/
+            CONTENT,                    /** 입양동물 내용 **/
+            ADOPTIONSTATUS              /** 입양 가능 여부 **/
+        FROM
+            ADOPTION_TBL
+        ORDER BY
+            ADOPTION_ID DESC
+    </select>
+
+    <select id="animalRead" parameterType="com.review.dto.animal.AnimalAdoptionDTO" resultType="com.review.dto.animal.AnimalAdoptionDTO">
+/**************************** 입양 동물 상세정보 AnimalAdoptionMapper.xml - adoption.animalRead *********************************/
+
+        SELECT
+            ADOPTION_ID,                /** 입동물 게시판 번호 **/
+            ANIMAL_NAME,                /** 입양동물 이름 **/
+            AGE,                        /** 입양동물 나이 **/
+            SPECIES,                    /** 입양동물 종 **/
+            GENDER,                     /** 입양동물 성별 **/
+            INOCULATION,                /** 입양동물 접종현황 **/
+            ILIKE,                      /** 입양동물 좋아하는 것 **/
+            DISLIKE,                    /** 입양동물 싫어하는 것 **/
+            NEUTERING,                  /** 입양동물 중성화 **/
+            STORED_FILE_NAME,           /** 저장된 이미지 이름 **/
+            FOLDER_NM,                  /** 이미지가 저장된 폴더 이름 **/
+            CONTENT,                    /** 입양동물 내용 **/
+            ADOPTIONSTATUS              /** 입양 가능 여부 **/
+        FROM
+            ADOPTION_TBL
+        WHERE
+            ADOPTION_ID = #{adoption_id}
+    </select>
+
+    <update id="informationModify" parameterType="com.review.dto.animal.AnimalAdoptionDTO">
+/**************************** 입양 동물 정보 수정 AnimalAdoptionMapper.xml - adoption.informationModify *********************************/
+
+        UPDATE ADOPTION_TBL
+        SET
+            ANIMAL_NAME = #{animal_name},           /** 입양동물 이름 **/
+            AGE = #{age},                           /** 입양동물 나이 **/
+            SPECIES = #{species},                   /** 입양동물 종 **/
+            GENDER = #{gender},                     /** 입양동물 성별 **/
+            INOCULATION = #{inoculation},           /** 입양동물 접종현황 **/
+            ILIKE = #{iLike},                       /** 입양동물 좋아하는 것 **/
+            DISLIKE = #{disLike},                   /** 입양동물 싫어하는 것 **/
+            NEUTERING = #{neutering},               /** 입양동물 중성화 **/
+            CONTENT = #{content},                   /** 입양동물 내용 **/
+            ADOPTIONSTATUS = #{adoptionStatus}      /** 입양 가능 여부 **/
+        WHERE
+            ADOPTION_ID = #{adoption_id}
+    </update>
+
+    <select id="idMaxCount" resultType="int">
+/**************************** 입양 게시판 총게시물 수 + 1 AnimalAdoptionMapper.xml - adoption.idMaxCount *********************************/
+
+        SELECT MAX(ADOPTION_ID) + 1
+        FROM ADOPTION_TBL
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.review.controller.animal;
 
+import com.review.dto.animal.AnimalMemberDTO;
 import com.review.dto.animal.AnimalPopUpDTO;
 import com.review.service.animal.AnimalMedicalReviewService;
 import com.review.service.animal.AnimalPopUpService;
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -28,17 +31,32 @@ public class AnimalPopUpController {
     @Setter(onMethod_ = @Autowired)
     private AnimalMedicalReviewService reviewService;
     @GetMapping("/popUp/list")
-    public String PopUpList(Model model){
-        List<AnimalPopUpDTO> popUpDto = popUp.popUpList();
+    public String PopUpList(Model model, HttpServletRequest request, RedirectAttributes rttr) {
 
-        model.addAttribute("list", popUpDto);
-        return "/animal/popup/popUpList";
+        HttpSession session = request.getSession();
+        AnimalMemberDTO loginId = (AnimalMemberDTO) session.getAttribute("loginId");
+
+        if (loginId.getGrade() == 99) {
+            List<AnimalPopUpDTO> popUpDto = popUp.popUpList();
+            model.addAttribute("list", popUpDto);
+            return "/animal/popup/popUpList";
+        } else {
+            rttr.addAttribute("grade", "권한이 없습니다.");
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/popup/register")
-    public String registerPopUp(){
+    public String registerPopUp(HttpServletRequest request, RedirectAttributes rttr){
+        HttpSession session = request.getSession();
+        AnimalMemberDTO loginId = (AnimalMemberDTO) session.getAttribute("loginId");
 
-        return "/animal/popup/register";
+        if (loginId.getGrade() == 99) {
+            return "/animal/popup/register";
+        }else {
+            rttr.addAttribute("grade", "권한이 없습니다.");
+            return "redirect:/";
+        }
     }
 
     @RequestMapping(value = "/popup/register/post", method = RequestMethod.POST)
@@ -56,16 +74,26 @@ public class AnimalPopUpController {
     }
 
     @GetMapping("/popup/modify")
-    public String popUpModify(AnimalPopUpDTO popUpDto, Model model, HttpServletRequest request){
-        List<Map<String,Object>> fileList = reviewService.selectFileList(popUpDto.getId());
-        AnimalPopUpDTO dbDto = popUp.popUpRead(popUpDto);
+    public String popUpModify(AnimalPopUpDTO popUpDto, Model model, HttpServletRequest request,
+                              RedirectAttributes rttr){
 
-        System.out.println("fileList = " + fileList);
+        HttpSession session = request.getSession();
+        AnimalMemberDTO loginId = (AnimalMemberDTO) session.getAttribute("loginId");
 
+        if (loginId.getGrade() == 99) {
 
-        model.addAttribute("file", fileList);
-        model.addAttribute("popUp", dbDto);
-        return "/animal/popup/popUpModify";
+            List<Map<String, Object>> fileList = reviewService.selectFileList(popUpDto.getId());
+            AnimalPopUpDTO dbDto = popUp.popUpRead(popUpDto);
+
+            System.out.println("fileList = " + fileList);
+
+            model.addAttribute("file", fileList);
+            model.addAttribute("popUp", dbDto);
+            return "/animal/popup/popUpModify";
+        }else {
+            rttr.addAttribute("grade", "권한이 없습니다.");
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/popup/modify")

@@ -100,6 +100,19 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>내가 쓴 문의</th>
+                        <td>
+                            <c:choose>
+                                <c:when test="${animal.inquiry > 0}">
+                                    <a href="/animal/inquiryIWrote?ownerId=${animal.owner_Id}">${animal.inquiry}개</a>
+                                </c:when>
+                                <c:otherwise>
+                                    -
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>내가 쓴 댓글</th>
                         <td>
                             <c:choose>

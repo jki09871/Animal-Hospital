@@ -1,6 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="/WEB-INF/views/cmmn/header.jsp"%>
+<%@include file="/WEB-INF/views/cmmn/header.jsp" %>
 
 <style>
     table {
@@ -8,6 +8,7 @@
         border: 1px solid #444444;
         border-collapse: collapse;
     }
+
     th, td {
         border: 1px solid #444444;
         white-space: nowrap; /* 텍스트 줄바꿈 방지 */
@@ -19,11 +20,13 @@
 
 </style>
 <body>
-<div class="container" >
+<div class="container">
     <div class="basic animal">
-        <h1 class="text-center">팝업 게시판</h1>
-        <div class="basic popUp">
-            <a href="/popup/register"><button type="button" class="btn-danger create" style="margin-left: 96%">작성</button></a>
+        <h1 class="text-center">배너 게시판</h1>
+        <div class="basic banner">
+            <a href="/banner/register">
+                <button type="button" class="btn-danger create" style="margin-left: 96%">작성</button>
+            </a>
             <table class="table table-striped table-bordered" id="dataTable">
                 <thead class="thead-dark">
                 <tr>
@@ -38,17 +41,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="popUp" items="${list}">
+                <c:forEach var="banner" items="${list}">
                     <tr>
-                        <td><c:out value="${popUp.id}"/></td>
-                        <td><c:out value="${popUp.title}"/></td>
-                        <td><c:out value="${popUp.content}"/></td>
-                        <td><fmt:formatDate value="${popUp.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                        <td><fmt:formatDate value="${popUp.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                        <td><c:out value="${popUp.status}"/></td>
+                        <td><c:out value="${banner.banner_id}"/></td>
+                        <td><c:out value="${banner.title}"/></td>
+                        <td><c:out value="${banner.content}"/></td>
+                        <td><fmt:formatDate value="${banner.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                        <td><fmt:formatDate value="${banner.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                        <td><c:out value="${banner.status}"/></td>
                         <td>
-                            <a class=".move" href="/popup/modify?id=${popUp.id}">
-                            <button type="button">수정</button></a>
+                            <a class=".move" href="/banner/modify?banner_id=${banner.banner_id}">
+                                <button type="button">수정</button>
+                            </a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -67,12 +71,10 @@
     //     e.preventDefault();
     //     form.find('#id').remove();
     //     form.append("<input type='hidden' name='id' id='id' value='" + $(this).attr("href")+"'>")
-    //     form.attr('action', '/popUp/modify');
+    //     form.attr('action', '/banner/modify');
     //     form.submit();
     // });
 </script>
 
 
-
-
-<%@include file="/WEB-INF/views/cmmn/footer.jsp"%>
+<%@include file="/WEB-INF/views/cmmn/footer.jsp" %>

@@ -8,7 +8,6 @@
         /**************************** 리뷰 게시물 파일 추가 FileUtilsMapper.xml - file.insertFile *********************************/
         insert into mp_file
         (
-            FILE_NO,               /* 파일 번호*/
             BNO,                   /* 게시물 번호*/
             ORG_FILE_NAME,         /* 진짜 파일 이름*/
             STORED_FILE_NAME,      /* 랜덤 파일 이름*/
@@ -18,8 +17,7 @@
             FOLDER_NM              /* 폴더 이름 */
         )VALUES
             (
-                #{FILE_NO},            /* 파일 번호 */
-                #{ALL_NUMBER},          /* 보드 BNO */
+                #{ALL_NUMBER},         /* 보드 BNO */
                 #{ORG_FILE_NAME},      /* 진짜 파일 이름 */
                 #{STORED_FILE_NAME},   /* 랜덤 파일 이름 */
                 #{FILE_SIZE},          /* 파일 사이즈 */
@@ -43,8 +41,6 @@
             MP_FILE
         WHERE
             BNO = #{ALL_NUMBER}
-          AND
-            DEL_GB = 'N'
         ORDER BY
             FILE_NO ASC
 
@@ -87,4 +83,25 @@
 
     </update>
 
+    <insert id="thumbnails" parameterType="hashMap">
+        /**************************** 리뷰 게시물 파일 추가 FileUtilsMapper.xml - file.insertFile *********************************/
+        insert into THUMBNAILS_TBL
+        (
+            MULTI_ID,              /* 게시물 번호*/
+            ORG_FILE_NAME,         /* 진짜 파일 이름*/
+            STORED_FILE_NAME,      /* 랜덤 파일 이름*/
+            FILE_SIZE,             /* 파일 사이즈*/
+            REGDATE,               /* 파일 올린 시간*/
+            FOLDER_NM              /* 폴더 이름 */
+        )
+        VALUES
+        (
+            #{ALL_NUMBER},         /* 보드 BNO */
+            #{ORG_FILE_NAME},      /* 진짜 파일 이름 */
+            #{STORED_FILE_NAME},   /* 랜덤 파일 이름 */
+            #{FILE_SIZE},          /* 파일 사이즈 */
+            SYSDATE(),             /* 파일 올린 시간 */
+            #{FOLDER_NM}           /* 폴더 이름 */
+        )
+    </insert>
 </mapper>

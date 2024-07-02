@@ -1,8 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmf" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link href="/resources/bootstrap/bootstrap.min.css" rel="stylesheet">
-<script src="/resources/bootstrap/bootstrap.bundle.min.js"></script>
+
 
 <html>
 <head>

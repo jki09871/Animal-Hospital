@@ -71,8 +71,8 @@
                     <button type="button" id="idCheck" name="idCheck" onclick="fn_idCheck()">아이디 확인</button>
                     <div id="idCheckResult">영문자로 시작하며 숫자 6~20자를 이용해주세요</div>
                 </div>
-                <div class="form-group" id="owner_nm">
-                    <label for="owner_nm">아이디</label>
+                <div class="form-group" id="divNm">
+                    <label for="owner_nm">이름</label>
                     <input type="text" id="owner_nm" name="owner_nm" placeholder="이름" class="owner_nm" autocomplete="off" required>
                 </div>
                 <div class="form-group" id="divPw">
@@ -159,7 +159,7 @@
 
     /*************************************** 이메일 정규식 검사 *********************************************/
     function validateEmail(emailCheck) {
-        var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        var emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|naver\.com|hanmail\.net|daum\.net|hotmail\.com|icloud\.com|aol\.com|protonmail\.com)$/;
         return emailRegex.test(emailCheck);
     }
 

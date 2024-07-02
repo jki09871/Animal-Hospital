@@ -21,7 +21,6 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
             response.sendRedirect(request.getContextPath() + "/animal/login?toURL="+request.getRequestURL());
             return false;
         }
-
         return true;
 
     }

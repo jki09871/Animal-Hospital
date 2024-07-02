@@ -45,4 +45,8 @@ public class AnimalMedicalInquiryRepository {
     public Map<String, Object> privateInquiryRead(Map<String, Object> paramMap) {
         return sql.selectOne("inquiry.read", paramMap);
     }
+
+    public List<AnimalInquiryBoardDTO> inquiryIWrote(String ownerId) {
+        return sql.selectList("inquiry.inquiryIWrote", ownerId);
+    }
 }

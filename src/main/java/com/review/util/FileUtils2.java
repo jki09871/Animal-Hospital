@@ -1,9 +1,6 @@
 package com.review.util;
 
-import com.review.dto.animal.AnimalAdoptionDTO;
-import com.review.dto.animal.AnimalBannerDTO;
-import com.review.dto.animal.AnimalPopUpDTO;
-import com.review.dto.animal.AnimalReviewDTO;
+import com.review.dto.animal.*;
 import com.review.repository.animal.AnimalMedicalReviewRepository;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -14,7 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,28 +19,21 @@ import java.util.*;
 @Log4j
 @Component
 @PropertySource("classpath:globals.properties")
-public class FileUtils {
+public class FileUtils2 {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
-
 
     @Setter(onMethod_ = @Autowired)
     private AnimalMedicalReviewRepository repository;
 
-
     @Value("${file.upload.path}")
     private String filePath;
-    // private static final String filePath = "C:\\mp\\file\\"; //파일이 저장될 위치
 
-    public List<Map<String, Object>> parseInsertFileInfo(Object object, MultipartHttpServletRequest mpRequest) throws IOException {
+    public List<Map<String, Object>> parseInsertFileInfo(Object object, List<MultipartFile> mpFiles, String folderNm) throws IOException {
 
-        Iterator<String> iterator = mpRequest.getFileNames();
+        String finalFolderNm = (folderNm == null || "".equals(folderNm)) ? "file" : folderNm;
+        System.out.println("folderNm = " + finalFolderNm);
 
-        String folderNm = (mpRequest.getParameter("folder_nm") == null || "".equals(mpRequest.getParameter("folder_nm")))
-                ?  "file" : mpRequest.getParameter("folder_nm");
-        System.out.println("folderNm = " + folderNm);
-
-        MultipartFile multipartFile = null;
         String originalFileName = null;
         String originalFileExtension = null;
         String storedFileName = null;
@@ -52,43 +41,33 @@ public class FileUtils {
         List<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> listMap = null;
 
-        int all_number; // reviewNum 변수를 선언만 하고 초기화하지 않음
+        int all_number;
 
         if (object instanceof AnimalReviewDTO) {
-
             AnimalReviewDTO reviewDTO = (AnimalReviewDTO) object;
             all_number = reviewDTO.getReviewNum();
-
         } else if (object instanceof AnimalPopUpDTO) {
-
             AnimalPopUpDTO animalPopUpDTO = (AnimalPopUpDTO) object;
             all_number = animalPopUpDTO.getId();
-
-        }else if (object instanceof AnimalAdoptionDTO) {
-
+        } else if (object instanceof AnimalAdoptionDTO) {
             AnimalAdoptionDTO adoptionDTO = (AnimalAdoptionDTO) object;
             all_number = adoptionDTO.getAdoption_id();
-
+            System.out.println("all_number = " + all_number);
         } else if (object instanceof AnimalBannerDTO) {
-
             AnimalBannerDTO bannerDTO = (AnimalBannerDTO) object;
             all_number = bannerDTO.getBanner_id();
-
-        }else {
+        } else {
             throw new IllegalArgumentException("Unsupported DTO type");
         }
 
+        File file = new File(filePath + "\\" + finalFolderNm);
 
-        File file = new File(filePath+"\\"+folderNm );
-
-        if (file.exists() == false){
+        if (!file.exists()) {
             file.mkdirs();
         }
 
-        while (iterator.hasNext()){
-            multipartFile = mpRequest.getFile(iterator.next());
-
-            if (multipartFile.isEmpty() == false){
+        for (MultipartFile multipartFile : mpFiles) {
+            if (!multipartFile.isEmpty()) {
                 originalFileName = multipartFile.getOriginalFilename();
                 System.out.println("## 1파일이 가지고 있는 실제 이름 = " + multipartFile.getOriginalFilename());
 
@@ -98,16 +77,16 @@ public class FileUtils {
                 storedFileName = getRandomString() + originalFileExtension;
                 System.out.println("## 3랜덤으로 아이디 부여(고유 해야됨) = " + storedFileName);
 
-                file = new File(filePath+"\\"+folderNm +"\\"+ storedFileName);
+                file = new File(filePath + "\\" + finalFolderNm + "\\" + storedFileName);
                 System.out.println("## 4저장 경로에 고유에 이름으로 저장 = " + file);
 
-                String fullUrl = filePath +"\\" + folderNm +"\\"+ storedFileName;
+                String fullUrl = filePath + "\\" + finalFolderNm + "\\" + storedFileName;
 
                 multipartFile.transferTo(file);
                 listMap = new HashMap<>();
                 listMap.put("ALL_NUMBER", all_number);
-                listMap.put("FOLDER_NM", folderNm);
-                listMap.put("FULL_URL", fullUrl); /* 팝업 저장용으로 그냥 만들어 놓음*/
+                listMap.put("FOLDER_NM", finalFolderNm);
+                listMap.put("FULL_URL", fullUrl);
                 listMap.put("ORG_FILE_NAME", originalFileName);
                 listMap.put("STORED_FILE_NAME", storedFileName);
                 listMap.put("FILE_SIZE", multipartFile.getSize());
@@ -116,21 +95,9 @@ public class FileUtils {
         }
         return list;
     }
-    
-    public static String getRandomString(){
+
+    public static String getRandomString() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-    public void processFileInformation(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest) {
-        try {
-            List<Map<String, Object>> list = parseInsertFileInfo(reviewDTO, mpRequest);
-            int size = list.size();
-            for (int i = 0; i < size; i++) {
-                repository.insertFile(list.get(i));
-                System.out.println("##list.size() -->" + list.size());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

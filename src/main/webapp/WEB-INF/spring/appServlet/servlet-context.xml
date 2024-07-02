@@ -74,6 +74,8 @@
 			<exclude-mapping path="/animal/pwReset/**"/>
 			<exclude-mapping path="/member/email/**"/>
 			<exclude-mapping path="/animal/pwChangeNo/**"/>
+			<exclude-mapping path="/adoption/animal/list/**"/>
+			<exclude-mapping path="/adoption/animal/read/**"/>
 			<beans:bean class="com.review.interceptor.LogInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

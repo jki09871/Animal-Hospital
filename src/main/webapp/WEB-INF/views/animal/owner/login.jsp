@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@include file="/WEB-INF/views/cmmn/header.jsp"%>
 <style>
   .login-container {
@@ -110,6 +109,7 @@
     if ($('#toURL').val() != ''){
       alert("로그인 후 이용해주세요");
     }
+
 
   })
   let idFail = "${fail}";

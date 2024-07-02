@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="banner">
+
+    <insert id="bannerRegister" parameterType="com.review.dto.animal.AnimalBannerDTO" useGeneratedKeys="true" keyProperty="banner_id">
+        /**************************** 배너 작성 AnimalBannerMapper.xml - banner.bannerRegister *********************************/
+
+        INSERT INTO
+            BANNER_TBL
+        (
+            TITLE,
+            CONTENT,
+            IMAGE_FULL_URL ,
+            LINK_URL,
+            START_DATE,
+            END_DATE,
+            STATUS,
+            FOLDER_NM,
+            STORED_FILE_NAME
+        )
+        VALUES
+        (
+            #{title},
+            #{content},
+            #{image_full_url},
+            #{link_url},
+            #{start_date},
+            #{end_date},
+            #{status},
+            #{folder_nm},
+            #{stored_file_name}
+        )
+    </insert>
+
+    <select id="bannerList" resultType="com.review.dto.animal.AnimalBannerDTO">
+        /**************************** 배너 리스트 AnimalBannerMapper.xml - banner.popUpList *********************************/
+        SELECT
+            BANNER_ID,
+            TITLE,
+            CONTENT,
+            IMAGE_FULL_URL,
+            LINK_URL,
+            START_DATE,
+            END_DATE,
+            STATUS,
+            FOLDER_NM,
+            STORED_FILE_NAME,
+            CASE
+                WHEN CURRENT_TIMESTAMP BETWEEN START_DATE AND END_DATE
+                    THEN 'Y' ELSE 'N' END AS VALID_TIME
+        FROM
+            BANNER_TBL
+
+    </select>
+
+    <select id="bannerRead" resultType="com.review.dto.animal.AnimalBannerDTO">
+        /**************************** 배너 리스트 AnimalBannerMapper.xml - banner.bannerRead *********************************/
+        SELECT
+            BANNER_ID,
+            TITLE,
+            CONTENT,
+            IMAGE_FULL_URL,
+            LINK_URL,
+            START_DATE,
+            END_DATE,
+            STATUS,
+            FOLDER_NM,
+            STORED_FILE_NAME
+        FROM
+            BANNER_TBL
+        WHERE
+            BANNER_ID = #{banner_id}
+    </select>
+
+    <update id="bannerModify" parameterType="com.review.dto.animal.AnimalBannerDTO">
+        /**************************** 팝업 수정 PopUpMapper.xml - banner.bannerModify *********************************/
+
+        UPDATE
+            BANNER_TBL
+        SET
+        TITLE = #{title},
+        CONTENT = #{content},
+        LINK_URL = #{link_url},
+        START_DATE =#{start_date},
+        END_DATE = #{end_date},
+        STATUS = #{status}
+        <if test="stored_file_name != null">
+            ,STORED_FILE_NAME = #{stored_file_name},
+            IMAGE_FULL_URL = #{image_full_url}
+        </if>
+        WHERE
+        BANNER_ID = #{banner_id}
+    </update>
+
+
+    <select id="maxNumber" resultType="int">
+/**************************** 배너 작성시 id + 1 AnimalBannerMapper.xml - banner.maxNumber *********************************/
+
+    SELECT COALESCE(MAX(BANNER_ID), 0) + 1 FROM BANNER_TBL;
+    </select>
+</mapper>

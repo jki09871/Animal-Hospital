@@ -69,23 +69,17 @@
 /*********************** 내 정보 AnimaMemberMapper.xml -  animal.myInfo **************************/
 
         SELECT
-            (
-            SELECT
-                COUNT(*)
-            FROM
-                MEDICAL_REVIEW_BAORD            /** 리뷰 몇개 썼는지 개수 찾는 쿼리 **/
-            WHERE
-                WRITER = #{owner_Id}
-            ) AS  POST,
+            (SELECT COUNT(*)
+            FROM MEDICAL_REVIEW_BAORD            /** 리뷰 몇개 썼는지 개수 찾는 쿼리 **/
+            WHERE WRITER = #{owner_Id} ) AS  POST,
 
-            (
-            SELECT
-                COUNT(*)
-            FROM
-                INQUIRY_COMMENT_TBL             /** 댓글 몇개 썼는지 개수 찾는 쿼리 **/
-             WHERE
-                COMMENT_WRITER =  #{owner_Id})
-                AS COMMENT,
+            (SELECT COUNT(*)
+            FROM INQUIRY_COMMENT_TBL             /** 댓글 몇개 썼는지 개수 찾는 쿼리 **/
+            WHERE COMMENT_WRITER = #{owner_Id} ) AS COMMENT,
+
+            (SELECT COUNT(*)
+            FROM INQUIRY_TBL
+            WHERE OWNER_ID = #{owner_Id} ) AS INQUIRY,
 
             OWNER_ID,                           /** 회원 아이디 **/
             EMAIL,                              /** 회원 이메일 **/

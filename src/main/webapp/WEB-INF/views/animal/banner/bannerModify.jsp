@@ -56,40 +56,40 @@
         <div class="title">팝업 등록</div>
       </div>
       <div class="ct">
-        <form class="form" action="/popup/modify" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="id" id="id" value="<c:out value="${popUp.id}"/>">
-          <input type="hidden" name="folder_nm" id="folder_nm" value="popup" />
+        <form class="form" action="/banner/modify" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="banner_id" id="banner_id" value="<c:out value="${banner.banner_id}"/>">
+          <input type="hidden" name="folder_nm" id="folder_nm" value="banner" />
           <input type="hidden" name="FILE_NO" id="FILE_NO" value="" />
           <div>
             <label>제목</label>
-            <input type="text" id="title" name="title" value="${popUp.title}" autocomplete="off" required>
+            <input type="text" id="title" name="title" value="${banner.title}" autocomplete="off" required>
           </div>
           <div>
             <label>내용</label>
-            <textarea type="text" id="summernote" name="content" value="${popUp.content}" autocomplete="off" required>${popUp.content}</textarea>
+            <textarea type="text" id="summernote" name="content" value="${banner.content}" autocomplete="off" required>${banner.content}</textarea>
           </div>
           <div>
             <label>링크URL</label>
-            <input type="text" id="link_url" name="link_url" value="${popUp.link_url}" autocomplete="off" required>
+            <input type="text" id="link_url" name="link_url" value="${banner.link_url}" autocomplete="off" required>
           </div>
           <div>
           <label>시작 날짜</label>
           <input type="datetime-local" id="start_date" name="start_date"
-                 value="<fmt:formatDate value='${popUp.start_date}' pattern='yyyy-MM-dd\'T\'HH:mm'/>"
+                 value="<fmt:formatDate value='${banner.start_date}' pattern='yyyy-MM-dd\'T\'HH:mm'/>"
                  autocomplete="off" required>
           </div>
           <div>
             <label>끝 날짜</label>
             <input type="datetime-local" id="end_date" name="end_date"
-                   value="<fmt:formatDate value='${popUp.end_date}' pattern='yyyy-MM-dd\'T\'HH:mm'/>"
+                   value="<fmt:formatDate value='${banner.end_date}' pattern='yyyy-MM-dd\'T\'HH:mm'/>"
                    autocomplete="off" required>
           </div>
           <div>
             <label>상태</label>
               <select class="status" name="status" required>
                 <option value="">---</option>
-                <option value="ACTIVE" <c:if test="${popUp.status == 'ACTIVE'}">selected</c:if>>ACTIVE</option>
-                <option value="INACTIVE" <c:if test="${popUp.status == 'INACTIVE'}">selected</c:if>>INACTIVE</option>
+                <option value="ACTIVE" <c:if test="${banner.status == 'ACTIVE'}">selected</c:if>>ACTIVE</option>
+                <option value="INACTIVE" <c:if test="${banner.status == 'INACTIVE'}">selected</c:if>>INACTIVE</option>
               </select>
           </div>
           <div class="form-group">
@@ -106,7 +106,7 @@
             </div>
           </div>
         </form>
-        <button type="button" class="btn-danger popUpRegister">수정</button>
+        <button type="button" class="btn-danger bannerRegister">수정</button>
         <button type="button" class="btn-danger cancel">취소</button>
       </div>
     </div>
@@ -128,21 +128,16 @@
     toggleFileAddButton();
   });
 
-  $('.popUpRegister').on('click', function() {
-    let length = $('#summernote').val().length;
-    if (length > 2000){
-      alert("글자수 초과 ("+ length +"/2000)");
-      return false;
-    }
+  $('.bannerRegister').on('click', function() {
     $('.form').submit();
   });
   $('.cancel').on('click', function() {
-    self.location.href = '/popUp/list';
+    self.location.href = '/banner/list';
   });
 
   function fnDel(reviewNum, fileNo, element) {
 
-    let folder_nm = "${popUp.folder_nm}";
+    let folder_nm = "${banner.folder_nm}";
 
 
     if (reviewNum != '' && reviewNum != null) {

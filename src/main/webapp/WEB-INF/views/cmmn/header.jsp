@@ -14,8 +14,8 @@
 
 <html lang="ko">
 <head>
-<%--    <script src="/resources/jquery-3.7.1.js"></script>--%>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="/resources/jquery-3.7.1.js" ></script>
+<%--    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>--%>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -42,6 +42,9 @@
   <%-- 썸원 --%>
   <script src="${pageContext.request.contextPath}/resources/summernote/summernote-lite.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/summernote/summernote-lite.css">
+    <style>
+
+    </style>
 </head>
 <body>
 
@@ -63,30 +66,33 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#gallery" class="smooth-scroll">ADOPT A PET</a></li>
-        <li><a href="/animal/reviewList" class="smooth-scroll">REVIEW</a></li>
-        <li><a href="/pet/inquiry/list" class="smooth-scroll">INQUIRY</a></li>
+        <li><a href="/adoption/animal/list" class="smooth-scroll">입양하기</a></li>
+        <li><a href="/animal/reviewList" class="smooth-scroll">리뷰남기기</a></li>
+        <li><a href="/pet/inquiry/list" class="smooth-scroll">문의</a></li>
         <c:if test="${sessionScope.loginId == null}">
-          <li><a href="/animal/login" class="smooth-scroll">LOGIN</a></li>
+          <li><a href="/animal/login" class="smooth-scroll">로그인</a></li>
         </c:if>
         <c:if test="${sessionScope.loginId != null}">
-          <li><a href="/animal/myInfo">MY INFO</a></li>
-          <li><a href="/animal/logout" class="smooth-scroll">LOGOUT</a></li>
+          <li><a href="/animal/myInfo">내 활동</a></li>
+          <li><a href="/animal/logout" class="smooth-scroll">로그아웃</a></li>
         </c:if>
         <c:if test="${sessionScope.loginId.grade == 99}">
-          <li><a href="/pet/prescription/list" class="smooth-scroll">PRESCRIPTION</a></li>
-          <li><a href="/subscribers/member" class="smooth-scroll">MEMBER LIST</a></li>
-          <li><a href="/registered/animal" class="smooth-scroll">ANIMAL LIST</a></li>
+<%--          <li><a href="/pet/prescription/list" class="smooth-scroll">PRESCRIPTION</a></li>--%>
+<%--          <li><a href="/subscribers/member" class="smooth-scroll">MEMBER LIST</a></li>--%>
+<%--          <li><a href="/registered/animal" class="smooth-scroll">ANIMAL LIST</a></li>--%>
 
-<%--                   <li> <form class="navbar-form navbar-right">--%>
-<%--              <select class="form-control" onchange='location.href = this.value;'>--%>
-<%--                <option value=''>------</option>--%>
-<%--                <option value='/pet/prescription/list'>처방전</option>--%>
-<%--                <option value='/subscribers/member'>회원가입자 목록</option>--%>
-<%--                <option value='/registered/animal'>등록된 동물</option>--%>
-<%--                <option value='/popUp/list'>팝업 등록</option>--%>
-<%--              </select>--%>
-<%--          </form></li>--%>
+          <li>
+            <form class="navbar-form navbar-right">
+              <select class="form-control" onchange='location.href = this.value;'>
+                <option value=''>------</option>
+                <option value='/pet/prescription/list'>처방전</option>
+                <option value='/subscribers/member'>회원가입자 목록</option>
+                <option value='/registered/animal'>등록된 동물</option>
+                <option value='/popUp/list'>팝업 목록</option>
+                <option value='/banner/list'>배너 목록</option>
+              </select>
+            </form>
+          </li>
         </c:if>
         <c:if test="${sessionScope.loginId.owner_Id != null}">
           <li>

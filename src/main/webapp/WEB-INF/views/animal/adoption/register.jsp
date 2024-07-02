@@ -8,7 +8,6 @@
     }
 </style>
 
-
 <div class="container-stories">
     <div class="container">
         <div>
@@ -49,7 +48,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bold" >접종 여부</td>
+                                <td class="bold" >접종 종류</td>
                                 <td><input type="text" class="form-control" name="inoculation"></td>
                             </tr>
                             <tr>
@@ -69,7 +68,7 @@
                     </div>
                     <div class="fileIndex">
                         <div>
-                            <input type="file" name="file">
+                            <input type="file" name="thumbnails" multiple>
                         </div>
                     </div>
                     <div>
@@ -90,11 +89,21 @@
 
 
 
-    var  fileIndex = 1;
-    $('.fileAdd').on('click', function(){
-       $('.fileIndex').append("<div><input type='file' style='float:left;' name='file_"+ fileIndex++ +"'>"
-           + "<button type='button' class='fileDel_btn'>삭제</button></div>");
+    // var  fileIndex = 1;
+    // $('.fileAdd').on('click', function(){
+    //    $('.fileIndex').append("<div><input type='file' style='float:left;' name='file_"+ fileIndex++ +"'>"
+    //        + "<button type='button' class='fileDel_btn'>삭제</button></div>");
+    // });
+
+    $('.fileAdd').on('click', function() {
+        $('.fileIndex').append(
+            "<div>" +
+            "<input type='file' style='float:left;' name='files[]' multiple>" +
+            "<button type='button' class='fileDel_btn'>삭제</button>" +
+            "</div>"
+        );
     });
+
     $('#summernote').summernote({
         height: 300,
         width: 1000,

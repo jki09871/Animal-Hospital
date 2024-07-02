@@ -125,4 +125,8 @@
             INQUIRY_NUM = #{inquiry_Num}       /** 문의고유번호 **/
 
     </update>
+
+    <select id="inquiryIWrote" resultType="com.review.dto.animal.AnimalInquiryBoardDTO">
+        SELECT * FROM INQUIRY_TBL WHERE OWNER_ID = #{ownerid}
+    </select>
 </mapper>

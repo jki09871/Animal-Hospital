@@ -1,6 +1,7 @@
 package com.review.controller.animal;
 
 import com.review.dto.animal.AnimalMemberDTO;
+import com.review.service.animal.AnimalMedicalInquiryService;
 import com.review.service.animal.AnimalMedicalReviewService;
 import com.review.service.animal.AnimalOwnerService;
 import com.review.util.MailSenderUtils;
@@ -39,6 +40,10 @@ public class AnimalOwnerController {
 
     @Setter(onMethod_ = @Autowired)
     private AnimalMedicalReviewService mrs;
+
+    @Setter(onMethod_ = @Autowired)
+    private AnimalMedicalInquiryService mis;
+
 
     @Setter(onMethod_ = @Autowired)
     private MailSenderUtils mailSenderUtils;
@@ -272,6 +277,17 @@ public class AnimalOwnerController {
         model.addAttribute("list", os.commentIWrote(commentIWrote));
 
         return "animal/owner/commentIWrote";
+    }
+
+    /**********************************************************************************************************/
+
+    /************************************  나의 활동 문의 글   ********************************************/
+    @GetMapping("/animal/inquiryIWrote")
+    public String inquiryIWrote(@RequestParam("ownerId") String ownerId, Model model) {
+
+        model.addAttribute("list", mis.inquiryIWrote(ownerId));
+
+        return "animal/owner/myInquiryWrote";
     }
 
     /**********************************************************************************************************/

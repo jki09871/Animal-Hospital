@@ -63,9 +63,10 @@ public class AnimalPopUpService {
 
     private void handleFileUpload(AnimalPopUpDTO popUpDTO, MultipartHttpServletRequest fileRequest) throws IOException {
 
-
-        int maxValue = popUp.idMaxCount();
-        popUpDTO.setId(maxValue);
+        if (popUpDTO.getId() == 0) {
+            int maxValue = popUp.idMaxCount();
+            popUpDTO.setId(maxValue);
+        }
 
         if (fileRequest != null && !fileRequest.equals("")) {
             List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(popUpDTO, fileRequest);
@@ -73,7 +74,7 @@ public class AnimalPopUpService {
             for (int i = 0; i < size; i++) {
                 Object stored_file_name = list.get(i).get("STORED_FILE_NAME");
                 Object full_url = list.get(i).get("FULL_URL");
-                list.get(i).get("FOLDER_NM");
+//                list.get(i).get("FOLDER_NM");
                 popUpDTO.setImage_full_url((String) full_url);
                 popUpDTO.setStored_file_name((String) stored_file_name);
 

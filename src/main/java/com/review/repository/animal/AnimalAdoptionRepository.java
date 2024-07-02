@@ -16,7 +16,7 @@ import java.util.Map;
 public class AnimalAdoptionRepository {
 
     @Setter(onMethod_ = @Autowired)
-    private SqlSessionTemplate sql;
+    private final SqlSessionTemplate sql;
 
     public void adoptionAnimalRegister(AnimalAdoptionDTO adoptionDTO) {
         sql.insert("adoption.register", adoptionDTO);
@@ -41,5 +41,9 @@ public class AnimalAdoptionRepository {
 
     public void insertFile(Map<String, Object> map) {
         sql.insert("file.insertFile", map);
+    }
+
+    public void thumbnailsFileSave(Map<String, Object> map) {
+        sql.insert("file.thumbnails", map);
     }
 }

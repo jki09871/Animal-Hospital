@@ -15,9 +15,11 @@
     <div class="container">
         <h1 style="text-align: center">보호동물 입양목록</h1>
 
+        <c:if test="${sessionScope.loginId.grade == 99}">
         <div style="text-align: right">
         <a href="/adoption/animal/register"><button type="button" class="btn btn-danger"> 입양동물 작성</button></a>
         </div>
+        </c:if>
 
         <c:set var="cnt" value="1" />
 

@@ -6,8 +6,10 @@ import java.util.*;
 
 import com.review.controller.animal.AnimalAdoptionController;
 import com.review.dto.animal.AnimalAdoptionDTO;
+import com.review.dto.animal.AnimalBannerDTO;
 import com.review.dto.animal.AnimalPopUpDTO;
 import com.review.service.animal.AnimalAdoptionService;
+import com.review.service.animal.AnimalBannerService;
 import com.review.service.animal.AnimalPopUpService;
 import lombok.Setter;
 import org.apache.commons.io.FileUtils;
@@ -36,6 +38,9 @@ public class HomeController {
 
 	@Setter(onMethod_ = @Autowired)
 	AnimalAdoptionService adoptionService;
+
+	@Setter(onMethod_ = @Autowired)
+	AnimalBannerService bannerService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -44,14 +49,14 @@ public class HomeController {
 	 */
 	@RequestMapping("/")
 	public String home(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
-
-		List<AnimalPopUpDTO> list = popUPService.popUpList();
-		System.out.println("list = " + list);
-		model.addAttribute("list", list);
-
-
 		model.addAttribute("success", request.getParameter("success"));
 
+		List<AnimalPopUpDTO> popUpList = popUPService.popUpList();
+		model.addAttribute("list", popUpList);
+
+		List<AnimalBannerDTO> bannerList = bannerService.bannerList();
+		System.out.println("bannerList = " + bannerList);
+		model.addAttribute("bannerList", bannerList);
 
 
 		List<AnimalAdoptionDTO> adoptionAnimalList = adoptionService.adoptionAnimalList();

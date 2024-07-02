@@ -48,4 +48,8 @@ public class AnimalMedicalInquiryService {
     public Map<String, Object> privateInquiryRead(Map<String, Object> paramMap) {
         return mir.privateInquiryRead(paramMap);
     }
+
+    public List<AnimalInquiryBoardDTO> inquiryIWrote(String ownerId) {
+        return mir.inquiryIWrote(ownerId);
+    }
 }

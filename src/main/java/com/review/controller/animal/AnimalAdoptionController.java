@@ -49,7 +49,7 @@ public class AnimalAdoptionController {
                                          @RequestParam("thumbnails") List<MultipartFile> thumbnails,
                                          @RequestParam("files") List<MultipartFile> files) throws IOException {
 
-//        adoptionService.adoptionAnimalRegister(adoptionDTO, thumbnails, files);
+        adoptionService.adoptionAnimalRegister(adoptionDTO, thumbnails, files);
         System.out.println("thumbnails = " + thumbnails);
         System.out.println("files = " + files);
 

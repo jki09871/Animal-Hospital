@@ -11,6 +11,7 @@
                 <input type="hidden" name="pageNum" id="pageNum" value="<c:out value="${cri.pageNum}"/>">
                 <input type="hidden" name="amount" id="amount" value="<c:out value="${cri.amount}"/>">
                 <input type="hidden" name="writer" id="writer" value="<c:out value="${animal.writer}"/>">
+                <input type="hidden" name="folderNm" id="folderNm" value="review">
 
                 <table>
                     <tr>
@@ -88,13 +89,14 @@
 
     function fnDel(reviewNum, fileNo, element) {
 
+        let folderNm = $('#folderNm').val();
 
         if (reviewNum != '' && reviewNum != null) {
             $(element).closest('div').remove();
             $.ajax({
                 url: '/animal/fileRemove',
                 method: 'POST',
-                data: {fileNo: fileNo, reviewNum: reviewNum},
+                data: {fileNo: fileNo, reviewNum: reviewNum,folderNm: folderNm},
                 success: function () {
                     console.log("reviewNum: " + reviewNum);
                     console.log("fileNo: " + fileNo);

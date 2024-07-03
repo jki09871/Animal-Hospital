@@ -42,4 +42,9 @@ public class AnimalPopUpDTO {
     public enum Status {
         ACTIVE, INACTIVE
     }
+
+    public String getFolderNm(){
+        return folder_nm;
+    }
+
 }

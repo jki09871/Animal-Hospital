@@ -58,7 +58,7 @@
       <div class="ct">
         <form class="form" action="/popup/modify" method="post" enctype="multipart/form-data">
           <input type="hidden" name="id" id="id" value="<c:out value="${popUp.id}"/>">
-          <input type="hidden" name="folder_nm" id="folder_nm" value="popup" />
+          <input type="hidden" name="folderNm" id="folderNm" value="popup" />
           <input type="hidden" name="FILE_NO" id="FILE_NO" value="" />
           <div>
             <label>제목</label>
@@ -142,7 +142,7 @@
 
   function fnDel(reviewNum, fileNo, element) {
 
-    let folder_nm = "${popUp.folder_nm}";
+    let folderNm = $('#folderNm').val();
 
 
     if (reviewNum != '' && reviewNum != null) {
@@ -150,7 +150,7 @@
       $.ajax({
         url: '/animal/fileRemove',
         method: 'POST',
-        data: {fileNo: fileNo, reviewNum: reviewNum, folder_nm : folder_nm},
+        data: {fileNo: fileNo, reviewNum: reviewNum, folderNm : folderNm},
         success: function () {
           console.log("reviewNum: " + reviewNum);
           console.log("fileNo: " + fileNo);
@@ -182,7 +182,6 @@
   function fn_fileDown(fileNo, folder){
     var formObj = $(".form");
     $("#FILE_NO").attr("value", fileNo);
-    $("#FOLDER_NM").attr("value", folder);
     formObj.attr("action", "/animal/fileDown");
     formObj.submit();
   }

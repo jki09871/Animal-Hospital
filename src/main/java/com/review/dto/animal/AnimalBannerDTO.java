@@ -40,4 +40,12 @@ public class AnimalBannerDTO {
     public enum Status {
         ACTIVE, INACTIVE
     }
+
+    public void setFolderNm(String folderNm){
+        this.folder_nm = folderNm;
+    }
+
+    public String getFolderNm(){
+        return folder_nm;
+    }
 }

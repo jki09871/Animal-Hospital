@@ -38,7 +38,7 @@
             </div>
             <div class="ct">
                 <form class="form" action="/banner/register" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="folder_nm" id="folder_nm" value="banner" />
+                    <input type="hidden" name="folderNm" id="folderNm" value="banner" />
                     <div>
                         <label>제목</label>
                         <input type="text" id="title" name="title" autocomplete="off" required>

@@ -39,4 +39,8 @@ public class AnimalAdoptionDTO {
     private String stored_file_name;
     private String folder_nm;
     private String adoptionStatus;
+
+    public String getFolderNm(){
+        return folder_nm;
+    }
 }

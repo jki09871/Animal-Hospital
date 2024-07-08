@@ -1,7 +1,9 @@
 package com.review.service.animal;
 
 
+import com.review.dto.animal.AnimalReviewDTO;
 import com.review.dto.animal.AnimalPopUpDTO;
+import com.review.repository.animal.AnimalMedicalReviewRepository;
 import com.review.repository.animal.AnimalPopUpRepository;
 import com.review.util.FileUtils;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +11,10 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +35,9 @@ public class AnimalPopUpService {
         return popUp.popUpList();
     }
 
-    public void popUpRegister(AnimalPopUpDTO popUpDTO,  List<MultipartFile> file, String folderNm ) throws IOException {
+    public void popUpRegister(AnimalPopUpDTO popUpDTO, MultipartHttpServletRequest fileRequest) throws IOException {
 
-        handleFileUpload(popUpDTO, file, folderNm);
+        handleFileUpload(popUpDTO, fileRequest);
         popUp.popUpRegister(popUpDTO);
 
 
@@ -44,24 +48,28 @@ public class AnimalPopUpService {
        return popUp.popUpRead(popUpDTO);
     }
 
-    public void popUpModify(AnimalPopUpDTO popUpDTO, List<MultipartFile> file, String folderNm) throws IOException {
+    public void popUpModify(AnimalPopUpDTO popUpDTO, MultipartHttpServletRequest mpRequest) throws IOException {
+        Iterator<String> fileNames = mpRequest.getFileNames();
 
-        if (!file.isEmpty()) { // 파일이 있으면 true
-            handleFileUpload(popUpDTO, file, folderNm);
+        while (fileNames.hasNext()) {
+            MultipartFile file = mpRequest.getFile(fileNames.next());
+
+            if (!file.isEmpty()) { // 파일이 있으면 true
+                handleFileUpload(popUpDTO, mpRequest);
+            }
         }
-
         popUp.popUpModify(popUpDTO);
-
     }
-    private void handleFileUpload(AnimalPopUpDTO popUpDTO,  List<MultipartFile> file, String folderNm) throws IOException {
+
+    private void handleFileUpload(AnimalPopUpDTO popUpDTO, MultipartHttpServletRequest fileRequest) throws IOException {
 
         if (popUpDTO.getId() == 0) {
             int maxValue = popUp.idMaxCount();
             popUpDTO.setId(maxValue);
         }
 
-        if (file != null && !file.equals("")) {
-            List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(popUpDTO, file, folderNm);
+        if (fileRequest != null && !fileRequest.equals("")) {
+            List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(popUpDTO, fileRequest);
             int size = list.size();
             for (int i = 0; i < size; i++) {
                 Object stored_file_name = list.get(i).get("STORED_FILE_NAME");

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -59,13 +58,13 @@ public class AnimalReviewBoardController {
     }
 
     @PostMapping("/animal/review")
-    public String medicalReview(AnimalReviewDTO reviewDTO, @RequestParam("file") List<MultipartFile> file,
-                                @RequestParam("folderNm") String folderNm, Model model,
+    public String medicalReview(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest, Model model,
                                 HttpServletRequest request) throws IOException {
-        System.out.println("mpRequest = " + file);
+        System.out.println("mpRequest = " + mpRequest);
         HttpSession session = request.getSession();
         model.addAttribute("animal", session.getAttribute("loginId"));
-        service.reviewWrite(reviewDTO, file, folderNm);
+        service.reviewWrite(reviewDTO, mpRequest);
+        System.out.println("reviewDTO = " + reviewDTO);
 
         return "redirect:/animal/reviewList";
     }
@@ -101,12 +100,11 @@ public class AnimalReviewBoardController {
     }
 
     @PostMapping("/animal/correction")
-    public String correctionAfter(AnimalReviewDTO reviewDTO, Model model, @RequestParam("file") List<MultipartFile> file,
-                                  @RequestParam("folderNm") String folderNm,HttpServletRequest request,
-                                  RedirectAttributes rttr) throws IOException {
+    public String correctionAfter(AnimalReviewDTO reviewDTO, Model model, MultipartHttpServletRequest mpRequest, HttpServletRequest request,
+                                  RedirectAttributes rttr){
 
 
-        service.correction(reviewDTO, file, folderNm);
+        service.correction(reviewDTO, mpRequest);
 
         /** 수정 후 리다이렉트 할 때 데이터를 넘겨서 수정한 게시물을 보기 **/
         rttr.addAttribute("amount", request.getParameter("amount"));
@@ -143,10 +141,8 @@ public class AnimalReviewBoardController {
         String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
         String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
 
-        System.out.println("resultMap = " + resultMap);
-
-        String folderNm =  resultMap.get("FOLDER_NM") == null || "".equals(resultMap.get("FOLDER_NM")) ? (String) map.get("FOLDER_NM")
-                : (String) resultMap.get("FOLDER_NM");
+        String folderNm =  resultMap.get("folder_nm") == null || "".equals(resultMap.get("folder_nm")) ? (String) map.get("folder_nm")
+                : (String) resultMap.get("folder_nm");
 
         // 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
         byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File(filePath+"\\"+folderNm+"\\"+storedFileName));
@@ -168,13 +164,13 @@ public class AnimalReviewBoardController {
                            @RequestParam("reviewNum") int reviewNum,
                            HttpServletRequest request){
 
-        String folderNm = (request.getParameter("folderNm") == null || "".equals(request.getParameter("folderNm")))
-                ?  "file" : request.getParameter("folderNm");
+        String folder_nm = (request.getParameter("folder_nm") == null || "".equals(request.getParameter("folder_nm")))
+                ?  "file" : request.getParameter("folder_nm");
 
-        System.out.println("######### folder_nm = " + folderNm);
+        System.out.println("######### folder_nm = " + folder_nm);
 
         System.out.println("삭제한 FILE_NO은 " + reviewNum + "번 입니다.");
-        service.deleteFile(fileNo, reviewNum, folderNm);
+        service.deleteFile(fileNo, reviewNum, folder_nm);
     }
     /**********************************************************************************************************/
 }

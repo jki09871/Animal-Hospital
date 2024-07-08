@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static com.review.util.FileUtils.getRandomString;
 
 @Service
 public class FileUploadService {

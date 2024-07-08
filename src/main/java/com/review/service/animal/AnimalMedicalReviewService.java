@@ -10,7 +10,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +32,9 @@ public class AnimalMedicalReviewService {
     @Setter(onMethod_ = @Autowired)
     private FileUtils fileUtils;
 
-    public void reviewWrite(AnimalReviewDTO reviewDTO, List<MultipartFile> mpRequest, String folderNm) throws IOException {
+    public void reviewWrite(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest) throws IOException {
         repository.reviewWrite(reviewDTO);
-        List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(reviewDTO, mpRequest, folderNm);
+        List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(reviewDTO, mpRequest);
         int size = list.size();
         for (int i = 0; i < size; i++){
             repository.insertFile(list.get(i));
@@ -50,8 +50,8 @@ public class AnimalMedicalReviewService {
         return  repository.information(reviewNum);
     }
 
-    public void correction(AnimalReviewDTO reviewDTO, List<MultipartFile> mpRequest, String folderNm) throws IOException {
-        fileUtils.parseInsertFileInfo(reviewDTO,mpRequest, folderNm);
+    public void correction(AnimalReviewDTO reviewDTO, MultipartHttpServletRequest mpRequest) {
+        fileUtils.processFileInformation(reviewDTO,mpRequest);
         repository.correction(reviewDTO);
     }
 

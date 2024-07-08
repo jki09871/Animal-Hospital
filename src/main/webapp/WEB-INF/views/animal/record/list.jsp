@@ -101,11 +101,11 @@
     </tr>
     <c:forEach var="list" items="${recordList}">
         <tr class="pet_info">
-            <td>${list.pet_Id}</td>
-            <td><a class="move" href="${list.pet_Id}">${list.pet_name}</a></td>
-            <td>${list.age}살</td>
-            <td>${list.species}</td>
-            <td>${list.significant}</td>
+            <td><c:out value="${list.pet_Id}"/></td>
+            <td><a class="move" href="<c:out value="${list.pet_Id}"/>"><c:out value="${list.pet_name}"/></a></td>
+            <td><c:out value="${list.age}"/>살</td>
+            <td><c:out value="${list.species}"/></td>
+            <td><c:out value="${list.significant}"/></td>
         </tr>
     </c:forEach>
 </table>
@@ -128,26 +128,26 @@
                 <ul class="pageInfo" id="pageInfo">
                     <%-- 이전 버튼 구현--%>
                     <c:if test="${pageMaker.prev}">
-                        <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">prev</a></li>
+                        <li class="pageInfo_btn previous"><a href="<c:out value="${pageMaker.startPage-1}"/>">prev</a></li>
                     </c:if>
 
                     <%-- 각 번호 페이지 버튼 --%>
                     <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                        <li class="pageInfo_btn ${pageMaker.pagingCriteria.pageNum == num ? "active":""}"><a href="${num}">${num}</a></li>
+                        <li class="pageInfo_btn ${pageMaker.pagingCriteria.pageNum == num ? "active":""}"><a href="<c:out value="${num}"/>">${num}</a></li>
                     </c:forEach>
 
                     <c:if test="${pageMaker.next}">
-                        <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1}">next</a></li>
+                        <li class="pageInfo_btn next"><a href="<c:out value="${pageMaker.endPage + 1}"/>">next</a></li>
                     </c:if>
                 </ul>
             </div>
         </div>
 </div>
     <form id="pageMove" method="get" action="/pet/prescription/list">
-        <input type="hidden" name="pageNum" value="${pageMaker.pagingCriteria.pageNum}">
-        <input type="hidden" name="amount" value="${pageMaker.pagingCriteria.amount}">
-        <input type="hidden" name="keyword" value="${pageMaker.pagingCriteria.keyword }">
-        <input type="hidden" name="type" value="${pageMaker.pagingCriteria.type }">
+        <input type="hidden" name="pageNum" value="<c:out value="${pageMaker.pagingCriteria.pageNum}"/>">
+        <input type="hidden" name="amount" value="<c:out value="${pageMaker.pagingCriteria.amount}"/>">
+        <input type="hidden" name="keyword" value="<c:out value="${pageMaker.pagingCriteria.keyword}"/>">
+        <input type="hidden" name="type" value="<c:out value="${pageMaker.pagingCriteria.type}"/>">
     </form>
 </body>
 

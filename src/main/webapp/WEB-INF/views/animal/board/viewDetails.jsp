@@ -47,15 +47,15 @@
                 <table>
                     <tr>
                         <th>Review Number</th>
-                        <td>${animal.reviewNum}</td>
+                        <td><c:out value="${animal.reviewNum}"/></td>
                     </tr>
                     <tr>
                         <th>Writer</th>
-                        <td>${animal.writer}</td>
+                        <td><c:out value="${animal.writer}"/></td>
                     </tr>
                     <tr>
                         <th>Title</th>
-                        <td>${animal.title}</td>
+                        <td><c:out value="${animal.title}"/></td>
                     </tr>
                     <tr>
                         <th>Content</th>

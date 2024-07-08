@@ -32,7 +32,7 @@ public class AnimalInquiryCommentController {
         return commentList;
     }
 
-    @RequestMapping("/inquiry/comment/delete")
+    @PostMapping("/inquiry/comment/delete")
     @ResponseBody
     public String commentDel(@RequestParam("id") int id){
         System.out.println("id = " + id);
@@ -40,7 +40,7 @@ public class AnimalInquiryCommentController {
         return "success";
     }
 
-    @RequestMapping("/inquiry/comment/update")
+    @PostMapping("/inquiry/comment/update")
     @ResponseBody
     public String commentUpdate(AnimalInquiryCommentDTO commentDTO){
         ics.commentUpdate(commentDTO);

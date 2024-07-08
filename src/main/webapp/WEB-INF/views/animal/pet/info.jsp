@@ -56,11 +56,11 @@
                         </tr>
                         <c:forEach var="pet" items="${pet}">
                             <tr class="pet_info">
-                                <td>${pet.pet_name}</td>
-                                <td>${pet.age}</td>
-                                <td>${pet.species}</td>
-                                <td>${pet.pet_Id}</td>
-                                <td>${pet.significant}</td>
+                                <td><c:out value="${pet.pet_name}"/></td>
+                                <td><c:out value="${pet.age}"/></td>
+                                <td><c:out value="${pet.species}"/></td>
+                                <td><c:out value="${pet.pet_Id}"/></td>
+                                <td><c:out value="${pet.significant}"/></td>
                                 <td>
                                     <button type="button" class="btn-modify">
                                         <a href="/pet/info/modify?pet_Id=${pet.pet_Id}" style="color: inherit; text-decoration: none;">수정</a>
@@ -69,9 +69,6 @@
                             </tr>
                         </c:forEach>
                     </table>
-<%--                    <div class="btn-group">--%>
-<%--                        <button type="button" onclick="history.back()" class="btn-modify">이전</button>--%>
-<%--                    </div>--%>
                 </form>
             </div>
         </div>

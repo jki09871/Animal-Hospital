@@ -84,14 +84,14 @@
                 <tr>
                     <th>아이디</th>
                     <td>
-                        <input type="text" name="owner_Id" id="owner_Id" value="${animal.owner_Id}" disabled><br>변경불가
+                        <input type="text" name="owner_Id" id="owner_Id" value="<c:out value="${animal.owner_Id}"/>" disabled><br>변경불가
                     </td>
                 </tr>
                 <tr>
                     <th>이메일</th>
                     <td>
                         <form id="emailResetForm">
-                        <input type="text" id="em" name="email" placeholder="이메일" class="input-email" value="${animal.email}" onclick="Email();" autocomplete="off" disabled>
+                        <input type="text" id="em" name="email" placeholder="이메일" class="input-email" value="<c:out value="${animal.email}"/>" onclick="Email();" autocomplete="off" disabled>
                             <div id="emailCheckResult" class="email-check-result"></div>
                             <button type="button" id="emailModify">이메일 변경</button>
                                 <div class="changingEmailBtn" style="display: none;">
@@ -104,7 +104,7 @@
                 <tr>
                     <th>핸드폰 번호</th>
                     <td>
-                        <input type="text" name="phoneNumber" id="pn" placeholder="'-' 빼고 입력해주세요" value="${animal.phoneNumber}" class="phone-number" disabled>
+                        <input type="text" name="phoneNumber" id="pn" placeholder="'-' 빼고 입력해주세요" value="<c:out value="${animal.phoneNumber}"/>" class="phone-number" disabled>
                         <div id="phoneNumberCheckResult" class="phone-number-check-result"></div>
                         <button type="button" id="phoneNumberModify" >전화번호 변경</button>
                         <button type="button"  id="phoneReset" style="display: none;" >변경취소</button>

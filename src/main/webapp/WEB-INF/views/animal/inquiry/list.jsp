@@ -38,8 +38,8 @@
                     <c:forEach var="board" items="${list}">
                         <tr>
                             <td><c:out value="${board.INQUIRY_NUM}"/></td>
-                            <td class="${board.PASSWORD_CH}" id="${board.OWNER_ID}">
-                                <a id="${board.INQUIRY_NUM}" class="privateInquiry <c:if test="${board.PASSWORD_CH eq 'Y'}">locked</c:if>"
+                            <td class="<c:out value="${board.PASSWORD_CH}"/>" id="<c:out value="${board.OWNER_ID}"/>">
+                                <a id="<c:out value="${board.INQUIRY_NUM}"/>" class="privateInquiry <c:if test="${board.PASSWORD_CH eq 'Y'}">locked</c:if>"
                                    href="/pet/inquiry/get?inquiry_Num=${board.INQUIRY_NUM}">
                                     <c:out value="${board.TITLE}"/>
                                     <c:if test="${board.CNT > 0}">(<c:out value="답변완료" />)</c:if>
@@ -65,10 +65,14 @@
     $(document).ready(function () {
         $('.privateInquiry').on('click', function (event) {
             let owner_id = $(this).parent().attr('id');
-            let session_id = "${sessionScope.loginId.owner_Id}";
+            let session_id = "<c:out value="${sessionScope.loginId.owner_Id}"/>";
+            let session_grade = "<c:out value="${sessionScope.loginId.grade}"/>";
             if (owner_id != session_id || owner_id == '' || session_id == '') {
                 let privateInquiry_ch = $(this).parent('td').attr('class'); // 클릭한 요소중 가장 가까운 부모태그(td)의 class 값을 가져옴
                 if (privateInquiry_ch === 'Y') {
+                    if (session_grade == 99){
+                        return true;
+                    }
                     $(this).siblings('div').css('display', 'flex');
                     return false;
                 }

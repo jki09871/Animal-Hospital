@@ -78,17 +78,17 @@
       <div class="login-container">
         <h1>로그인</h1>
         <form action="/animal/login" method="post">
-          <input type="text" name="owner_Id" value="${cookie.owner_Id.value}" placeholder="아이디" autocomplete="off" required>
+          <input type="text" name="owner_Id" value="<c:out value="${cookie.owner_Id.value}"/>" placeholder="아이디" autocomplete="off" required>
           <input type="password" name="password" placeholder="비밀번호" autocomplete="off" required>
           <c:choose>
             <c:when test="${pwFailCnt.pwFailCount < 5}">
-              <div>비밀번호 ${pwFailCnt.pwFailCount}/5 실패 하셨습니다.</div>
+              <div>비밀번호 <c:out value="${pwFailCnt.pwFailCount}"/>/5 실패 하셨습니다.</div>
             </c:when>
             <c:when test="${pwFailCnt.pwFailCount >= 5}">
               <div>비밀번호 5회 틀려서 아이디가 잠겼습니다. 관리자에게 문의 해주세요</div>
             </c:when>
           </c:choose>
-          <input type="hidden" id="toURL" name="toURL" value="${param.toURL}">
+          <input type="hidden" id="toURL" name="toURL" value="<c:out value="${param.toURL}"/>">
           <label><input type="checkbox" name="rememberId"${empty cookie.owner_Id.value ? "":"checked" }> 아이디 기억</label>
           <label><input type="checkbox" name="useCookie"> 로그인유지</label>
           <input type="submit" value="로그인">

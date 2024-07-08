@@ -22,7 +22,7 @@
                         <th>content</th>
                         <td>
                             <!-- Editor -->
-                            <textarea id="summernote" rows="5" name="content" style="width:100%; height:250px;">${animal.content}</textarea>
+                            <textarea id="summernote" rows="5" name="content" style="width:100%; height:250px;"><c:out value="${animal.content}"/></textarea>
                         </td>
                         <td><input type="submit" value="수정"></td>
                         <td><input type="button" onClick="history.back();" value="취소"></td>
@@ -95,7 +95,7 @@
             $(element).closest('div').remove();
             $.ajax({
                 url: '/animal/fileRemove',
-                method: 'POST',
+                method: 'GET',
                 data: {fileNo: fileNo, reviewNum: reviewNum,folderNm: folderNm},
                 success: function () {
                     console.log("reviewNum: " + reviewNum);

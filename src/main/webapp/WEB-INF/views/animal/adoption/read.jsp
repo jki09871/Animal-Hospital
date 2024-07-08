@@ -35,9 +35,9 @@
             </tr>
             <tr>
                 <td class="bold">동물 이름</td>
-                <td>${read.animal_name}</td>
+                <td><c:out value="${read.animal_name}"/></td>
                 <td class="bold">종</td>
-                <td>${read.species}</td>
+                <td><c:out value="${read.species}"/></td>
                 <td class="bold">중성화 여부</td>
                 <td>
                     <c:choose>
@@ -47,11 +47,11 @@
                     </c:choose>
                 </td>
                 <td class="bold">좋아하는 것</td>
-                <td>${read.ILike}</td>
+                <td><c:out value="${read.ILike}"/></td>
             </tr>
             <tr>
                 <td class="bold">나이</td>
-                <td>${read.age}</td>
+                <td><c:out value="${read.age}"/></td>
                 <td class="bold">성별</td>
                 <td>
                     <c:choose>
@@ -61,13 +61,13 @@
                     </c:choose>
                 </td>
                 <td class="bold">접종 여부</td>
-                <td>${read.inoculation}</td>
+                <td><c:out value="${read.inoculation}"/></td>
                 <td class="bold">싫어하는 것</td>
-                <td>${read.disLike}</td>
+                <td><c:out value="${read.disLike}"/></td>
             </tr>
             <tr>
                 <td class="bold">상세 내용</td>
-                <td colspan="8">${read.content}</td>
+                <td colspan="8"><c:out value="${read.content}"/></td>
             </tr>
             </tbody>
         </table>
@@ -84,7 +84,7 @@
     function anything_btn(es) {
         switch (es) {
             case 'E' :
-                self.location = '/adoption/animal/information/modify?adoption_id=' + ${read.adoption_id};
+                self.location = '/adoption/animal/information/modify?adoption_id=' + <c:out value="${read.adoption_id}"/>;
                 break;
             case 'L' :
                 self.location = '/adoption/animal/list';

@@ -76,22 +76,22 @@
                     <h2>My Info</h2>
                     <tr>
                         <th>아이디</th>
-                        <td>${animal.owner_Id}</td>
+                        <td><c:out value="${animal.owner_Id}"/></td>
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td>${animal.email}</td>
+                        <td><c:out value="${animal.email}"/></td>
                     </tr>
                     <tr>
                         <th>핸드폰 번호</th>
-                        <td>${animal.phoneNumber}</td>
+                        <td><c:out value="${animal.phoneNumber}"/></td>
                     </tr>
                     <tr>
                         <th>내가 쓴 게시물</th>
                         <td>
                             <c:choose>
                                 <c:when test="${animal.post > 0}">
-                                    <a href="/animal/postIWrote?ownerId=${animal.owner_Id}">${animal.post}개</a>
+                                    <a href="/animal/postIWrote?ownerId=${animal.owner_Id}"><c:out value="${animal.post}"/>개</a>
                                 </c:when>
                                 <c:otherwise>
                                     -
@@ -104,7 +104,7 @@
                         <td>
                             <c:choose>
                                 <c:when test="${animal.inquiry > 0}">
-                                    <a href="/animal/inquiryIWrote?ownerId=${animal.owner_Id}">${animal.inquiry}개</a>
+                                    <a href="/animal/inquiryIWrote?ownerId=${animal.owner_Id}"><c:out value="${animal.inquiry}"/>개</a>
                                 </c:when>
                                 <c:otherwise>
                                     -
@@ -117,7 +117,7 @@
                         <td>
                             <c:choose>
                                 <c:when test="${animal.comment > 0}">
-                                    <a href="/animal/commentIWrote?ownerId=${animal.owner_Id}">${animal.comment}개</a>
+                                    <a href="/animal/commentIWrote?ownerId=${animal.owner_Id}"><c:out value="${animal.comment}"/>개</a>
                                 </c:when>
                                 <c:otherwise>
                                     -

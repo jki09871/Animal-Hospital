@@ -63,10 +63,10 @@
 
             <c:forEach var="readList" items="${read}">
                 <tr class="pet_info">
-                    <td>${readList.PET_NAME}(${readList.CALCULATED_AGE}살)</td>
-                    <td><a class="move" href="${readList.RECORD_ID}">${readList.DATE_OF_VISIT}</a></td>
-                    <td>${readList.SYMPTOMS}</td>
-                    <td>${readList.DOCTOR}</td>
+                    <td><c:out value="${readList.PET_NAME}"/>(<c:out value="${readList.CALCULATED_AGE}"/>살)</td>
+                    <td><a class="move" href="<c:out value="${readList.RECORD_ID}"/>"><c:out value="${readList.DATE_OF_VISIT}"/></a></td>
+                    <td><c:out value="${readList.SYMPTOMS}"/></td>
+                    <td><c:out value="${readList.DOCTOR}"/></td>
                 </tr>
                 <input type="hidden" id="pet_id" value="<c:out value="${readList.PET_ID}"/>">
             </c:forEach>
@@ -91,7 +91,7 @@
     let readForm = $('#readForm');
 
     $(document).ready(function (){
-        let pet_Id = "${cookie.pet_Id.value}";
+        let pet_Id = "<c:out value="${cookie.pet_Id.value}"/>";
         console.log(pet_Id);
     })
 
@@ -146,7 +146,7 @@
     $('#timeBtn').on('click', function (){
         let startTime = $('#datepicker1').val();
         let endTime = $('#datepicker2').val();
-        let pet_Id = "${cookie.pet_Id.value}";
+        let pet_Id = "<c:out value="${cookie.pet_Id.value}"/>";
 
         if (startTime == ''){
             alert("시작 시간을 선택해주세요");

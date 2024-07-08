@@ -13,7 +13,7 @@
 
             <div class="panel-body">
                 <form role="form" id="modifyForm" action="/pet/inquiry/modify" method="post">
-                    <input type="hidden" name="inquiry_Num" value="${board.INQUIRY_NUM}">
+                    <input type="hidden" name="inquiry_Num" value="<c:out value="${board.INQUIRY_NUM}"/>">
                     <div class="form-group">
                         <label for="title">제목</label>
                         <input type="text" class="form-control" id="title" name="title" value="<c:out value='${board.TITLE}'/>">

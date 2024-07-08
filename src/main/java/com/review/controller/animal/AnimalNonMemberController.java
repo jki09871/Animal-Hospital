@@ -29,6 +29,6 @@ public class AnimalNonMemberController {
             nms.nonMembersRegister(memberDTO);
         }
         mis.register(boardDTO);
-        return "forward:/";
+        return "redirect:/";
     }
 }

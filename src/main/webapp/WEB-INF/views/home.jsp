@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=AjZmS5FC4Sn4r9ZDKaeZ"></script>--%>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ra76pvfqpj"></script>
 
 <style>
     .img {
@@ -450,16 +450,47 @@
             }
         });
 
-        // var mapOptions = {
-        // 	center: new naver.maps.LatLng(37.3595704, 127.105399),
-        // 	zoom: 10
-        // }
-        //
-        // var map = new naver.maps.Map('map', {
-        // 	center: new naver.maps.LatLng(37.3595704, 127.105399),
-        // 	zoom: 10
-        // });
+    });
 
+    var HOME_PATH = window.HOME_PATH || '.';
+    var cityhall = new naver.maps.LatLng(37.491848, 127.147512),
+        map = new naver.maps.Map('map', {
+            center: cityhall,
+            zoom: 15
+        }),
+        marker = new naver.maps.Marker({
+            map: map,
+            position: cityhall
+        });
+
+    var contentString = [
+        '<div class="iw_inner">',
+        '   <h3>동물병원</h3>',
+        '   <p>서울특별시 송파구 거여2동 258-28본자 | 서울특별시 오금로64길 9<br />',
+        // '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="동물병원" class="thumb" /><br />',
+        '       02-1234-5678 | 동물 병원, 동물 입양<br />',
+        // '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+        '   </p>',
+        '</div>'
+    ].join('');
+    var infowindow = new naver.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 140,
+        backgroundColor: "#eee",
+        borderColor: "#2db400",
+        borderWidth: 5,
+        anchorSize: new naver.maps.Size(30, 30),
+        anchorSkew: true,
+        anchorColor: "#eee",
+        pixelOffset: new naver.maps.Point(20, -20)
+    });
+
+    naver.maps.Event.addListener(marker, "click", function(e) {
+        if (infowindow.getMap()) {
+            infowindow.close();
+        } else {
+            infowindow.open(map, marker);
+        }
     });
 
 

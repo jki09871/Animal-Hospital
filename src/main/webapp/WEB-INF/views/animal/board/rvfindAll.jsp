@@ -94,7 +94,7 @@
                 <c:forEach var="animal" items="${list}">
                     <tr>
                         <td><c:out value="${animal.reviewNum}"></c:out></td>
-                        <td><a class="move" href="${animal.reviewNum}"><c:out value="${animal.title}"></c:out></a></td>
+                        <td><a class="move" href="<c:out value="${animal.reviewNum}"/>"><c:out value="${animal.title}"></c:out></a></td>
                         <td><c:out value="${animal.writer}"></c:out></td>
                         <td><fmt:formatDate value="${animal.regdate}" pattern="yyyy-MM-dd"/></td>
                         <td><fmt:formatDate value="${animal.updatetdate}" pattern="yyyy-MM-dd"/></td>

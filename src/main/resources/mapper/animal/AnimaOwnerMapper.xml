@@ -129,6 +129,7 @@
             GRADE,               /** 등급 **/
             PWDEXPIRES,          /** 비번 만료일 **/
             SESSION_KEY,          /** 세션 키 **/
+            OWNER_NM,
         CASE WHEN
             PWDEXPIRES <= DATE_ADD(NOW(), INTERVAL -3 MONTH) THEN 'Y' ELSE 'N' END AS CHANGE_AT
         FROM

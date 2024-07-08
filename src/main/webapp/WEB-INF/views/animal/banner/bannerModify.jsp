@@ -62,15 +62,15 @@
           <input type="hidden" name="FILE_NO" id="FILE_NO" value="" />
           <div>
             <label>제목</label>
-            <input type="text" id="title" name="title" value="${banner.title}" autocomplete="off" required>
+            <input type="text" id="title" name="title" value="<c:out value="${banner.title}"/>" autocomplete="off" required>
           </div>
           <div>
             <label>내용</label>
-            <textarea type="text" id="summernote" name="content" value="${banner.content}" autocomplete="off" required>${banner.content}</textarea>
+            <textarea type="text" id="summernote" name="content" value="<c:out value="${banner.content}"/>" autocomplete="off" required>${banner.content}</textarea>
           </div>
           <div>
             <label>링크URL</label>
-            <input type="text" id="link_url" name="link_url" value="${banner.link_url}" autocomplete="off" required>
+            <input type="text" id="link_url" name="link_url" value="<c:out value="${banner.link_url}"/>" autocomplete="off" required>
           </div>
           <div>
           <label>시작 날짜</label>
@@ -98,8 +98,9 @@
               <div id="fileIndex">
                 <c:forEach var="file" items="${file}" varStatus="var">
                   <div>
-                    <a href="#" id="fileName" onclick="fn_fileDown('${file.FILE_NO}', '${file.FOLDER_NM}'); return false;" class="${file.FILE_NO}">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
-                    <button type="button" class="fileDel_btn" onclick="fnDel('${file.BNO}', '${file.FILE_NO}', this)">삭제</button>
+                    <a href="#" id="fileName" onclick="fn_fileDown('<c:out value="${file.FILE_NO}"/>', '<c:out value="${file.FOLDER_NM}"/>'); return false;"
+                       class="<c:out value="${file.FILE_NO}"/>"><c:out value="${file.ORG_FILE_NAME}"/></a>(<c:out value="${file.FILE_SIZE}"/>kb)
+                    <button type="button" class="fileDel_btn" onclick="fnDel('<c:out value="${file.BNO}"/>', '<c:out value="${file.FILE_NO}"/>', this)">삭제</button>
                   </div>
                 </c:forEach>
               </div>

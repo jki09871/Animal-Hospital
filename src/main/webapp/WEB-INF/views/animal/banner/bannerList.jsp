@@ -50,7 +50,7 @@
                         <td><fmt:formatDate value="${banner.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                         <td><c:out value="${banner.status}"/></td>
                         <td>
-                            <a class=".move" href="/banner/modify?banner_id=${banner.banner_id}">
+                            <a class=".move" href="/banner/modify?banner_id=<c:out value="${banner.banner_id}"/>">
                                 <button type="button">수정</button>
                             </a>
                         </td>

@@ -102,7 +102,7 @@
                 <input type="text" id="date_Of_Visit" name="date_Of_Visit" required autocomplete="off" placeholder="클릭 후 날짜를 선택 해주세요" readonly><br><br>
 
                 <label for="pet_Id">마이크로칩 번호:</label><br>
-                <input type="text" id="pet_Id" name="pet_Id" required autocomplete="off" style="width: 550px">
+                <input type="text" id="pet_Id" name="pet_Id" required autocomplete="off" style="width: 550px" readonly>
                 <input type="button" value="번호 찾기" onclick="openChild()" class="SearchBtn"><br><br>
 
 
@@ -144,6 +144,7 @@
         // window.open("open할 window", "자식창 이름", "팝업창 옵션");
          window.open("/registered/petNumberSearch", "childForm", "width=780, height=800, resizable = no, scrollbars = no");
     }
+
 
     $(function() {
         let currentDate = new Date();

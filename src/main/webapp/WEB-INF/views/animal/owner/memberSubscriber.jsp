@@ -83,11 +83,11 @@
                 <tbody>
                 <c:forEach var="list" items="${memberList}">
                     <tr>
-                        <td>${list.owner_Id}</td>
-                        <td>${list.phoneNumber}</td>
-                        <td><a class="move" href="${list.owner_Id}">${list.email}</a></td>
+                        <td><c:out value="${list.owner_Id}"/></td>
+                        <td><c:out value="${list.phoneNumber}"/></td>
+                        <td><a class="move" href="<c:out value="${list.owner_Id}"/>"><c:out value="${list.email}"/></a></td>
                         <td><fmf:formatDate value="${list.regDate}" pattern="yyyy-MM-dd"/> </td>
-                        <td><button type="button" class="btn"><a class="ResetBtn" data="${list.owner_Id}">PwReset</a></button></td>
+                        <td><button type="button" class="btn"><a class="ResetBtn" data="<c:out value="${list.owner_Id}"/>">PwReset</a></button></td>
                     </tr>
                 </c:forEach>
                 </tbody>

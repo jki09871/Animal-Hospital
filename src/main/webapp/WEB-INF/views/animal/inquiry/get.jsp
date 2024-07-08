@@ -60,7 +60,7 @@
             <div class="form-group">
                 <label for="inquiry_Num">게시물 번호</label>
                 <div class="btn-group">
-                    <a <%--href="/pet/inquiry/modify?inquiry_Num=${board.INQUIRY_NUM}"--%> id="${board.OWNER_ID}" class="btn btn-warning">수정</a>
+                    <a id="<c:out value="${board.OWNER_ID}"/>" class="btn btn-warning">수정</a>
                     <a href="/pet/inquiry/list" class="btn btn-info">목록</a>
                 </div>
                 <input type="text" class="form-control" id="inquiry_Num" name="inquiry_Num" value="<c:out value='${board.INQUIRY_NUM}'/>" readonly>
@@ -91,13 +91,13 @@
                     <tbody id="comment-tbody">
                     <c:forEach items="${commentList}" var="comment">
                         <tr>
-                            <td>${comment.comment_Writer}</td>
-                            <td>${comment.comment_Content}</td>
+                            <td><c:out value="${comment.comment_Writer}"/></td>
+                            <td><c:out value="${comment.comment_Content}"/></td>
                             <td><fmt:formatDate value="${comment.comment_Create_Time}" pattern="yyyy-MM-dd"/></td>
                             <c:if test="${sessionScope.loginId.grade == 99}">
                             <td class="text-right">
-                                <button class="btn btn-danger" onclick="deleteComment(${comment.id}, this)">삭제</button>
-                                <button class="btn btn-dark" id="comment_Id" onclick="openEditModal(${comment.id}, this)">수정</button>
+                                <button class="btn btn-danger" onclick="deleteComment(<c:out value="${comment.id}"/>, this)">삭제</button>
+                                <button class="btn btn-dark" id="comment_Id" onclick="openEditModal(<c:out value="${comment.id}"/>, this)">수정</button>
                             </td>
                             </c:if>
                         </tr>
@@ -119,7 +119,7 @@
 </div>
 </div>
 <div class="modal">
-    <div class="modal_body">
+    <div class="modal_body" style="margin-top: 300px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editCommentModalLabel">댓글 수정</h5>
@@ -156,13 +156,15 @@
 
     $('.btn-warning').on('click', function (e){
         let writer = $(this).attr('id');
-        let owner = "${sessionScope.loginId.owner_Id}";
-        if (writer != '' && owner != ''){
+        let owner = "<c:out value="${sessionScope.loginId.owner_Id}"/>";
+        let password = "<c:out value="${board.PASSWORD}"/>";
+
+        if (writer != '' && owner != '' || password == ""){
             if (writer != owner){
                 alert("작성자가 아닙니다.")
                 return false;
             } else {
-                self.location = "/pet/inquiry/modify?inquiry_Num=" + ${board.INQUIRY_NUM};
+                self.location = "/pet/inquiry/modify?inquiry_Num=" + <c:out value="${board.INQUIRY_NUM}"/>;
             }
         } else {
             $('.modal2').css('display','flex');
@@ -171,7 +173,7 @@
     });
     $('.pwCheck').on('click', function () {
         let pwCheck = $('#password').val();
-        let inquiry_num = "${board.INQUIRY_NUM}";
+        let inquiry_num = "<c:out value="${board.INQUIRY_NUM}"/>";
 
         if (pwCheck != '' && pwCheck != null) {
             $.ajax({
@@ -259,7 +261,7 @@
     function commentWrite() {
         const writer = $('#comment_Writer').val();
         const content = $('#comment_Content').val();
-        const inquiry_num = '${board.INQUIRY_NUM}';
+        const inquiry_num = '<c:out value="${board.INQUIRY_NUM}"/>';
 
         $.ajax({
             type: "post",

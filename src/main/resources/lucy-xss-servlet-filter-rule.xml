@@ -45,9 +45,27 @@
     <!-- URL 별 필터링 룰 선언 -->
     <url-rule-set>
         <!-- url disable이 true이면 지정한 url 내의 모든 파라미터는 필터링되지 않는다.(기본값은 false) -->
-<!--        <url-rule>-->
-<!--            <url disable="true">/xss/noneFilter.do</url>-->
-<!--        </url-rule>-->
+        <url-rule>
+            <url disable="true">/ajaxUpload</url>
+        </url-rule>
+        <url-rule>
+            <url disable="true">/common/img</url>
+        </url-rule>
+        <url-rule>
+            <url>/ajaxUpload</url>
+            <params>
+                <param name="fName" useDefender="false"/>
+                <param name="f" usePrefix="true" useDefender="false"/>
+            </params>
+        </url-rule>
+        <url-rule>
+            <url>/common/img</url>
+            <params>
+                <param name="fName" useDefender="false"/>
+                <param name="f" usePrefix="true" useDefender="false"/>
+            </params>
+        </url-rule>
+
 
         <!--
         1. '/xss/globalFilter.do' 내의 nParam은 필터링 되지 않는다.

@@ -49,15 +49,15 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mapping path="/**"/>
-			<exclude-mapping path="/animal/login"/>
+			<exclude-mapping path="/animal/login/**"/>
 			<exclude-mapping path="/animal/reviewList/**"/>
 			<exclude-mapping path="/animal/viewDetails/**"/>
 			<exclude-mapping path="/"/>
-			<exclude-mapping path="/animal/logout"/>
-			<exclude-mapping path="/animal/signup"/>
-			<exclude-mapping path="/animal/emailCheck"/>
-			<exclude-mapping path="/board/msg"/>
-			<exclude-mapping path="/common/img"/>
+			<exclude-mapping path="/animal/logout/**"/>
+			<exclude-mapping path="/animal/signup/**"/>
+			<exclude-mapping path="/animal/emailCheck/**"/>
+			<exclude-mapping path="/board/msg/**"/>
+			<exclude-mapping path="/common/img/**"/>
 			<exclude-mapping path="/pet/inquiry/list/**"/>
 			<exclude-mapping path="/pet/inquiry/get/**"/>
 			<exclude-mapping path="/inquiry/password/send/**"/>
@@ -76,6 +76,7 @@
 			<exclude-mapping path="/animal/pwChangeNo/**"/>
 			<exclude-mapping path="/adoption/animal/list/**"/>
 			<exclude-mapping path="/adoption/animal/read/**"/>
+			<exclude-mapping path="/nonMembers/inquiry/**"/>
 			<beans:bean class="com.review.interceptor.LogInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

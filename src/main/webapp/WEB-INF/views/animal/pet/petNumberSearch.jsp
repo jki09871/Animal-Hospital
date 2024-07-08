@@ -97,18 +97,18 @@
                 </thead>
                 <c:forEach var="list" items="${petList}">
                     </td>
-                        <td><a class="pet_Id" data-pet-id="${list.pet_Id}">${list.pet_Id}</a></td>
-                        <td>${list.owner_Id}</td>
-                        <td>${list.pet_name}</td>
-                        <td>${list.age}(살)</td>
-                        <td>${list.species}</td>
+                        <td><a class="pet_Id" data-pet-id="<c:out value="${list.pet_Id}"/>"><c:out value="${list.pet_Id}"/></a></td>
+                        <td><c:out value="${list.owner_Id}"/></td>
+                        <td><c:out value="${list.pet_name}"/></td>
+                        <td><c:out value="${list.age}"/>(살)</td>
+                        <td><c:out value="${list.species}"/></td>
                         <td><button class="choice">선택</button></td>
                     </tr>
                 </c:forEach>
             </table>
             <form id="pageMove" method="get" action="/registered/petNumberSearch">
-                <input type="hidden" name="keyword" value="${pageMaker.pagingCriteria.keyword }">
-                <input type="hidden" name="type" value="${pageMaker.pagingCriteria.type }">
+                <input type="hidden" name="keyword" value="<c:out value="${pageMaker.pagingCriteria.keyword}"/>">
+                <input type="hidden" name="type" value="<c:out value="${pageMaker.pagingCriteria.type}"/>">
             </form>
         </div>
     </div>

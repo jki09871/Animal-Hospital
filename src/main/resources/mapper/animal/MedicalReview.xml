@@ -9,19 +9,17 @@
 
         INSERT INTO MEDICAL_REVIEW_BAORD
         (
-            TITLE ,           /** 리뷰 제목 **/
-            CONTENT ,         /** 리뷰 내용 **/
-            <if test="writer != null and writer != '' ">
-                WRITER        /** 리뷰 작성자 **/
-            </if>
+        TITLE ,           /** 리뷰 제목 **/
+        CONTENT ,         /** 리뷰 내용 **/
+        WRITER        /** 리뷰 작성자 **/
+
         )
         VALUES
         (
-             #{title},
-             #{content},
-            <if test="writer != null and writer != '' ">
-                #{writer}
-            </if>
+        #{title},
+        #{content},
+        #{writer}
+
         )
 
     </insert>

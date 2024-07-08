@@ -80,12 +80,12 @@
             <tbody>
             <c:forEach var="list" items="${petList}">
                 <tr>
-                    <td>${list.pet_Id}</td>
-                    <td>${list.owner_Id}</td>
-                    <td><a class="move" href="${list.pet_Id}">${list.pet_name}</a></td>
-                    <td>${list.age}(살)</td>
-                    <td>${list.species}</td>
-                    <td>${list.significant}</td>
+                    <td><c:out value="${list.pet_Id}"/></td>
+                    <td><c:out value="${list.owner_Id}"/></td>
+                    <td><a class="move" href="<c:out value="${list.pet_Id}"/>"><c:out value="${list.pet_name}"/></a></td>
+                    <td><c:out value="${list.age}"/>(살)</td>
+                    <td><c:out value="${list.species}"/></td>
+                    <td><c:out value="${list.significant}"/></td>
                 </tr>
             </c:forEach>
             </tbody>

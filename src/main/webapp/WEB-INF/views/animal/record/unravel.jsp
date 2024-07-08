@@ -55,35 +55,35 @@
                 <div class="detail-item all">
                         <div class="detail-item">
                         <span class="detail-label">마이크로칩 번호 : </span>
-                        <span>${read.pet_Id}</span>
+                        <span><c:out value="${read.pet_Id}"/></span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">이름 : </span>
-                        <span>${read.pet_Name}</span>
+                        <span><c:out value="${read.pet_Name}"/></span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">나이 : </span>
-                        <span>${read.pet_Age}(${read.calculated_age}살)</span>
+                        <span><c:out value="${read.pet_Age}"/>(<c:out value="${read.calculated_age}"/>살)</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">증상 : </span>
-                        <span>${read.symptoms}</span>
+                        <span><c:out value="${read.symptoms}"/></span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">진단 : </span>
-                        <span>${read.diagnosis}</span>
+                        <span><c:out value="${read.diagnosis}"/></span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">치료 : </span>
-                        <span>${read.treatment}</span>
+                        <span><c:out value="${read.treatment}"/></span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">처방 : </span>
-                        <span>${read.prescription}</span>
+                        <span><c:out value="${read.prescription}"/></span>
                     </div>
                 </div>
-                <a href="${read.record_Id}"  class="edit-button" id="edit">수정</a>
-                <a href="${read.pet_Id}" class="edit-button" id="back" >이전</a>
+                <a href="<c:out value="${read.record_Id}"/>"  class="edit-button" id="edit">수정</a>
+                <a href="<c:out value="${read.pet_Id}"/>" class="edit-button" id="back" >이전</a>
                 <form id="DynamicForm" action="/pet/prescription/edit" method="get">
                     <input type="hidden" name="pageNum" value="<c:out value="${cri.pageNum}"/>">
                     <input type="hidden" name="amount" value="<c:out value="${cri.amount}"/>">

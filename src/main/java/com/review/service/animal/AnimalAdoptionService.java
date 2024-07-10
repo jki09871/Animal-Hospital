@@ -3,13 +3,11 @@ package com.review.service.animal;
 import com.review.dto.animal.AnimalAdoptionDTO;
 import com.review.repository.animal.AnimalAdoptionRepository;
 import com.review.util.FileUtils;
-import com.review.util.FileUtils2;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,7 +21,7 @@ public class AnimalAdoptionService {
     private AnimalAdoptionRepository adoptionRepository;
 
     @Setter(onMethod_ = @Autowired)
-    private FileUtils2 fileUtils;
+    private FileUtils fileUtils;
 
 
     public void adoptionAnimalRegister(AnimalAdoptionDTO adoptionDTO, List<MultipartFile> thumbnails, List<MultipartFile> files) throws IOException {

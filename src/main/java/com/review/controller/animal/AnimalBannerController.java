@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -44,8 +46,9 @@ public class AnimalBannerController {
     }
 
     @PostMapping("/banner/register")
-    public String bannerRegister(AnimalBannerDTO bannerDTO, MultipartHttpServletRequest mpRequest) throws IOException {
-        bannerService.bannerRegister(bannerDTO, mpRequest);
+    public String bannerRegister(AnimalBannerDTO bannerDTO, List<MultipartFile> file, @RequestParam("folderNm")String folderNm) throws IOException {
+
+        bannerService.bannerRegister(bannerDTO, file,folderNm);
         return "redirect:/banner/list";
     }
 
@@ -69,6 +72,7 @@ public class AnimalBannerController {
     public String bannerRead(AnimalBannerDTO bannerDTO, Model model,
                              HttpServletRequest request, RedirectAttributes rttr){
 
+
         HttpSession session = request.getSession();
         AnimalMemberDTO loginId = (AnimalMemberDTO) session.getAttribute("loginId");
 
@@ -86,9 +90,9 @@ public class AnimalBannerController {
     }
 
     @PostMapping("/banner/modify")
-    public String bannerModify(AnimalBannerDTO bannerDTO, MultipartHttpServletRequest mpRequest) throws IOException {
-
-        bannerService.bannerModify(bannerDTO, mpRequest);
+    public String bannerModify(AnimalBannerDTO bannerDTO,  List<MultipartFile> file, @RequestParam("folderNm")String folderNm) throws IOException {
+        System.out.println("####bannerDTO = " + bannerDTO);
+        bannerService.bannerModify(bannerDTO, file, folderNm);
 
         return"redirect:/banner/list";
     }

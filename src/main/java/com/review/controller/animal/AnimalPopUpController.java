@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -60,14 +61,14 @@ public class AnimalPopUpController {
     }
 
     @RequestMapping(value = "/popup/register/post", method = RequestMethod.POST)
-    public String registerPopUpPost(AnimalPopUpDTO pop, MultipartHttpServletRequest fileRequest) throws Exception {
-        // 받아온 데이터를 처리하는 로직을 작성합니다.
-        System.out.println("Received PopupDTO: " + pop);
+    public String registerPopUpPost(AnimalPopUpDTO popUpDto, @RequestParam("file") List<MultipartFile> file) throws Exception {
+        String folder_nm = popUpDto.getFolder_nm();
+
 
 
 
         // 여기서 데이터베이스에 저장하거나 추가적인 비즈니스 로직을 수행할 수 있습니다.
-        popUp.popUpRegister(pop, fileRequest);
+        popUp.popUpRegister(popUpDto, file, folder_nm);
 
         // 성공적으로 처리되었다는 메시지를 클라이언트에게 반환합니다.
         return "redirect:/popUp/list";
@@ -97,9 +98,10 @@ public class AnimalPopUpController {
     }
 
     @PostMapping("/popup/modify")
-    public String popUpModify(AnimalPopUpDTO popUpDto, MultipartHttpServletRequest request) throws IOException {
+    public String popUpModify(AnimalPopUpDTO popUpDto, @RequestParam("file") List<MultipartFile> file,
+                                                        @RequestParam("folderNm") String folderNm) throws IOException {
 
-        popUp.popUpModify(popUpDto, request);
+        popUp.popUpModify(popUpDto, file, folderNm);
         System.out.println("popUpDto = " + popUpDto);
 
 

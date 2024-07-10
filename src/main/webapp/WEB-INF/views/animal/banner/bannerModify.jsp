@@ -58,7 +58,7 @@
       <div class="ct">
         <form class="form" action="/banner/modify" method="post" enctype="multipart/form-data">
           <input type="hidden" name="banner_id" id="banner_id" value="<c:out value="${banner.banner_id}"/>">
-          <input type="hidden" name="folder_nm" id="folder_nm" value="banner" />
+          <input type="hidden" name="folderNm" id="folderNm" value="banner" />
           <input type="hidden" name="FILE_NO" id="FILE_NO" value="" />
           <div>
             <label>제목</label>
@@ -138,7 +138,9 @@
 
   function fnDel(reviewNum, fileNo, element) {
 
-    let folder_nm = "${banner.folder_nm}";
+    let folderNm = $('#folderNm').val();
+
+    alert(folderNm);
 
 
     if (reviewNum != '' && reviewNum != null) {
@@ -146,7 +148,7 @@
       $.ajax({
         url: '/animal/fileRemove',
         method: 'POST',
-        data: {fileNo: fileNo, reviewNum: reviewNum, folder_nm : folder_nm},
+        data: {fileNo: fileNo, reviewNum: reviewNum, folderNm : folderNm},
         success: function () {
           console.log("reviewNum: " + reviewNum);
           console.log("fileNo: " + fileNo);
@@ -159,13 +161,13 @@
     }
     $(element).closest('div').remove();
   }
-  var fileIndex = 1;
-  $('.fileAdd').on('click', function () {
-    $("#fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
-            + "<button type='button' class='fileDel_btn'>삭제</button></div>");
-    $(".file").css('display', 'none');
-
-  });
+  // var fileIndex = 1;
+  // $('.fileAdd').on('click', function () {
+  //   $("#fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
+  //           + "<button type='button' class='fileDel_btn'>삭제</button></div>");
+  //   $(".file").css('display', 'none');
+  //
+  // });
 
   $(document).on("click",".fileDel_btn", function(){
     $(this).parent().remove();
@@ -178,7 +180,7 @@
   function fn_fileDown(fileNo, folder){
     var formObj = $(".form");
     $("#FILE_NO").attr("value", fileNo);
-    $("#FOLDER_NM").attr("value", folder);
+    $("#folderNm").attr("value", folder);
     formObj.attr("action", "/animal/fileDown");
     formObj.submit();
   }

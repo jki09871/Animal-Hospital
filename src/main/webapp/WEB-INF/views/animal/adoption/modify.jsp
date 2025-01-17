@@ -38,7 +38,7 @@
                     </tr>
                     <tr>
                         <td class="bold" >나이</td>
-                        <td><input type="text" class="form-control" name="age" value=""<c:out value="${modify.age}"/>"></td>
+                        <td><input type="text" class="form-control" name="age" value="<c:out value="${modify.age}"/>"></td>
                         <td class="bold" >성별</td>
                         <td>
                             <label class="radio-inline"><input type="radio" name="gender" value="M" <c:if test="${modify.gender == 'M'}">checked</c:if>> 수컷</label>
@@ -51,7 +51,7 @@
                     </tr>
                     <tr>
                         <td class="bold" >상세 내용</td>
-                        <td colspan="7"><textarea class="form-control" rows="5" name="content"><c:out value="${modify.content}"/></textarea></td>
+                        <td colspan="7"><textarea class="form-control" rows="5" id="content" name="content"><c:out value="${modify.content}"/></textarea></td>
                     </tr>
                     </tbody>
                 </table>
@@ -62,3 +62,40 @@
             </form>
     </div>
 </div>
+
+<script>
+    $('#content').summernote({
+        height: 300,
+        width: 1150,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        lang: "ko-KR",
+        callbacks: {
+            onImageUpload: function (files) {
+                for (var i = files.length - 1; i >= 0; i--) {
+                    sendFile(files[i], this);
+                }
+            }
+        }
+    });
+
+
+    function sendFile(file, editor) {
+        let formData = new FormData();
+        formData.append("file", file);
+        console.log(file);
+        $.ajax({
+            data: formData,
+            type: "POST",
+            url: "/ajaxUpload",
+            contentType: false,
+            processData: false,
+
+            success: function (data) {
+                console.log(data);
+                $(editor).summernote("insertImage", data.url);
+            }
+        });
+    }
+</script>

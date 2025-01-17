@@ -29,6 +29,7 @@ public class AnimalAdoptionController {
     @Setter(onMethod_ = @Autowired)
     private AnimalAdoptionService adoptionService;
 
+    /**********************************************  입양 동물 등록  ************************************************/
     @GetMapping("/adoption/animal/register")
     public String adoptionAnimalRegister(HttpServletRequest request, RedirectAttributes rttr){
         HttpSession session = request.getSession();
@@ -56,6 +57,7 @@ public class AnimalAdoptionController {
         return "redirect:/adoption/animal/list";
     }
 
+    /**********************************************  입양 동물 목록  ************************************************/
     @GetMapping("/adoption/animal/list")
     public String adoptionAnimalList(Model model){
 
@@ -64,6 +66,8 @@ public class AnimalAdoptionController {
             return "/animal/adoption/list";
     }
 
+
+    /********************************************  입양 동물 상세보기  ************************************************/
     @GetMapping("/adoption/animal/read")
     public String adoptionAnimalRead(AnimalAdoptionDTO adoptionDTO, Model model){
 
@@ -74,6 +78,7 @@ public class AnimalAdoptionController {
 
     }
 
+    /********************************************  입양 동물 수정  ************************************************/
     @GetMapping("/adoption/animal/information/modify")
     public String adoptionAnimalInformationModify(AnimalAdoptionDTO adoptionDTO, Model model,
                                                   HttpServletRequest request, RedirectAttributes rttr){

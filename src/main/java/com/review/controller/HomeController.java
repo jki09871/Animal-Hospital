@@ -55,7 +55,6 @@ public class HomeController {
 		model.addAttribute("list", popUpList);
 
 		List<AnimalBannerDTO> bannerList = bannerService.bannerList();
-		System.out.println("bannerList = " + bannerList);
 		model.addAttribute("bannerList", bannerList);
 
 

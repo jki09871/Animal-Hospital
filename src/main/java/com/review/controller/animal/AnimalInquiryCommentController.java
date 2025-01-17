@@ -22,6 +22,8 @@ public class AnimalInquiryCommentController {
     @Setter(onMethod_ = @Autowired)
     private AnimalInquiryCommentService ics;
 
+
+    /********************************************  문의 댓글 작성  ************************************************/
     @PostMapping("/inquiry/comment/save")
     public @ResponseBody List<AnimalInquiryCommentDTO> commentSave(@ModelAttribute AnimalInquiryCommentDTO commentDTO, Model model) {
         System.out.println("commentDTO = " + commentDTO);
@@ -32,6 +34,7 @@ public class AnimalInquiryCommentController {
         return commentList;
     }
 
+    /********************************************  문의 댓글 삭제  ************************************************/
     @PostMapping("/inquiry/comment/delete")
     @ResponseBody
     public String commentDel(@RequestParam("id") int id){
@@ -40,6 +43,7 @@ public class AnimalInquiryCommentController {
         return "success";
     }
 
+    /********************************************  문의 댓글 수정  ************************************************/
     @PostMapping("/inquiry/comment/update")
     @ResponseBody
     public String commentUpdate(AnimalInquiryCommentDTO commentDTO){

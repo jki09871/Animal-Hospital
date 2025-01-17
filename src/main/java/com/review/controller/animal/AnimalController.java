@@ -32,8 +32,6 @@ public class AnimalController {
         request.setAttribute("returnUrl", request.getAttribute("returnUrl"));
         request.setAttribute("method", request.getAttribute("method"));
 
-
-
         return "/msg";
     }
 
@@ -54,7 +52,7 @@ public class AnimalController {
         rttr.addAttribute("ownerId", petDTO.getOwner_Id());
         return "redirect:/pet/info";
     }
-    /************************************************************************************************************/
+
     /************************************************  등록 정보  ************************************************/
 
     @GetMapping("/pet/info")
@@ -74,7 +72,7 @@ public class AnimalController {
         }
 
     }
-    /************************************************************************************************************/
+
 
     /************************************************  등록 수정  ************************************************/
     @GetMapping("/pet/info/modify")
@@ -95,7 +93,7 @@ public class AnimalController {
         ps.getPetInfo(petDTO.getOwner_Id());
         return "redirect:/pet/info";
     }
-    /************************************************************************************************************/
+
 
     /********************************************  동물 정보 삭제  ************************************************/
     @PostMapping("/pet/info/delete")

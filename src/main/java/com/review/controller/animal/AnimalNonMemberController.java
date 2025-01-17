@@ -22,6 +22,7 @@ public class AnimalNonMemberController {
     @Setter(onMethod_ = @Autowired)
     private AnimalMedicalInquiryService mis;
 
+    /********************************************  비회원 문의 작성  ************************************************/
     @PostMapping("/nonMembers/inquiry")
     public String nonMembersInquiry(AnimalNonMembersDTO memberDTO, AnimalInquiryBoardDTO boardDTO){
         int membersDTO = nms.registeredMemberCount(memberDTO);

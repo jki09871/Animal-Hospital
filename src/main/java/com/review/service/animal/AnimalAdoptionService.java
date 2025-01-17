@@ -49,18 +49,20 @@ public class AnimalAdoptionService {
         int maxValue = adoptionRepository.adoptionIdMaxCount();
         adoptionDTO.setAdoption_id(maxValue);
 
-        if (mpFiles != null && !mpFiles.isEmpty()) {
-            List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(adoptionDTO, mpFiles, folder_nm);
-            for (Map<String, Object> fileInfo : list) {
+        for (MultipartFile multipartFile : mpFiles){
+            if (!multipartFile.isEmpty()) {
+                List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(adoptionDTO, mpFiles, folder_nm);
+                for (Map<String, Object> fileInfo : list) {
 
 
-                if ("thumbnails".equals(folder_nm)) {
-                    adoptionDTO.setFolder_nm(folder_nm);
-                    adoptionDTO.setStored_file_name((String) fileInfo.get("STORED_FILE_NAME"));
-                    adoptionRepository.thumbnailsFileSave(fileInfo);
-                } else {
-                    adoptionDTO.setFolder_nm(folder_nm);
-                    adoptionRepository.insertFile(fileInfo);
+                    if ("thumbnails".equals(folder_nm)) {
+                        adoptionDTO.setFolder_nm(folder_nm);
+                        adoptionDTO.setStored_file_name((String) fileInfo.get("STORED_FILE_NAME"));
+                        adoptionRepository.thumbnailsFileSave(fileInfo);
+                    } else {
+                        adoptionDTO.setFolder_nm(folder_nm);
+                        adoptionRepository.insertFile(fileInfo);
+                    }
                 }
             }
         }

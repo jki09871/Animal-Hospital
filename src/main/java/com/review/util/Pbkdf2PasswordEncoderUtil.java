@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 public class Pbkdf2PasswordEncoderUtil {
 
     private static final CharSequence SECRET_KEY = "asd2qd!@#$#%%$@#$@#$18613548#@$@123123!@#%!@#%asdakbqwjd";
+    private static final int SALT_LENGTH = 16;
     private static final int ITERATION_COUNT = 65536;
     private static final int HASH_WIDTH = 256;
-    private static final int SALT_LENGTH = 16;
     public static Pbkdf2PasswordEncoder pbkdf2PasswordEncoder;
 
     static {

@@ -67,7 +67,7 @@ public class AnimalOwnerController {
             messageHelper.setTo(animalDTO.getEmail()); /** 받을 이메일 */
             messageHelper.setSubject("안녕하세요! 동물 입양센터입니다."); /** 이메일 제목 */
             messageHelper.setText("이메일 :" + animalDTO.getEmail() + "아이디 :" + animalDTO.getOwner_Id() +
-                    "핸드폰 번호 :" + animalDTO.getPhoneNumber()); /** 내용*/
+                    "입니다. 가입해 주셔서 감사합니다."); /** 내용*/
 //            FileSystemResource fileSystemResource = new FileSystemResource(new File("C:\\js\\api\\123.html"));
 //            messageHelper.addAttachment("html.html", fileSystemResource);
 
@@ -89,7 +89,7 @@ public class AnimalOwnerController {
             return "/animal/owner/ownerSignup";
         }
     }
-    /************************************************************************************************************/
+
 
     /*******************************************  로그인  & 로그아웃 **********************************************/
     @GetMapping("/animal/login")
@@ -124,22 +124,9 @@ public class AnimalOwnerController {
                 AnimalMemberDTO animalMemberDTO = os.userVerification(animalDTO);
                 model.addAttribute("pwFailCnt", animalMemberDTO);
 
-            // 5번 실패시 이메일 발송과 동시에 아이디 잠금
-           /* 로그인 실패 카운트 --
-            5보다 작은지 체크
-            * update
-            *  fail_cnt = fail_cnt + 1
-            *
-             5보다 크거가 같으면
-             비밀번호 5회 이상 틀려 아이디가 잠겼습니다. 관리자에게 문의해주시기 바랍니다.
-             관리자 - 회원 목록 - 비밀번호 초기화 -> 랜덤으로 메일로 발송 + 비밀번호 만료일 3개월 전으로 초기화
-
-             */
 
             }
 
-
-            /* 로그인 실패 카운트 --  */
 
             if (rememberId) {
                 // 1. 쿠키에 아이디 저장
@@ -204,7 +191,7 @@ public class AnimalOwnerController {
         }
         return "redirect:/";
     }
-    /************************************************************************************************************/
+
 
     /*******************************************  이메일 & 아이디 체크  ********************************************/
 

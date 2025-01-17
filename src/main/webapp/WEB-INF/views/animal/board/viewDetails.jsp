@@ -80,7 +80,7 @@
                 </div>
                 <div class="btn-container">
                     <button onclick="fnDynamic('L')">목록</button>
-                    <c:if test="${sessionScope.loginId != null }">
+                    <c:if test="${sessionScope.loginId.owner_Id == animal.writer }">
                         <button onclick="fnDynamic('U')">수정</button>
                         <button onclick="fnDynamic('D')">삭제</button>
                     </c:if>

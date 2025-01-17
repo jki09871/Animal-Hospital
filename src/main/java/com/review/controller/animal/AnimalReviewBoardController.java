@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +63,6 @@ public class AnimalReviewBoardController {
     public String medicalReview(AnimalReviewDTO reviewDTO, @RequestParam("file") List<MultipartFile> file,
                                 @RequestParam("folderNm") String folderNm, Model model,
                                 HttpServletRequest request) throws IOException {
-        System.out.println("mpRequest = " + file);
         HttpSession session = request.getSession();
         model.addAttribute("animal", session.getAttribute("loginId"));
         service.reviewWrite(reviewDTO, file, folderNm);
@@ -95,8 +95,7 @@ public class AnimalReviewBoardController {
         model.addAttribute("cri", criteria);
         model.addAttribute("file", service.selectFileList(reviewDTO.getReviewNum()));
 
-        System.out.println("pageNum = " + request.getParameter("pageNum"));
-        System.out.println("amount = " + request.getParameter("amount"));
+
         return "/animal/board/correction";
     }
 
@@ -104,6 +103,7 @@ public class AnimalReviewBoardController {
     public String correctionAfter(AnimalReviewDTO reviewDTO, Model model, @RequestParam("file") List<MultipartFile> file,
                                   @RequestParam("folderNm") String folderNm,HttpServletRequest request,
                                   RedirectAttributes rttr) throws IOException {
+
 
 
         service.correction(reviewDTO, file, folderNm);
@@ -166,12 +166,13 @@ public class AnimalReviewBoardController {
     @ResponseBody
     public void deleteFile(@RequestParam("fileNo") int fileNo,
                            @RequestParam("reviewNum") int reviewNum,
+                           @RequestParam("folderNm") String folderNm2,
                            HttpServletRequest request){
 
+        System.out.println("folderNm2 = " + folderNm2);
         String folderNm = (request.getParameter("folderNm") == null || "".equals(request.getParameter("folderNm")))
                 ?  "file" : request.getParameter("folderNm");
 
-        System.out.println("######### folder_nm = " + folderNm);
 
         System.out.println("삭제한 FILE_NO은 " + reviewNum + "번 입니다.");
         service.deleteFile(fileNo, reviewNum, folderNm);

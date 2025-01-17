@@ -179,7 +179,7 @@
     </update>
 
     <update id="pwChange"  parameterType="hashMap">
-/*********************** 비밀번호 변경  AnimaMemberMapper.xml -  animal.pwUpdate **************************/
+/*********************** 비밀번호 변경  AnimaMemberMapper.xml -  animal.pwChange **************************/
 
         UPDATE
             OWNER_TBL

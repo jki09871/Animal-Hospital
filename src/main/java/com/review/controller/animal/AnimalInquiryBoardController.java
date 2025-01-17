@@ -27,6 +27,7 @@ public class AnimalInquiryBoardController {
     private final AnimalInquiryCommentService ics;
 
 
+    /********************************************  등록된 문의 목록  ************************************************/
     @RequestMapping("/pet/inquiry/list")
     public String list(Model model){
         log.info("list.....");
@@ -34,6 +35,9 @@ public class AnimalInquiryBoardController {
         return "/animal/inquiry/list";
 
     }
+
+    /********************************************  문의 등록  ************************************************/
+
     @GetMapping("/pet/inquiry/register")
     public String GetRegister(HttpServletRequest request, String toURL, Model model){
         HttpSession session = request.getSession();
@@ -60,6 +64,7 @@ public class AnimalInquiryBoardController {
     }
 
 
+    /********************************************  문의 상세정보  ************************************************/
     // 글 읽기
     @GetMapping("/pet/inquiry/get")
     public String get(@RequestParam("inquiry_Num") Long inquiry_Num, Model model){
@@ -74,6 +79,8 @@ public class AnimalInquiryBoardController {
         return "/animal/inquiry/get";
     }
 
+
+    /********************************************  문의 수정  ************************************************/
     // 글 수정
     @GetMapping("/pet/inquiry/modify")
     public String getModify(@RequestParam("inquiry_Num") Long inquiry_Num, Model model){
@@ -87,6 +94,8 @@ public class AnimalInquiryBoardController {
         return "/animal/inquiry/modify";
     }
 
+
+    /********************************************  문의 삭제  ************************************************/
     // 글 수정
     @PostMapping("/pet/inquiry/modify")
     public String modify(AnimalInquiryBoardDTO board, RedirectAttributes rttr){
@@ -111,6 +120,7 @@ public class AnimalInquiryBoardController {
         return "redirect:/pet/inquiry/list";
     }
 
+    /*************************************  문의 비밀번호 확인  *********************************************/
     @GetMapping(value = "/inquiry/password/send", produces = "application/text; charset=utf8" )
     @ResponseBody
     public String privateInquiryRead(@RequestParam Map<String, Object> paramMap){

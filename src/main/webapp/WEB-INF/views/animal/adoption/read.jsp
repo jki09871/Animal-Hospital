@@ -91,39 +91,5 @@
         }
     }
 
-    $('#summernote').summernote({
-        height: 300,
-        width: 1000,
-        minHeight: null,
-        maxHeight: null,
-        focus: true,
-        lang: "ko-KR",
-        callbacks: {
-            onImageUpload: function (files) {
-                for (var i = files.length - 1; i >= 0; i--) {
-                    sendFile(files[i], this);
-                }
-            }
-        }
-    });
-
-
-    function sendFile(file, editor) {
-        let formData = new FormData();
-        formData.append("file", file);
-        console.log(file);
-        $.ajax({
-            data: formData,
-            type: "POST",
-            url: "/ajaxUpload",
-            contentType: false,
-            processData: false,
-
-            success: function (data) {
-                console.log(data);
-                $(editor).summernote("insertImage", data.url);
-            }
-        });
-    }
 </script>
 <%@include file="/WEB-INF/views/cmmn/footer.jsp" %>

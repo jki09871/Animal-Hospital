@@ -22,12 +22,11 @@ public class MailSenderUtils {
 
 
     public void MailSenderUtils(AnimalMemberDTO animalMemberDTO) throws Exception {
-        System.out.println("animalDTO = " + animalMemberDTO);
 
         if (os.userVerification(animalMemberDTO) != null){
             Pbkdf2PasswordEncoderUtil pbkdf2PasswordEncoderUtil = new Pbkdf2PasswordEncoderUtil();
 
-            String randomPw = generateRandomString();
+            String randomPw = randomPasswordSend();
 
             String randomP2 = pbkdf2PasswordEncoderUtil.pbkdf2PasswordEncoder.encode(randomPw);
             animalMemberDTO.setPassword(randomP2);
@@ -59,7 +58,7 @@ public class MailSenderUtils {
         }
     }
 
-    public String generateRandomString() {
+    public String randomPasswordSend() {
         // 랜덤 문자열을 생성할 문자열 범위 지정
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         // 랜덤 문자열을 저장할 StringBuilder 객체 생성

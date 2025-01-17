@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=ra76pvfqpj"></script>
+<%@include file="/WEB-INF/views/cmmn/header.jsp" %>
 
 <style>
     .img {
@@ -38,22 +39,6 @@
         line-height: 1.5; /* 텍스트 줄 간격을 조정할 수도 있습니다 */
     }
 
-    /*.close-btn  {*/
-    /*	position: absolute;*/
-    /*	top: 10px;*/
-    /*	right: 10px;*/
-    /*	font-size: 20px;*/
-    /*	cursor: pointer;*/
-    /*	color: #aaa;*/
-    /*}*/
-    /*.stopWatching {*/
-    /*	position: absolute;*/
-    /*	bottom: 10px;*/
-    /*	right: 10px;*/
-    /*	font-size: 15px;*/
-    /*	cursor: pointer;*/
-    /*	color: #aaa;*/
-    /*}*/
     .modal {
         position: absolute;
         display: none;
@@ -93,9 +78,6 @@
 
 </style>
 
-<%@include file="/WEB-INF/views/cmmn/header.jsp" %>
-
-
 <!-- Carousel -->
 <div id="theme-carousel" class="carousel slide" data-ride="carousel">
 
@@ -115,7 +97,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <h2>SAVE LIFE ADOPT A PET</h2>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                                    <h3>PLEASE SAVE THE ANIMALS</h3>
                                     <br/>
                                     <a href="/adoption/animal/list">
                                         <button type="button" class="button-more-primary btn btn-lg" type="button"

@@ -31,12 +31,14 @@ public class AnimalPopUpService {
         return popUp.popUpList();
     }
 
-    public void popUpRegister(AnimalPopUpDTO popUpDTO,  List<MultipartFile> file, String folderNm ) throws IOException {
+    public void popUpRegister(AnimalPopUpDTO popUpDTO,  List<MultipartFile> mpRequest, String folderNm ) throws IOException {
 
-        handleFileUpload(popUpDTO, file, folderNm);
+        for (MultipartFile multipartFile : mpRequest) {
+            if (!multipartFile.isEmpty()) {
+                handleFileUpload(popUpDTO, mpRequest, folderNm);
+            }
+        }
         popUp.popUpRegister(popUpDTO);
-
-
 
     }
 
@@ -44,12 +46,13 @@ public class AnimalPopUpService {
        return popUp.popUpRead(popUpDTO);
     }
 
-    public void popUpModify(AnimalPopUpDTO popUpDTO, List<MultipartFile> file, String folderNm) throws IOException {
+    public void popUpModify(AnimalPopUpDTO popUpDTO, List<MultipartFile> mpRequest, String folderNm) throws IOException {
 
-        if (!file.isEmpty()) { // 파일이 있으면 true
-            handleFileUpload(popUpDTO, file, folderNm);
+        for (MultipartFile multipartFile : mpRequest) {
+            if (!multipartFile.isEmpty()) {
+                handleFileUpload(popUpDTO, mpRequest, folderNm);
+            }
         }
-
         popUp.popUpModify(popUpDTO);
 
     }

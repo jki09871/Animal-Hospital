@@ -66,15 +66,15 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/adoption/animal/list" class="smooth-scroll">입양하기</a></li>
-        <li><a href="/animal/reviewList" class="smooth-scroll">리뷰남기기</a></li>
-        <li><a href="/pet/inquiry/list" class="smooth-scroll">문의</a></li>
+        <li><a href="/adoption/animal/list" >입양하기</a></li>
+        <li><a href="/animal/reviewList" >리뷰남기기</a></li>
+        <li><a href="/pet/inquiry/list" >문의</a></li>
         <c:if test="${sessionScope.loginId == null}">
-          <li><a href="/animal/login" class="smooth-scroll">로그인</a></li>
+          <li><a href="/animal/login" >로그인</a></li>
         </c:if>
         <c:if test="${sessionScope.loginId != null}">
           <li><a href="/animal/myInfo">내 활동</a></li>
-          <li><a href="/animal/logout" class="smooth-scroll">로그아웃</a></li>
+          <li><a href="/animal/logout" >로그아웃</a></li>
         </c:if>
         <c:if test="${sessionScope.loginId.grade == 99}">
 <%--          <li><a href="/pet/prescription/list" class="smooth-scroll">PRESCRIPTION</a></li>--%>

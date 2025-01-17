@@ -39,6 +39,7 @@ public class FileUtils {
         Map<String, Object> listMap = null;
 
         int all_number = extractId(object);
+        System.out.println("all_number@@@@@@@ = " + all_number);
 
         File file = new File(filePath + "\\" + finalFolderNm);
 
@@ -69,7 +70,7 @@ public class FileUtils {
                 listMap.put("FULL_URL", fullUrl);
                 listMap.put("ORG_FILE_NAME", originalFileName);
                 listMap.put("STORED_FILE_NAME", storedFileName);
-                listMap.put("FILE_SIZE", multipartFile.getSize());
+                    listMap.put("FILE_SIZE", multipartFile.getSize());
                 list.add(listMap);
             }
         }

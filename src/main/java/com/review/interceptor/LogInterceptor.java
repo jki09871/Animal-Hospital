@@ -22,9 +22,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
         return true;
-
     }
-
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse
             response, Object handler, ModelAndView modelAndView) throws Exception {

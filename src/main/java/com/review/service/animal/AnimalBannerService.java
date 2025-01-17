@@ -50,7 +50,7 @@ public class AnimalBannerService {
 
     }
 
-    private void handleFileUpload(AnimalBannerDTO bannerDTO, List<MultipartFile> file, String folderNm) throws IOException {
+    private void handleFileUpload(AnimalBannerDTO bannerDTO, List<MultipartFile> mpRequest, String folderNm) throws IOException {
 
         int maxValue = bannerRepository.bannerIdMaxCount();
         if (bannerDTO.getBanner_id() == 0) {
@@ -58,19 +58,21 @@ public class AnimalBannerService {
             System.out.println("bannerDTO = " + bannerDTO);
 
         }
-        if (file != null && !file.equals("")) {
-            List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(bannerDTO, file, folderNm);
-            int size = list.size();
-            for (int i = 0; i < size; i++) {
+        for (MultipartFile multipartFile : mpRequest) {
+            if (!multipartFile.isEmpty()) {
+                List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(bannerDTO, mpRequest, folderNm);
+                int size = list.size();
+                for (int i = 0; i < size; i++) {
 //                list.get(i).get("FOLDER_NM");
 
-                Object stored_file_name = list.get(i).get("STORED_FILE_NAME");
-                Object full_url = list.get(i).get("FULL_URL");
+                    Object stored_file_name = list.get(i).get("STORED_FILE_NAME");
+                    Object full_url = list.get(i).get("FULL_URL");
 
-                bannerDTO.setImage_full_url((String) full_url);
-                bannerDTO.setStored_file_name((String) stored_file_name);
+                    bannerDTO.setImage_full_url((String) full_url);
+                    bannerDTO.setStored_file_name((String) stored_file_name);
 
-                bannerRepository.insertFile(list.get(i));
+                    bannerRepository.insertFile(list.get(i));
+                }
             }
         }
     }

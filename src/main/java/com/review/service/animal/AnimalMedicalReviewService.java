@@ -34,14 +34,16 @@ public class AnimalMedicalReviewService {
 
     public void reviewWrite(AnimalReviewDTO reviewDTO, List<MultipartFile> mpRequest, String folderNm) throws IOException {
         repository.reviewWrite(reviewDTO);
-        List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(reviewDTO, mpRequest, folderNm);
-        int size = list.size();
-        for (int i = 0; i < size; i++){
-            repository.insertFile(list.get(i));
+        for (MultipartFile multipartFile : mpRequest){
+            if (!multipartFile.isEmpty()) {
+                List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(reviewDTO, mpRequest, folderNm);
+                int size = list.size();
+                for (int i = 0; i < size; i++) {
+                    repository.insertFile(list.get(i));
+                }
+            }
         }
-
     }
-
     public List<AnimalReviewDTO> reviewList() {
         return repository.reviewList();
     }
@@ -51,8 +53,16 @@ public class AnimalMedicalReviewService {
     }
 
     public void correction(AnimalReviewDTO reviewDTO, List<MultipartFile> mpRequest, String folderNm) throws IOException {
-        fileUtils.parseInsertFileInfo(reviewDTO,mpRequest, folderNm);
         repository.correction(reviewDTO);
+        for (MultipartFile multipartFile : mpRequest) {
+            if (!multipartFile.isEmpty()) {
+                List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(reviewDTO, mpRequest, folderNm);
+                int size = list.size();
+                for (int i = 0; i < size; i++) {
+                    repository.insertFile(list.get(i));
+                }
+            }
+        }
     }
 
     public void deleteUsingNum(int reviewNum) {
@@ -103,6 +113,7 @@ public class AnimalMedicalReviewService {
             if (file.delete()){
                 System.out.println(fileNo);
                 repository.removeFile(fileNo);
+                System.out.println("성공");
             }else {
                 System.out.println("오류");
             }

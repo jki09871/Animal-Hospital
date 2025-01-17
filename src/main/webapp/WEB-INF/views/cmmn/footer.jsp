@@ -98,7 +98,7 @@
 <script src="/resources/animal-adoption/bootstrap/js/bootstrap.min.js"></script>
 <%--<script src="/resources/animal-adoption/js/googleMap.js"></script>--%>
 <%--<script src="https://maps.googleapis.com/maps/api/js"></script>--%>
-<script src="/resources/animal-adoption/js/theme.js"></script>
+<%--<script src="/resources/animal-adoption/js/theme.js"></script>--%>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <%--

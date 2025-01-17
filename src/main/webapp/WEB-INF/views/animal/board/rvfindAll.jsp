@@ -77,7 +77,7 @@
         <div class="basic animal">
             <h1 class="text-primary text-center" style="margin-top: 90px    ">PET REVIEWS</h1>
             <c:if test="${sessionScope.loginId.owner_Id != null}">
-                <button id="regBtn">게시글 작성</button>
+                <button id="regBtn" class="btn btn-primary" >게시글 작성</button>
             </c:if>
 
             <table class="table-cell">

@@ -24,8 +24,6 @@
                             <!-- Editor -->
                             <textarea id="summernote" rows="5" name="content" style="width:100%; height:250px;"><c:out value="${animal.content}"/></textarea>
                         </td>
-                        <td><input type="submit" value="수정"></td>
-                        <td><input type="button" onClick="history.back();" value="취소"></td>
                     </tr>
                 </table>
                 <!-- File Uploads -->
@@ -39,7 +37,9 @@
                         </c:forEach>
                     </div>
                 </div>
-                <button type="button" id="fileAdd_btn">파일추가</button>
+                <button type="button" id="fileAdd_btn"  class="btn btn-danger">파일추가</button>
+                <input class="btn btn-danger" type="submit" value="수정" style="margin-right: auto">
+                <input  class="btn btn-danger" type="button" onClick="history.back();" value="취소">
             </form>
         </div>
     </div>
@@ -82,7 +82,7 @@
 
     var fileIndex = 1;
     $('#fileAdd_btn').on('click', function () {
-        $("#fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "'>"
+        $("#fileIndex").append("<div><input type='file' style='float:left;' name='file' multiple>"
             + "<button type='button' class='fileRemove' id='fileDel'>삭제</button></div>");
 
     });
@@ -91,12 +91,13 @@
 
         let folderNm = $('#folderNm').val();
 
+
         if (reviewNum != '' && reviewNum != null) {
             $(element).closest('div').remove();
             $.ajax({
                 url: '/animal/fileRemove',
-                method: 'GET',
-                data: {fileNo: fileNo, reviewNum: reviewNum,folderNm: folderNm},
+                method: 'POST',
+                data: {fileNo: fileNo, reviewNum: reviewNum, folderNm : folderNm},
                 success: function () {
                     console.log("reviewNum: " + reviewNum);
                     console.log("fileNo: " + fileNo);
@@ -109,7 +110,6 @@
         }
         $(element).closest('div').remove();
     }
-
 
     $(document).ready(function() {
         // 삭제 버튼에 대한 클릭 이벤트 핸들러 설정

@@ -27,11 +27,13 @@ import java.util.Map;
 public class AnimalBannerController {
 
     @Setter(onMethod_ = @Autowired)
-    private final AnimalBannerService bannerService;
+    private AnimalBannerService bannerService;
 
     @Setter(onMethod_ = @Autowired)
     private AnimalMedicalReviewService reviewService;
 
+
+    /********************************************  배너 등록  ************************************************/
     @GetMapping("/banner/register")
     public String bannerRegister(HttpServletRequest request, RedirectAttributes rttr) {
         HttpSession session = request.getSession();
@@ -52,6 +54,7 @@ public class AnimalBannerController {
         return "redirect:/banner/list";
     }
 
+    /********************************************  등록된 배너 목록  ************************************************/
     @GetMapping("/banner/list")
     public String bannerList(Model model, HttpServletRequest request, RedirectAttributes rttr){
         HttpSession session = request.getSession();
@@ -68,6 +71,8 @@ public class AnimalBannerController {
         }
     }
 
+
+    /********************************************  등록된 배너 수정  ************************************************/
     @GetMapping("/banner/modify")
     public String bannerRead(AnimalBannerDTO bannerDTO, Model model,
                              HttpServletRequest request, RedirectAttributes rttr){

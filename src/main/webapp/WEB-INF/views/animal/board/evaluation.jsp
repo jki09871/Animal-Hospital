@@ -7,7 +7,7 @@
 
 <div class="container-stories">
     <div class="container">
-        <div >
+        <div>
             <form role="form" action="/animal/review" method="post" id="form" enctype="multipart/form-data">
                 <input type="hidden" name="folderNm" id="folderNm" value="review">
                 <h1>글쓰기</h1>
@@ -96,7 +96,7 @@
     }
     var fileIndex = 1;
     $('.fileAdd').on('click', function () {
-        $(".fileIndex").append("<div><input type='file' style='float:left;' name='file' multiple>"
+        $(".fileIndex").append("<div><input type='file' style='float:left;' name='file_" + fileIndex++ + "' multiple>"
             + "<button type='button' class='fileDel_btn'>삭제</button></div>");
 
     });
